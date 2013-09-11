@@ -1,0 +1,36 @@
+apply plugin: 'idea'
+
+subprojects {
+
+    apply plugin: 'java'
+	apply plugin: 'scala'
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+            scala {
+                srcDir 'src/main/scala'
+            }
+            resources {
+                srcDir 'src/main/resources'
+                srcDir 'src/main/java'
+                srcDir 'src/main/scala'
+            }
+        }
+    }
+
+    compileJava {
+        options.encoding = "UTF-8"
+    }
+    compileTestJava {
+        options.encoding = "UTF-8"
+    }
+}
+

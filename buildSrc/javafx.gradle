@@ -57,7 +57,7 @@ task javafxJar(type: Jar, dependsOn: jar) {
 task enrichedJavafxJar(type: Jar, dependsOn: javafxJar) {
     appendix = "enriched"
 
-    doLast {
+    doFirst {
         from project.configurations.compile.collect {
             zipTree(it).matching { exclude { it.name == 'META-INF' } }
         }

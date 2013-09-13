@@ -17,7 +17,7 @@ object Main extends JFXApp {
 
   stage = new JFXApp.PrimaryStage {
     title = "Image compression"
-    width = 600
+    width = 900
     height = 600
     scene = new Scene(delegate = new javafx.scene.Scene(root))
   }

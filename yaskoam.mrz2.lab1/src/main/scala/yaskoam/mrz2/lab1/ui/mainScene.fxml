@@ -6,38 +6,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="rootPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0.0" minWidth="0.0"
-      prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="yaskoam.mrz2.lab1.ui.controllers.MainSceneController">
-
+<VBox fx:id="rootPane" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0"
+      prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/2.2" fx:controller="yaskoam.mrz2.lab1.ui.controllers.MainSceneController">
     <children>
-        <MenuBar maxHeight="Infinity" maxWidth="Infinity" minHeight="0.0" minWidth="0.0"
-                 prefWidth="-1.0" VBox.vgrow="SOMETIMES">
+        <MenuBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefWidth="-1.0"
+                 VBox.vgrow="SOMETIMES">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="loadSourceImageMenuItem" mnemonicParsing="false" onAction="#loadSourceImage"
-                                  text="Load image"/>
+                        <MenuItem mnemonicParsing="false" onAction="#loadSourceImage" text="Load image"
+                                  fx:id="loadSourceImageMenuItem"/>
                         <MenuItem mnemonicParsing="false" onAction="#closeMainWindow" text="Close"/>
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-        <TabPane maxHeight="Infinity" maxWidth="Infinity" minHeight="0.0"
-                 minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE"
-                 tabMaxHeight="Infinity" tabMinHeight="0.0" VBox.vgrow="ALWAYS">
+        <TabPane maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0"
+                 tabClosingPolicy="UNAVAILABLE" tabMaxHeight="+Infinity" tabMinHeight="0.0" VBox.vgrow="ALWAYS">
             <tabs>
                 <Tab onSelectionChanged="#disableLoadImageMenuItem" text="Images">
                     <content>
-                        <VBox alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity"
-                              minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
+                        <VBox alignment="CENTER" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0"
+                              prefHeight="-1.0" prefWidth="-1.0">
                             <children>
-                                <ToolBar maxHeight="Infinity" maxWidth="Infinity" minHeight="0.0"
-                                         minWidth="0.0" orientation="HORIZONTAL" VBox.vgrow="NEVER">
+                                <ToolBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0"
+                                         orientation="HORIZONTAL" VBox.vgrow="SOMETIMES">
                                     <items>
-                                        <Button contentDisplay="CENTER" maxHeight="Infinity"
-                                                maxWidth="Infinity" minHeight="9.0" minWidth="9.0"
-                                                mnemonicParsing="false" prefHeight="-1.0" text="Compress" textAlignment="CENTER">
+                                        <Button contentDisplay="CENTER" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="9.0"
+                                                minWidth="9.0" mnemonicParsing="false" prefHeight="-1.0" text="Compress"
+                                                textAlignment="CENTER">
                                             <font>
                                                 <Font size="17.0"/>
                                             </font>
@@ -48,43 +46,58 @@
                                     </VBox.margin>
                                 </ToolBar>
                                 <GridPane alignment="CENTER" focusTraversable="false" gridLinesVisible="false" hgap="20.0"
-                                          maxHeight="Infinity" maxWidth="Infinity" minHeight="0.0"
-                                          minWidth="0.0" snapToPixel="true" vgap="0.0" VBox.vgrow="SOMETIMES">
+                                          maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0"
+                                          snapToPixel="true" vgap="0.0" VBox.vgrow="ALWAYS">
                                     <children>
-                                        <ImageView fx:id="sourceImage" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true"
+                                        <ImageView fx:id="sourceImage" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true"
                                                    preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER"
-                                                   GridPane.hgrow="SOMETIMES" GridPane.rowIndex="0" GridPane.valignment="CENTER"
-                                                   GridPane.vgrow="SOMETIMES">
+                                                   GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER"
+                                                   GridPane.vgrow="ALWAYS">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                             </GridPane.margin>
                                         </ImageView>
-                                        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"
-                                                   GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                                   GridPane.hgrow="SOMETIMES" GridPane.rowIndex="0" GridPane.valignment="CENTER"
-                                                   GridPane.vgrow="SOMETIMES">
+                                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true"
+                                                   GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                                                   GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                             </GridPane.margin>
                                         </ImageView>
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="Infinity"
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="+Infinity"
                                                            minWidth="0.0" percentWidth="-1.0" prefWidth="-1.0"/>
-                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="Infinity"
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="+Infinity"
                                                            minWidth="0.0" percentWidth="-1.0" prefWidth="-1.0"/>
                                     </columnConstraints>
                                     <padding>
                                         <Insets/>
                                     </padding>
                                     <rowConstraints>
-                                        <RowConstraints fillHeight="true" maxHeight="Infinity" minHeight="0.0"
-                                                        prefHeight="-1.0" valignment="CENTER" vgrow="ALWAYS"/>
+                                        <RowConstraints fillHeight="true" maxHeight="+Infinity" minHeight="0.0" prefHeight="-1.0"
+                                                        valignment="CENTER" vgrow="ALWAYS"/>
                                     </rowConstraints>
                                     <VBox.margin>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                                     </VBox.margin>
                                 </GridPane>
+                                <FlowPane prefHeight="27.0" prefWidth="-1.0" VBox.vgrow="SOMETIMES">
+                                    <children>
+                                        <Label id="sourceImageHeightLabel" fx:id="imageHeightLabel" text="">
+                                            <FlowPane.margin>
+                                                <Insets right="30.0"/>
+                                            </FlowPane.margin>
+                                        </Label>
+                                        <Label fx:id="imageWidthLabel" text=""/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                    <VBox.margin>
+                                        <Insets top="5.0"/>
+                                    </VBox.margin>
+                                </FlowPane>
                             </children>
                         </VBox>
                     </content>

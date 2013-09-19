@@ -7,7 +7,7 @@ import javafx.stage.FileChooser
 import javafx.stage.FileChooser.ExtensionFilter
 import java.io.{File, FileInputStream}
 import javafx.scene.layout.VBox
-import javafx.scene.control.{Label, Tab, MenuItem}
+import javafx.scene.control.{TextField, Label, Tab, MenuItem}
 import javafx.application.Platform
 import javafx.scene.input.MouseEvent
 
@@ -25,12 +25,29 @@ class MainSceneController {
   @FXML
   var sourceImage: ImageView = null
 
-
   @FXML
   var imageHeightLabel: Label = null
 
   @FXML
   var imageWidthLabel: Label = null
+
+  @FXML
+  var nTextField: TextField = null
+
+  @FXML
+  var mTextField: TextField = null
+
+  @FXML
+  var pTextField: TextField = null
+
+  @FXML
+  var aTextField: TextField = null
+
+  @FXML
+  var a1TextField: TextField = null
+
+  @FXML
+  var eTextField: TextField = null
 
   def loadSourceImage(event: ActionEvent) {
     val file = createFileChooser().showOpenDialog(rootPane.getScene.getWindow)

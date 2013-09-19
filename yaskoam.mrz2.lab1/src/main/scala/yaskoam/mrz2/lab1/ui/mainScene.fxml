@@ -33,9 +33,9 @@
                                 <ToolBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0"
                                          orientation="HORIZONTAL" VBox.vgrow="SOMETIMES">
                                     <items>
-                                        <Button contentDisplay="CENTER" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="9.0"
-                                                minWidth="9.0" mnemonicParsing="false" prefHeight="-1.0" text="Compress"
-                                                textAlignment="CENTER">
+                                        <Button onAction="#compressSourceImage" contentDisplay="CENTER" maxHeight="+Infinity"
+                                                maxWidth="+Infinity" minHeight="9.0" minWidth="9.0" mnemonicParsing="false"
+                                                prefHeight="-1.0" text="Compress" textAlignment="CENTER">
                                             <font>
                                                 <Font size="17.0"/>
                                             </font>
@@ -49,7 +49,7 @@
                                           maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0"
                                           snapToPixel="true" vgap="0.0" VBox.vgrow="ALWAYS">
                                     <children>
-                                        <ImageView fx:id="sourceImage" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true"
+                                        <ImageView fx:id="sourceImageView" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true"
                                                    preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER"
                                                    GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER"
                                                    GridPane.vgrow="ALWAYS">
@@ -57,9 +57,10 @@
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                             </GridPane.margin>
                                         </ImageView>
-                                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true"
-                                                   GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
-                                                   GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                        <ImageView fx:id="resultImageView" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true"
+                                                   preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                                   GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER"
+                                                   GridPane.vgrow="ALWAYS">
                                             <GridPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                             </GridPane.margin>

@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.control.{TextField, Label, Tab, MenuItem}
 import javafx.application.Platform
 import javafx.scene.input.MouseEvent
+import yaskoam.mrz2.lab1.ui.Utils
 
 /**
  * @author Q-YAA
@@ -23,7 +24,10 @@ class MainSceneController {
   var loadSourceImageMenuItem: MenuItem = null
 
   @FXML
-  var sourceImage: ImageView = null
+  var sourceImageView: ImageView = null
+
+  @FXML
+  var resultImageView: ImageView = null
 
   @FXML
   var imageHeightLabel: Label = null
@@ -53,10 +57,19 @@ class MainSceneController {
     val file = createFileChooser().showOpenDialog(rootPane.getScene.getWindow)
 
     if (file != null) {
-      val image = getImage(file)
-      sourceImage.setImage(image)
+      val image: Image = getImage(file)
+      sourceImageView.setImage(image)
 
-      setSourceImageEventHandlers()
+      setImageViewsEventHandlers()
+    }
+  }
+
+  def compressSourceImage() {
+    val image = sourceImageView.getImage
+    if (image != null) {
+      val neuroImage = Utils.convertToNeuroImage(image)
+      val compressedImage = Utils.convertFromNeuroImage(neuroImage)
+      resultImageView.setImage(compressedImage)
     }
   }
 
@@ -70,20 +83,26 @@ class MainSceneController {
 
   def chooseImage(event: MouseEvent) {
     val imageView: ImageView = event.getSource.asInstanceOf[ImageView]
-    imageView.scaleXProperty().setValue(1.1)
-    imageView.scaleYProperty().setValue(1.1)
 
-    imageHeightLabel.setText("image height: " + imageView.getImage.getHeight.toString)
-    imageWidthLabel.setText("image width:" + imageView.getImage.getWidth.toString)
+    if (imageView.getImage != null) {
+      imageView.scaleXProperty().setValue(1.1)
+      imageView.scaleYProperty().setValue(1.1)
+
+      imageHeightLabel.setText("image height: " + imageView.getImage.getHeight.toString)
+      imageWidthLabel.setText("image width:" + imageView.getImage.getWidth.toString)
+    }
   }
 
   def unChooseImage(event: MouseEvent) {
     val imageView: ImageView = event.getSource.asInstanceOf[ImageView]
-    imageView.scaleXProperty().setValue(1)
-    imageView.scaleYProperty().setValue(1)
 
-    imageHeightLabel.setText("")
-    imageWidthLabel.setText("")
+    if (imageView.getImage != null) {
+      imageView.scaleXProperty().setValue(1)
+      imageView.scaleYProperty().setValue(1)
+
+      imageHeightLabel.setText("")
+      imageWidthLabel.setText("")
+    }
   }
 
   private def getImage(file: File): Image = {
@@ -108,15 +127,27 @@ class MainSceneController {
     fileChooser
   }
 
-  private def setSourceImageEventHandlers() {
+  private def setImageViewsEventHandlers() {
 
-    sourceImage.setOnMouseEntered(new EventHandler[MouseEvent]() {
+    sourceImageView.setOnMouseEntered(new EventHandler[MouseEvent]() {
       def handle(event: MouseEvent) {
         chooseImage(event)
       }
     })
 
-    sourceImage.setOnMouseExited(new EventHandler[MouseEvent]() {
+    sourceImageView.setOnMouseExited(new EventHandler[MouseEvent]() {
+      def handle(event: MouseEvent) {
+        unChooseImage(event)
+      }
+    })
+
+    resultImageView.setOnMouseEntered(new EventHandler[MouseEvent]() {
+      def handle(event: MouseEvent) {
+        chooseImage(event)
+      }
+    })
+
+    resultImageView.setOnMouseExited(new EventHandler[MouseEvent]() {
       def handle(event: MouseEvent) {
         unChooseImage(event)
       }

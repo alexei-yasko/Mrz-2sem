@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.control.{TextField, Label, Tab, MenuItem}
 import javafx.application.Platform
 import javafx.scene.input.MouseEvent
+import java.util.Calendar
 import yaskoam.mrz2.lab1.ui.Utils
 
 /**
@@ -65,12 +66,15 @@ class MainSceneController {
   }
 
   def compressSourceImage() {
+    val currentTime = Calendar.getInstance().getTimeInMillis
     val image = sourceImageView.getImage
     if (image != null) {
       val neuroImage = Utils.convertToNeuroImage(image)
+      neuroImage.splitAndEncode(4, 4)
       val compressedImage = Utils.convertFromNeuroImage(neuroImage)
       resultImageView.setImage(compressedImage)
     }
+    println(Calendar.getInstance().getTimeInMillis - currentTime)
   }
 
   def closeMainWindow(event: ActionEvent) {

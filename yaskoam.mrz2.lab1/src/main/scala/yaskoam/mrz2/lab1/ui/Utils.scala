@@ -1,6 +1,6 @@
 package yaskoam.mrz2.lab1.ui
 
-import javafx.scene.image.{WritableImage, PixelWriter, Image}
+import javafx.scene.image.{WritableImage, Image}
 import yaskoam.mrz2.lab1.neuro.NeuroImage
 import javafx.scene.paint.Color
 
@@ -21,9 +21,6 @@ object Utils {
         pixels(i)(j) = (color.getRed, color.getGreen, color.getBlue)
       }
     }
-
-    println(pixels.length)
-    println(pixels(0).length)
 
     new NeuroImage(pixels)
   }

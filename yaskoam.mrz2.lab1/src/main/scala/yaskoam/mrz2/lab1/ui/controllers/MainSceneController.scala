@@ -67,13 +67,16 @@ class MainSceneController {
 
   def compressSourceImage() {
     val currentTime = Calendar.getInstance().getTimeInMillis
+
     val image = sourceImageView.getImage
+
     if (image != null) {
       val neuroImage = Utils.convertToNeuroImage(image)
-      neuroImage.splitAndEncode(4, 4)
+      neuroImage.split(4, 4)
       val compressedImage = Utils.convertFromNeuroImage(neuroImage)
       resultImageView.setImage(compressedImage)
     }
+
     println(Calendar.getInstance().getTimeInMillis - currentTime)
   }
 

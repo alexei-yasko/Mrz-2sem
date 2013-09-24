@@ -12,14 +12,13 @@ object Utils {
 
   def convertToNeuroImage(image: Image): NeuroImage = {
 
-    val pixels = ParArray.fill(image.getHeight.toInt, image.getWidth.toInt)(0.0, 0.0, 0.0)
+    val imageHeight = image.getHeight.toInt
+    val imageWidth = image.getWidth.toInt
 
-    for (i <- 0 until pixels.length) {
-      for (j <- 0 until pixels(i).length) {
-        val pixel: Color = image.getPixelReader.getColor(j, i)
-        pixels(i)(j) = encodePixel(pixel)
-      }
-    }
+    val pixels = ParArray.tabulate(imageHeight, imageWidth)((i, j) => {
+      val color = image.getPixelReader.getColor(j, i)
+      encodePixel(color)
+    })
 
     new NeuroImage(pixels)
   }

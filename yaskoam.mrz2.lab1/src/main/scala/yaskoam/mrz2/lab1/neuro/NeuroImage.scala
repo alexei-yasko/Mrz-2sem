@@ -1,7 +1,6 @@
 package yaskoam.mrz2.lab1.neuro
 
 import scala.collection.parallel.mutable.ParArray
-import scala.collection.mutable
 
 /**
  * @author Q-YAA
@@ -12,26 +11,50 @@ class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
 
   def width = pixels(0).length
 
-  def split(n: Int, m: Int): ParArray[ParArray[Double]] = {
+  def splitIntoSegments(n: Int, m: Int): ParArray[ParArray[Double]] = {
 
-    var splittedNeuroImage = new mutable.MutableList[ParArray[Double]]()
+    val segmentsColumnCount = width / m
+    val segmentsRowCount = height / n
 
-    for (i <- 0 until(height - n, n)) {
-      for (j <- 0 until(width - m, m)) {
+    val segmentedNeuroImage = new ParArray[ParArray[Double]](segmentsRowCount * segmentsColumnCount)
 
-        splittedNeuroImage += (for (row <- pixels.slice(i, i + n)) yield {
+    for (i <- 0 to(height - n, n)) {
+      for (j <- 0 to(width - m, m)) {
 
-          row.slice(j, m).map(pix => Array(pix._1, pix._2, pix._3)).flatten
+        segmentedNeuroImage((i / n) * segmentsColumnCount + (j / m)) = (for (row <- pixels.slice(i, i + n)) yield {
+
+          row.slice(j, j + m).map(pix => Array(pix._1, pix._2, pix._3)).flatten
 
         }).flatten
 
       }
     }
 
-    splittedNeuroImage.toArray.par
+    segmentedNeuroImage
   }
 
-  def collect(n: Int, m: Int, splittedNeuroImage: ParArray[ParArray[Double]]) {
+  def collectFromSegments(n: Int, m: Int, segmentedNeuroImage: ParArray[ParArray[Double]]) {
 
+    val segmentsColumnCount = width / m
+
+    for (i <- 0 until(height - n, n)) {
+      for (j <- 0 until(width - m, m)) {
+
+        val segmentRowNumber = i / n
+        val segmentColumnNumber = j / m
+
+        val segmentNumber = segmentRowNumber * segmentsColumnCount + segmentColumnNumber
+
+        val segment = segmentedNeuroImage(segmentNumber)
+
+        for (k <- 0 until n) {
+          for (l <- 0 until(m * 3, 3)) {
+
+            val pixelPosition = k * m * 3 + l
+            pixels(i + k)(j + l / 3) = (segment(pixelPosition), segment(pixelPosition + 1), segment(pixelPosition + 2))
+          }
+        }
+      }
+    }
   }
 }

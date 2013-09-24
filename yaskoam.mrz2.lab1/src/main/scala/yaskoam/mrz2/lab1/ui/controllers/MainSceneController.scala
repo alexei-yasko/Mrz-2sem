@@ -72,7 +72,10 @@ class MainSceneController {
 
     if (image != null) {
       val neuroImage = Utils.convertToNeuroImage(image)
-      neuroImage.split(4, 4)
+
+      val splittedNeuroImage = neuroImage.splitIntoSegments(4, 6)
+      neuroImage.collectFromSegments(4, 6, splittedNeuroImage)
+
       val compressedImage = Utils.convertFromNeuroImage(neuroImage)
       resultImageView.setImage(compressedImage)
     }

@@ -49,8 +49,8 @@ class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
 
         val segment = segmentedNeuroImage(segmentNumber)
 
-        for (k <- (0 until n).par) {
-          for (l <- (0 until(m * 3, 3)).par) {
+        for (k <- 0 until n) {
+          for (l <- 0 until(m * 3, 3)) {
 
             val pixelPosition = k * m * 3 + l
             pixels(i + k)(j + l / 3) = (segment(pixelPosition), segment(pixelPosition + 1), segment(pixelPosition + 2))

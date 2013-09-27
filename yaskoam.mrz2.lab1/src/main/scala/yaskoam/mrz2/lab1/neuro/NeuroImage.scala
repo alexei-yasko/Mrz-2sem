@@ -7,6 +7,8 @@ import scala.collection.parallel.mutable.ParArray
  */
 class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
 
+  require(pixels.length > 0, "pixels array must not be empty")
+
   def height = pixels.length
 
   def width = pixels(0).length
@@ -18,12 +20,12 @@ class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
 
     val segmentedNeuroImage = new ParArray[ParArray[Double]](segmentsRowCount * segmentsColumnCount)
 
-    for (i <- 0 to(height - n, n)) {
-      for (j <- 0 to(width - m, m)) {
+    for (i <- (0 to(height - n, n)).par) {
+      for (j <- (0 to(width - m, m)).par) {
 
         segmentedNeuroImage((i / n) * segmentsColumnCount + (j / m)) = (for (row <- pixels.slice(i, i + n)) yield {
 
-          row.slice(j, j + m).map(pix => Array(pix._1, pix._2, pix._3)).flatten
+          row.slice(j, j + m).map(pix => ParArray(pix._1, pix._2, pix._3)).flatten
 
         }).flatten
 
@@ -37,8 +39,8 @@ class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
 
     val segmentsColumnCount = width / m
 
-    for (i <- 0 until(height - n, n)) {
-      for (j <- 0 until(width - m, m)) {
+    for (i <- (0 until(height - n, n)).par) {
+      for (j <- (0 until(width - m, m)).par) {
 
         val segmentRowNumber = i / n
         val segmentColumnNumber = j / m
@@ -47,8 +49,8 @@ class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
 
         val segment = segmentedNeuroImage(segmentNumber)
 
-        for (k <- 0 until n) {
-          for (l <- 0 until(m * 3, 3)) {
+        for (k <- (0 until n).par) {
+          for (l <- (0 until(m * 3, 3)).par) {
 
             val pixelPosition = k * m * 3 + l
             pixels(i + k)(j + l / 3) = (segment(pixelPosition), segment(pixelPosition + 1), segment(pixelPosition + 2))

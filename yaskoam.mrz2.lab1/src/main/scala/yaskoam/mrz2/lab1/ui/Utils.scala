@@ -33,10 +33,8 @@ object Utils {
   def convertFromNeuroImage(neuroImage: NeuroImage): Image = {
     val image = new WritableImage(neuroImage.width, neuroImage.height)
 
-    for (i <- (0 until neuroImage.height).par) {
-      for (j <- (0 until neuroImage.width).par) {
-        image.getPixelWriter.setColor(j, i, decodePixel(neuroImage.pixels(i)(j)))
-      }
+    for (i <- (0 until neuroImage.height).par; j <- (0 until neuroImage.width).par) {
+      image.getPixelWriter.setColor(j, i, decodePixel(neuroImage.pixels(i)(j)))
     }
 
     image

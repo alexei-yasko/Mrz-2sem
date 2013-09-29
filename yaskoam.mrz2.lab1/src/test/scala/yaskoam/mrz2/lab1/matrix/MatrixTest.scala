@@ -87,6 +87,29 @@ class MatrixTest {
   }
 
   @Test
+  def testMultiplication3() {
+    val matrix1 = new Matrix(ParArray[ParArray[Double]](
+      ParArray[Double](2.0, 3.0),
+      ParArray[Double](4.0, 5.0),
+      ParArray[Double](6.0, 7.0)
+    ))
+
+    val resultMatrix = matrix1 * 2.0
+
+    Assert.assertThat(resultMatrix.height, Is.is(3))
+    Assert.assertThat(resultMatrix.width, Is.is(2))
+
+    Assert.assertThat(resultMatrix.get(0, 0), Is.is(4.0))
+    Assert.assertThat(resultMatrix.get(0, 1), Is.is(6.0))
+
+    Assert.assertThat(resultMatrix.get(1, 0), Is.is(8.0))
+    Assert.assertThat(resultMatrix.get(1, 1), Is.is(10.0))
+
+    Assert.assertThat(resultMatrix.get(2, 0), Is.is(12.0))
+    Assert.assertThat(resultMatrix.get(2, 1), Is.is(14.0))
+  }
+
+  @Test
   def testSubtraction() {
     val matrix1 = new Matrix(ParArray[ParArray[Double]](
       ParArray[Double](1.0, 2.0, 3.0),

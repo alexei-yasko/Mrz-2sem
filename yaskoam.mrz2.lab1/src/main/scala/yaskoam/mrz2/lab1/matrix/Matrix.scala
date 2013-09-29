@@ -29,6 +29,8 @@ class Matrix(private val elements: ParArray[ParArray[Double]]) {
     new Matrix(matrixMultiplicationElements)
   }
 
+  def *(value: Double) = new Matrix(ParArray.tabulate(height, width)((i, j) => get(i, j) * value))
+
   def -(matrix: Matrix) = {
     require(height == matrix.height && width == matrix.width, "wrong matrices sizes")
     new Matrix(ParArray.tabulate(height, width)((i, j) => get(i, j) - matrix.get(i, j)))

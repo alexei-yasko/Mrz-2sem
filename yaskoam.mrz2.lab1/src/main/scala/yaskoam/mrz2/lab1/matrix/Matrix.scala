@@ -29,5 +29,15 @@ class Matrix(private val elements: ParArray[ParArray[Double]]) {
     new Matrix(matrixMultiplicationElements)
   }
 
+  def -(matrix: Matrix) = {
+    require(height == matrix.height && width == matrix.width, "wrong matrices sizes")
+    new Matrix(ParArray.tabulate(height, width)((i, j) => get(i, j) - matrix.get(i, j)))
+  }
+
+  def +(matrix: Matrix) = {
+    require(height == matrix.height && width == matrix.width, "wrong matrices sizes")
+    new Matrix(ParArray.tabulate(height, width)((i, j) => get(i, j) + matrix.get(i, j)))
+  }
+
   override def toString = (for (row <- elements) yield { row.mkString(" ") }).mkString("\n")
 }

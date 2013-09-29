@@ -85,4 +85,56 @@ class MatrixTest {
     Assert.assertThat(resultMatrix.get(2, 2), Is.is(-8.0))
     Assert.assertThat(resultMatrix.get(2, 3), Is.is(-19.0))
   }
+
+  @Test
+  def testSubtraction() {
+    val matrix1 = new Matrix(ParArray[ParArray[Double]](
+      ParArray[Double](1.0, 2.0, 3.0),
+      ParArray[Double](2.0, 0.0, 1.0)
+    ))
+
+    val matrix2 = new Matrix(ParArray[ParArray[Double]](
+      ParArray[Double](2.0, -1.0, 0.0),
+      ParArray[Double](-2.0, 4.0, -1.0)
+    ))
+
+    val resultMatrix = matrix1 - matrix2
+
+    Assert.assertThat(resultMatrix.height, Is.is(2))
+    Assert.assertThat(resultMatrix.width, Is.is(3))
+
+    Assert.assertThat(resultMatrix.get(0, 0), Is.is(-1.0))
+    Assert.assertThat(resultMatrix.get(0, 1), Is.is(3.0))
+    Assert.assertThat(resultMatrix.get(0, 2), Is.is(3.0))
+
+    Assert.assertThat(resultMatrix.get(1, 0), Is.is(4.0))
+    Assert.assertThat(resultMatrix.get(1, 1), Is.is(-4.0))
+    Assert.assertThat(resultMatrix.get(1, 2), Is.is(2.0))
+  }
+
+  @Test
+  def testAddition() {
+    val matrix1 = new Matrix(ParArray[ParArray[Double]](
+      ParArray[Double](1.0, 2.0, 3.0),
+      ParArray[Double](2.0, 0.0, 1.0)
+    ))
+
+    val matrix2 = new Matrix(ParArray[ParArray[Double]](
+      ParArray[Double](2.0, -1.0, 0.0),
+      ParArray[Double](-2.0, 4.0, -1.0)
+    ))
+
+    val resultMatrix = matrix1 + matrix2
+
+    Assert.assertThat(resultMatrix.height, Is.is(2))
+    Assert.assertThat(resultMatrix.width, Is.is(3))
+
+    Assert.assertThat(resultMatrix.get(0, 0), Is.is(3.0))
+    Assert.assertThat(resultMatrix.get(0, 1), Is.is(1.0))
+    Assert.assertThat(resultMatrix.get(0, 2), Is.is(3.0))
+
+    Assert.assertThat(resultMatrix.get(1, 0), Is.is(0.0))
+    Assert.assertThat(resultMatrix.get(1, 1), Is.is(4.0))
+    Assert.assertThat(resultMatrix.get(1, 2), Is.is(0.0))
+  }
 }

@@ -20,21 +20,13 @@ class Matrix(private val elements: ParArray[ParArray[Double]]) {
   def transpose = new Matrix(ParArray.tabulate(width, height)((i, j) => elements(j)(i)))
 
   def *(matrix: Matrix) = {
+    require(width == matrix.height, "wrong matrices sizes")
 
-//    val result = ParArray.tabulate(height, matrix.width)((i, j) => {
-//      for ()
-//    })
-//
-//    val result =  ParArray.fill(height, matrix.width)(0.0)
-//    val result = new ParArray[]()
-//
-//    for(row <- (0 until m1.length).par;
-//        col <- (0 until m2(0).length).par;
-//        i   <- 0 until m1(0).length){
-//
-//      result(row)(col) += m1(row)(i) * m2(i)(col)
-//    }
-//    result
+    val matrixMultiplicationElements = ParArray.tabulate(height, matrix.width)((i, j) => {
+      (for (k <- 0 until matrix.height) yield { get(i, k) * matrix.get(k, j) }).sum
+    })
+
+    new Matrix(matrixMultiplicationElements)
   }
 
   override def toString = (for (row <- elements) yield { row.mkString(" ") }).mkString("\n")

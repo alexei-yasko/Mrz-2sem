@@ -8,4 +8,6 @@ dependencies {
 
     compile 'org.scalafx:scalafx_2.10:1.0.0-M4'
     compile 'org.scalafx:scalafx-demos_2.10:1.0.0-M4'
+    
+    testCompile 'junit:junit:4.11'
 }

@@ -1,8 +1,8 @@
 package yaskoam.mrz2.lab1.matrix
 
-import org.junit.{Assert, Test}
-import scala.collection.parallel.mutable.ParArray
+import org.junit.{Test, Assert}
 import org.hamcrest.core.Is
+import java.util.Calendar
 
 /**
  * @author Q-YAA
@@ -10,9 +10,22 @@ import org.hamcrest.core.Is
 class MatrixTest {
 
   @Test
+  def testJust() {
+
+    val currentTime = Calendar.getInstance().getTimeInMillis
+
+    var s = 0
+    for (i <- 0 until 2000; j <- 0 until 2000; k <- 0 until 2000) {
+      s += 1
+    }
+
+    println(Calendar.getInstance().getTimeInMillis - currentTime)
+  }
+
+  @Test
   def testTransposition() {
 
-    val matrix = new Matrix(ParArray.tabulate(4)(i => ParArray.tabulate(3)(j => i * 3 + j)))
+    val matrix = new Matrix(Array.tabulate(4)(i => Array.tabulate(3)(j => i * 3 + j)))
 
     val transposedMatrix = matrix.transpose
 
@@ -34,14 +47,14 @@ class MatrixTest {
 
   @Test
   def testMultiplication1() {
-    val matrix1 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](1.0, 0.0, 3.0)
+    val matrix1 = new Matrix(Array[Array[Double]](
+      Array[Double](1.0, 0.0, 3.0)
     ))
 
-    val matrix2 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](2.0),
-      ParArray[Double](-1.0),
-      ParArray[Double](1.0)
+    val matrix2 = new Matrix(Array[Array[Double]](
+      Array[Double](2.0),
+      Array[Double](-1.0),
+      Array[Double](1.0)
     ))
 
     val resultMatrix = matrix1 * matrix2
@@ -54,15 +67,15 @@ class MatrixTest {
 
   @Test
   def testMultiplication2() {
-    val matrix1 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](2.0, 3.0),
-      ParArray[Double](0.0, -2.0),
-      ParArray[Double](-1.0, 4.0)
+    val matrix1 = new Matrix(Array[Array[Double]](
+      Array[Double](2.0, 3.0),
+      Array[Double](0.0, -2.0),
+      Array[Double](-1.0, 4.0)
     ))
 
-    val matrix2 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](1.0, -1.0, 0.0, 3.0),
-      ParArray[Double](2.0, 1.0, -2.0, -4.0)
+    val matrix2 = new Matrix(Array[Array[Double]](
+      Array[Double](1.0, -1.0, 0.0, 3.0),
+      Array[Double](2.0, 1.0, -2.0, -4.0)
     ))
 
     val resultMatrix = matrix1 * matrix2
@@ -88,10 +101,10 @@ class MatrixTest {
 
   @Test
   def testMultiplication3() {
-    val matrix1 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](2.0, 3.0),
-      ParArray[Double](4.0, 5.0),
-      ParArray[Double](6.0, 7.0)
+    val matrix1 = new Matrix(Array[Array[Double]](
+      Array[Double](2.0, 3.0),
+      Array[Double](4.0, 5.0),
+      Array[Double](6.0, 7.0)
     ))
 
     val resultMatrix = matrix1 * 2.0
@@ -111,14 +124,14 @@ class MatrixTest {
 
   @Test
   def testSubtraction() {
-    val matrix1 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](1.0, 2.0, 3.0),
-      ParArray[Double](2.0, 0.0, 1.0)
+    val matrix1 = new Matrix(Array[Array[Double]](
+      Array[Double](1.0, 2.0, 3.0),
+      Array[Double](2.0, 0.0, 1.0)
     ))
 
-    val matrix2 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](2.0, -1.0, 0.0),
-      ParArray[Double](-2.0, 4.0, -1.0)
+    val matrix2 = new Matrix(Array[Array[Double]](
+      Array[Double](2.0, -1.0, 0.0),
+      Array[Double](-2.0, 4.0, -1.0)
     ))
 
     val resultMatrix = matrix1 - matrix2
@@ -137,14 +150,14 @@ class MatrixTest {
 
   @Test
   def testAddition() {
-    val matrix1 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](1.0, 2.0, 3.0),
-      ParArray[Double](2.0, 0.0, 1.0)
+    val matrix1 = new Matrix(Array[Array[Double]](
+      Array[Double](1.0, 2.0, 3.0),
+      Array[Double](2.0, 0.0, 1.0)
     ))
 
-    val matrix2 = new Matrix(ParArray[ParArray[Double]](
-      ParArray[Double](2.0, -1.0, 0.0),
-      ParArray[Double](-2.0, 4.0, -1.0)
+    val matrix2 = new Matrix(Array[Array[Double]](
+      Array[Double](2.0, -1.0, 0.0),
+      Array[Double](-2.0, 4.0, -1.0)
     ))
 
     val resultMatrix = matrix1 + matrix2

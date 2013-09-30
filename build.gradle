@@ -3,7 +3,6 @@ apply plugin: 'idea'
 subprojects {
 
     apply plugin: 'java'
-    apply plugin: 'scala'
     apply plugin: 'idea'
 
     repositories {
@@ -15,13 +14,9 @@ subprojects {
             java {
                 srcDir 'src/main/java'
             }
-            scala {
-                srcDir 'src/main/scala'
-            }
             resources {
                 srcDir 'src/main/resources'
                 srcDir 'src/main/java'
-                srcDir 'src/main/scala'
             }
         }
     }

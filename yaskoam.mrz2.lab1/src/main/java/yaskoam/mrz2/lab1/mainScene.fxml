@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 
 <VBox fx:id="rootPane" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0"
-      prefWidth="900.0" stylesheets="/yaskoam/mrz2/lab1/ui/style.css" xmlns:fx="http://javafx.com/fxml/1"
+      prefWidth="900.0" stylesheets="/yaskoam/mrz2/lab1/style.css" xmlns:fx="http://javafx.com/fxml/1"
       xmlns="http://javafx.com/javafx/2.2" fx:controller="yaskoam.mrz2.lab1.ui.controllers.MainSceneController">
     <children>
         <MenuBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefWidth="-1.0"

@@ -12,6 +12,7 @@ import javafx.application.Platform
 import javafx.scene.input.MouseEvent
 import java.util.Calendar
 import yaskoam.mrz2.lab1.ui.Utils
+import yaskoam.mrz2.lab1.neuro.NeuralNetwork
 
 /**
  * @author Q-YAA
@@ -70,17 +71,33 @@ class MainSceneController {
 
     val image = sourceImageView.getImage
 
+    val n = 3
+    val m = 3
+    val p = 4
+    val a = 0.005
+    val e = 0.01
+
     if (image != null) {
-      val neuroImage = Utils.convertToNeuroImage(image)
 
-      val splittedNeuroImage = neuroImage.splitIntoSegments(4, 6)
-      neuroImage.collectFromSegments(4, 6, splittedNeuroImage)
+      new Thread(new Runnable {
+        def run() {
+          val neuroImage = Utils.convertToNeuroImage(image)
+          val segments = neuroImage.splitIntoSegments(n, m)
 
-      val compressedImage = Utils.convertFromNeuroImage(neuroImage)
-      resultImageView.setImage(compressedImage)
+          val neuralNetwork = new NeuralNetwork(n * m * 3, p, e, a)
+          neuralNetwork.learn(segments)
+          val compressedSegments = neuralNetwork.compress(segments)
+          val decompressedSegments = neuralNetwork.decompress(compressedSegments)
+
+          neuroImage.collectFromSegments(n, m, decompressedSegments)
+
+          val resultImage = Utils.convertFromNeuroImage(neuroImage)
+          resultImageView.setImage(resultImage)
+        }
+      }).start()
     }
 
-    println(Calendar.getInstance().getTimeInMillis - currentTime)
+    println("Time: " + (Calendar.getInstance().getTimeInMillis - currentTime).toString)
   }
 
   def closeMainWindow(event: ActionEvent) {

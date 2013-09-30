@@ -1,11 +1,9 @@
 package yaskoam.mrz2.lab1.neuro
 
-import scala.collection.parallel.mutable.ParArray
-
 /**
  * @author Q-YAA
  */
-class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
+class NeuroImage(val pixels: Array[Array[(Double, Double, Double)]]) {
 
   require(pixels.length > 0, "pixels array must not be empty")
 
@@ -13,18 +11,18 @@ class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
 
   def width = pixels(0).length
 
-  def splitIntoSegments(n: Int, m: Int): ParArray[ParArray[Double]] = {
+  def splitIntoSegments(n: Int, m: Int): Array[Array[Double]] = {
 
     val segmentsColumnCount = width / m
     val segmentsRowCount = height / n
 
-    val segmentedNeuroImage = new ParArray[ParArray[Double]](segmentsRowCount * segmentsColumnCount)
+    val segmentedNeuroImage = new Array[Array[Double]](segmentsRowCount * segmentsColumnCount)
 
     for (i <- (0 to(height - n, n)).par; j <- (0 to(width - m, m)).par) {
 
       segmentedNeuroImage((i / n) * segmentsColumnCount + (j / m)) = (for (row <- pixels.slice(i, i + n)) yield {
 
-        row.slice(j, j + m).map(pix => ParArray(pix._1, pix._2, pix._3)).flatten
+        row.slice(j, j + m).map(pix => Array(pix._1, pix._2, pix._3)).flatten
 
       }).flatten
     }
@@ -32,7 +30,7 @@ class NeuroImage(val pixels: ParArray[ParArray[(Double, Double, Double)]]) {
     segmentedNeuroImage
   }
 
-  def collectFromSegments(n: Int, m: Int, segmentedNeuroImage: ParArray[ParArray[Double]]) {
+  def collectFromSegments(n: Int, m: Int, segmentedNeuroImage: Array[Array[Double]]) {
 
     val segmentsColumnCount = width / m
 

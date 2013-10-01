@@ -53,7 +53,7 @@ public class MatrixJavaTest {
         Assert.assertThat(resultMatrix.getHeight(), Is.is(1));
         Assert.assertThat(resultMatrix.getWidth(), Is.is(1));
 
-        Assert.assertThat(resultMatrix.get(0, 0), Is.is(5.0));
+        Assert.assertThat(resultMatrix.get(0, 0), Is.is(5d));
     }
 
     @Test
@@ -74,20 +74,20 @@ public class MatrixJavaTest {
         Assert.assertThat(resultMatrix.getHeight(), Is.is(3));
         Assert.assertThat(resultMatrix.getWidth(), Is.is(4));
 
-        Assert.assertThat(resultMatrix.get(0, 0), Is.is(8.0));
-        Assert.assertThat(resultMatrix.get(0, 1), Is.is(1.0));
-        Assert.assertThat(resultMatrix.get(0, 2), Is.is(-6.0));
-        Assert.assertThat(resultMatrix.get(0, 3), Is.is(-6.0));
+        Assert.assertThat(resultMatrix.get(0, 0), Is.is(8d));
+        Assert.assertThat(resultMatrix.get(0, 1), Is.is(1d));
+        Assert.assertThat(resultMatrix.get(0, 2), Is.is(-6d));
+        Assert.assertThat(resultMatrix.get(0, 3), Is.is(-6d));
 
-        Assert.assertThat(resultMatrix.get(1, 0), Is.is(-4.0));
-        Assert.assertThat(resultMatrix.get(1, 1), Is.is(-2.0));
-        Assert.assertThat(resultMatrix.get(1, 2), Is.is(4.0));
-        Assert.assertThat(resultMatrix.get(1, 3), Is.is(8.0));
+        Assert.assertThat(resultMatrix.get(1, 0), Is.is(-4d));
+        Assert.assertThat(resultMatrix.get(1, 1), Is.is(-2d));
+        Assert.assertThat(resultMatrix.get(1, 2), Is.is(4d));
+        Assert.assertThat(resultMatrix.get(1, 3), Is.is(8d));
 
-        Assert.assertThat(resultMatrix.get(2, 0), Is.is(7.0));
-        Assert.assertThat(resultMatrix.get(2, 1), Is.is(5.0));
-        Assert.assertThat(resultMatrix.get(2, 2), Is.is(-8.0));
-        Assert.assertThat(resultMatrix.get(2, 3), Is.is(-19.0));
+        Assert.assertThat(resultMatrix.get(2, 0), Is.is(7d));
+        Assert.assertThat(resultMatrix.get(2, 1), Is.is(5d));
+        Assert.assertThat(resultMatrix.get(2, 2), Is.is(-8d));
+        Assert.assertThat(resultMatrix.get(2, 3), Is.is(-19d));
     }
 
 
@@ -104,13 +104,13 @@ public class MatrixJavaTest {
         Assert.assertThat(resultMatrix.getHeight(), Is.is(3));
         Assert.assertThat(resultMatrix.getWidth(), Is.is(2));
 
-        Assert.assertThat(resultMatrix.get(0, 0), Is.is(4.0));
-        Assert.assertThat(resultMatrix.get(0, 1), Is.is(6.0));
+        Assert.assertThat(resultMatrix.get(0, 0), Is.is(4d));
+        Assert.assertThat(resultMatrix.get(0, 1), Is.is(6d));
 
-        Assert.assertThat(resultMatrix.get(1, 0), Is.is(8.0));
-        Assert.assertThat(resultMatrix.get(1, 1), Is.is(10.0));
+        Assert.assertThat(resultMatrix.get(1, 0), Is.is(8d));
+        Assert.assertThat(resultMatrix.get(1, 1), Is.is(10d));
 
-        Assert.assertThat(resultMatrix.get(2, 0), Is.is(12.0));
-        Assert.assertThat(resultMatrix.get(2, 1), Is.is(14.0));
+        Assert.assertThat(resultMatrix.get(2, 0), Is.is(12d));
+        Assert.assertThat(resultMatrix.get(2, 1), Is.is(14d));
     }
 }

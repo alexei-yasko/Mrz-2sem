@@ -35,6 +35,10 @@ public class Matrix {
         return elements[i];
     }
 
+    public double[][] getElements() {
+        return elements;
+    }
+
     public Matrix transpose() {
 
         double[][] transposedElements = new double[getWidth()][getHeight()];
@@ -64,46 +68,30 @@ public class Matrix {
     }
 
     public Matrix multiply(double value) {
-
-//        double[][] resultElements = new double[height][width];
-
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-//                resultElements[i][j] = get(i, j) * value;
                 elements[i][j] *= value;
             }
         }
-
         return this;
-//        return new Matrix(resultElements);
     }
 
     public Matrix subtract(Matrix matrix) {
-
-//        double[][] resultElements = new double[height][width];
-
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-//                resultElements[i][j] = get(i, j) - matrix.get(i, j);
                 elements[i][j] -= matrix.get(i, j);
             }
         }
-
         return this;
-//        return new Matrix(resultElements);
     }
 
     public Matrix add(Matrix matrix) {
-
-        double[][] resultElements = new double[height][width];
-
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                resultElements[i][j] = get(i, j) + matrix.get(i, j);
+                elements[i][j] += matrix.get(i, j);
             }
         }
-
-        return new Matrix(resultElements);
+        return this;
     }
 
     @Override

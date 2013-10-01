@@ -124,14 +124,14 @@ public class NeuroImage {
     }
 
     private static double decodeColor(double color) {
-        return color;
+        return (color + 1) / 2;
     }
 
     private static NeuroPixel encodePixel(Color pixel) {
         return new NeuroPixel(encodeColor(pixel.getRed()), encodeColor(pixel.getGreen()), encodeColor(pixel.getBlue()));
     }
 
-    private static double encodeColor(Double color) {
-        return color;
+    private static double encodeColor(double color) {
+        return 2 * color - 1;
     }
 }

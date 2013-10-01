@@ -9,5 +9,7 @@ dependencies {
     compile "com.google.guava:guava:10.0.1"
     compile "com.googlecode.lambdaj:lambdaj:2.3.3"
 
+    compile "org.jblas:jblas:1.2.3"
+
     testCompile 'junit:junit:4.11'
 }

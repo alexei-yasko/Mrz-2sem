@@ -65,6 +65,8 @@ public class MainSceneController {
     @FXML
     private TextField eTextField = null;
 
+    private Thread calculationThread;
+
     public void loadSourceImage(ActionEvent event) {
         File file = createFileChooser().showOpenDialog(rootPane.getScene().getWindow());
 
@@ -78,45 +80,33 @@ public class MainSceneController {
     public void compressSourceImage() {
         long currentTime = Calendar.getInstance().getTimeInMillis();
 
-        Image image = sourceImageView.getImage();
+        final Image image = sourceImageView.getImage();
 
-        int n = 3;
-        int m = 3;
-        int p = 4;
-        double a = 0.005;
-        double e = 1000;
+        final int n = 8;
+        final int m = 7;
+        final int p = 20;
+        final double a = 0.01;
+        final double e = 800;
 
         if (image != null) {
 
-//            new Thread(new Runnable() {
-//                public void run() {
+            calculationThread = new Thread(new Runnable() {
+                public void run() {
+                    NeuroImage neuroImage = NeuroImage.fromImage(image);
+                    double[][] segments = neuroImage.splitIntoSegments(n, m);
 
+                    NeuralNetwork neuralNetwork = new NeuralNetwork(n * m * 3, p, e, a);
+                    neuralNetwork.learn(segments);
+                    double[][] compressedSegments = neuralNetwork.compress(segments);
+                    double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
 
-//                    val neuroImage = Utils.convertToNeuroImage(image)
-//                    val segments = neuroImage.splitIntoSegments(n, m)
-//
-//                    val neuralNetwork = new NeuralNetwork(n * m * 3, p, e, a)
-//                    neuralNetwork.learn(segments)
-//                    val compressedSegments = neuralNetwork.compress(segments)
-//                    val decompressedSegments = neuralNetwork.decompress(compressedSegments)
-//
-//                    neuroImage.collectFromSegments(n, m, decompressedSegments)
-//
-//                    val resultImage = Utils.convertFromNeuroImage(neuroImage)
-//                    resultImageView.setImage(resultImage)
-//                }
-//            }).start();
+                    neuroImage.collectFromSegments(n, m, decompressedSegments);
+                    resultImageView.setImage(NeuroImage.toImage(neuroImage));
+                }
+            });
 
-            NeuroImage neuroImage = NeuroImage.fromImage(image);
-            double[][] segments = neuroImage.splitIntoSegments(n, m);
-
-            NeuralNetwork neuralNetwork = new NeuralNetwork(n * m * 3, p, e, a);
-            neuralNetwork.learn(segments);
-            double[][] compressedSegments = neuralNetwork.compress(segments);
-            double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
-
-            neuroImage.collectFromSegments(n, m, decompressedSegments);
-            resultImageView.setImage(NeuroImage.toImage(neuroImage));
+            calculationThread.setDaemon(true);
+            calculationThread.start();
         }
 
         System.out.println("Time: " + (Calendar.getInstance().getTimeInMillis() - currentTime));

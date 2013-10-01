@@ -11,14 +11,14 @@ public class MatrixJavaTest {
 
     @Test
     public void testTransposition() {
-        MatrixJava matrix = new MatrixJava(new double[][] {
+        Matrix matrix = new Matrix(new double[][] {
             new double[] { 1, 2, 3 },
             new double[] { 4, 5, 6 },
             new double[] { 7, 8, 9 },
             new double[] { 10, 11, 12 }
         });
 
-        MatrixJava transposedMatrix = matrix.transpose();
+        Matrix transposedMatrix = matrix.transpose();
 
         Assert.assertThat(transposedMatrix.get(0, 0), Is.is(matrix.get(0, 0)));
         Assert.assertThat(transposedMatrix.get(0, 1), Is.is(matrix.get(1, 0)));
@@ -38,17 +38,17 @@ public class MatrixJavaTest {
 
     @Test
     public void testMultiplication1() {
-        MatrixJava matrix1 = new MatrixJava(new double[][] {
+        Matrix matrix1 = new Matrix(new double[][] {
             new double[] { 1, 0, 3 }
         });
 
-        MatrixJava matrix2 = new MatrixJava(new double[][] {
+        Matrix matrix2 = new Matrix(new double[][] {
             new double[] { 2 },
             new double[] { -1 },
             new double[] { 1 }
         });
 
-        MatrixJava resultMatrix = matrix1.multiply(matrix2);
+        Matrix resultMatrix = matrix1.multiply(matrix2);
 
         Assert.assertThat(resultMatrix.getHeight(), Is.is(1));
         Assert.assertThat(resultMatrix.getWidth(), Is.is(1));
@@ -58,18 +58,18 @@ public class MatrixJavaTest {
 
     @Test
     public void testMultiplication2() {
-        MatrixJava matrix1 = new MatrixJava(new double[][] {
+        Matrix matrix1 = new Matrix(new double[][] {
             new double[] { 2, 3 },
             new double[] { 0, -2 },
             new double[] { -1, 4 }
         });
 
-        MatrixJava matrix2 = new MatrixJava(new double[][] {
+        Matrix matrix2 = new Matrix(new double[][] {
             new double[] { 1, -1, 0, 3 },
             new double[] { 2, 1, -2, -4 }
         });
 
-        MatrixJava resultMatrix = matrix1.multiply(matrix2);
+        Matrix resultMatrix = matrix1.multiply(matrix2);
 
         Assert.assertThat(resultMatrix.getHeight(), Is.is(3));
         Assert.assertThat(resultMatrix.getWidth(), Is.is(4));
@@ -93,13 +93,13 @@ public class MatrixJavaTest {
 
     @Test
     public void testMultiplication3() {
-        MatrixJava matrix1 = new MatrixJava(new double[][] {
+        Matrix matrix1 = new Matrix(new double[][] {
             new double[] { 2, 3 },
             new double[] { 4, 5 },
             new double[] { 6, 7 }
         });
 
-        MatrixJava resultMatrix = matrix1.multiply(2);
+        Matrix resultMatrix = matrix1.multiply(2);
 
         Assert.assertThat(resultMatrix.getHeight(), Is.is(3));
         Assert.assertThat(resultMatrix.getWidth(), Is.is(2));

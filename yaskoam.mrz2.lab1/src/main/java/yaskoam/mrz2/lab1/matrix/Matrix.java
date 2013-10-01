@@ -1,9 +1,11 @@
 package yaskoam.mrz2.lab1.matrix;
 
+import com.google.common.primitives.Doubles;
+
 /**
  * @author Q-YAA
  */
-public class MatrixJava {
+public class Matrix {
 
     private double[][] elements;
 
@@ -11,7 +13,7 @@ public class MatrixJava {
 
     private int width;
 
-    public MatrixJava(double[][] elements) {
+    public Matrix(double[][] elements) {
         this.elements = elements;
         this.height = elements.length;
         this.width = elements[0].length;
@@ -33,7 +35,7 @@ public class MatrixJava {
         return elements[i];
     }
 
-    public MatrixJava transpose() {
+    public Matrix transpose() {
 
         double[][] transposedElements = new double[getWidth()][getHeight()];
 
@@ -43,51 +45,55 @@ public class MatrixJava {
             }
         }
 
-        return new MatrixJava(transposedElements);
+        return new Matrix(transposedElements);
     }
 
-    public MatrixJava multiply(MatrixJava matrix) {
+    public Matrix multiply(Matrix matrix) {
 
         double[][] resultElements = new double[height][matrix.getWidth()];
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < matrix.getWidth(); j++) {
                 for (int k = 0; k < width; k++) {
-                    resultElements[i][j] += get(i, k) * matrix.get(k, j);
+                    resultElements[i][j] += elements[i][k] * matrix.get(k, j);
                 }
             }
         }
 
-        return new MatrixJava(resultElements);
+        return new Matrix(resultElements);
     }
 
-    public MatrixJava multiply(double value) {
+    public Matrix multiply(double value) {
 
-        double[][] resultElements = new double[height][width];
+//        double[][] resultElements = new double[height][width];
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                resultElements[i][j] = get(i, j) * value;
+//                resultElements[i][j] = get(i, j) * value;
+                elements[i][j] *= value;
             }
         }
 
-        return new MatrixJava(resultElements);
+        return this;
+//        return new Matrix(resultElements);
     }
 
-    public MatrixJava substract(MatrixJava matrix) {
+    public Matrix subtract(Matrix matrix) {
 
-        double[][] resultElements = new double[height][width];
+//        double[][] resultElements = new double[height][width];
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                resultElements[i][j] = get(i, j) - matrix.get(i, j);
+//                resultElements[i][j] = get(i, j) - matrix.get(i, j);
+                elements[i][j] -= matrix.get(i, j);
             }
         }
 
-        return new MatrixJava(resultElements);
+        return this;
+//        return new Matrix(resultElements);
     }
 
-    public MatrixJava add(MatrixJava matrix) {
+    public Matrix add(Matrix matrix) {
 
         double[][] resultElements = new double[height][width];
 
@@ -97,7 +103,19 @@ public class MatrixJava {
             }
         }
 
-        return new MatrixJava(resultElements);
+        return new Matrix(resultElements);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (double[] row : elements) {
+            stringBuilder.append(Doubles.join(" ", row));
+            stringBuilder.append("\n");
+        }
+
+        return stringBuilder.toString();
     }
 }
 

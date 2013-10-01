@@ -21,6 +21,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import yaskoam.mrz2.lab1.neuro.NeuralNetwork;
+import yaskoam.mrz2.lab1.neuro.NeuroImage;
 
 /**
  * @author Q-YAA
@@ -82,12 +84,14 @@ public class MainSceneController {
         int m = 3;
         int p = 4;
         double a = 0.005;
-        double e = 0.01;
+        double e = 1000;
 
         if (image != null) {
 
-            new Thread(new Runnable() {
-                public void run() {
+//            new Thread(new Runnable() {
+//                public void run() {
+
+
 //                    val neuroImage = Utils.convertToNeuroImage(image)
 //                    val segments = neuroImage.splitIntoSegments(n, m)
 //
@@ -100,8 +104,19 @@ public class MainSceneController {
 //
 //                    val resultImage = Utils.convertFromNeuroImage(neuroImage)
 //                    resultImageView.setImage(resultImage)
-                }
-            }).start();
+//                }
+//            }).start();
+
+            NeuroImage neuroImage = NeuroImage.fromImage(image);
+            double[][] segments = neuroImage.splitIntoSegments(n, m);
+
+            NeuralNetwork neuralNetwork = new NeuralNetwork(n * m * 3, p, e, a);
+            neuralNetwork.learn(segments);
+            double[][] compressedSegments = neuralNetwork.compress(segments);
+            double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
+
+            neuroImage.collectFromSegments(n, m, decompressedSegments);
+            resultImageView.setImage(NeuroImage.toImage(neuroImage));
         }
 
         System.out.println("Time: " + (Calendar.getInstance().getTimeInMillis() - currentTime));

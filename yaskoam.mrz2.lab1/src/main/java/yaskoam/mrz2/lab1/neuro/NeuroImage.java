@@ -2,7 +2,7 @@ package yaskoam.mrz2.lab1.neuro;
 
 import java.util.Arrays;
 
-import com.google.common.primitives.Floats;
+import com.google.common.primitives.Doubles;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -37,31 +37,31 @@ public class NeuroImage {
         return pixels[i][j];
     }
 
-    public float[][] splitIntoSegments(int n, int m) {
+    public double[][] splitIntoSegments(int n, int m) {
 
         int segmentsColumnCount = width / m;
         int segmentsRowCount = height / n;
 
-        float[][] segmentedNeuroImage = new float[segmentsRowCount * segmentsColumnCount][n * m * 3];
+        double[][] segmentedNeuroImage = new double[segmentsRowCount * segmentsColumnCount][n * m * 3];
 
         for (int i = 0; i <= height - n; i += n) {
             for (int j = 0; j <= width - m; j += m) {
 
-                float[][] segment = new float[n][m * 3];
+                double[][] segment = new double[n][m * 3];
 
                 int index = 0;
                 for (NeuroPixel[] segmentRow : Arrays.copyOfRange(pixels, i, i + n)) {
                     segment[index++] = NeuroPixel.convertToSimple(Arrays.copyOfRange(segmentRow, j, j + m));
                 }
 
-                segmentedNeuroImage[(i / n) * segmentsColumnCount + (j / m)] = Floats.concat(segment);
+                segmentedNeuroImage[(i / n) * segmentsColumnCount + (j / m)] = Doubles.concat(segment);
             }
         }
 
         return segmentedNeuroImage;
     }
 
-    public void collectFromSegments(int n, int m, float[][] segmentedNeuroImage) {
+    public void collectFromSegments(int n, int m, double[][] segmentedNeuroImage) {
 
         int segmentsColumnCount = width / m;
 
@@ -73,7 +73,7 @@ public class NeuroImage {
 
                 int segmentNumber = segmentRowNumber * segmentsColumnCount + segmentColumnNumber;
 
-                float[] segment = segmentedNeuroImage[segmentNumber];
+                double[] segment = segmentedNeuroImage[segmentNumber];
 
                 for (int k = 0; k < n; k++) {
                     for (int l = 0; l < m * 3; l += 3) {
@@ -116,14 +116,14 @@ public class NeuroImage {
     }
 
     private static Color decodePixel(NeuroPixel pixel) {
-        float r = decodeColor(pixel.getR());
-        float g = decodeColor(pixel.getG());
-        float b = decodeColor(pixel.getB());
+        double r = decodeColor(pixel.getR());
+        double g = decodeColor(pixel.getG());
+        double b = decodeColor(pixel.getB());
 
         return new Color(r > 1 ? 1 : r < 0 ? 0 : r, g > 1 ? 1 : g < 0 ? 0 : g, b > 1 ? 1 : b < 0 ? 0 : b, 1);
     }
 
-    private static float decodeColor(float color) {
+    private static double decodeColor(double color) {
         return (color + 1) / 2;
     }
 
@@ -131,7 +131,7 @@ public class NeuroImage {
         return new NeuroPixel(encodeColor(pixel.getRed()), encodeColor(pixel.getGreen()), encodeColor(pixel.getBlue()));
     }
 
-    private static float encodeColor(double color) {
-        return (float) (2 * color - 1);
+    private static double encodeColor(double color) {
+        return (2 * color - 1);
     }
 }

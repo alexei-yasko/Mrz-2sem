@@ -1,19 +1,19 @@
 package yaskoam.mrz2.lab1.matrix;
 
-import com.google.common.primitives.Floats;
+import com.google.common.primitives.Doubles;
 
 /**
  * @author Q-YAA
  */
 public class Matrix {
 
-    private float[][] elements;
+    private double[][] elements;
 
     private int height;
 
     private int width;
 
-    public Matrix(float[][] elements) {
+    public Matrix(double[][] elements) {
         this.elements = elements;
         this.height = elements.length;
         this.width = elements[0].length;
@@ -27,21 +27,21 @@ public class Matrix {
         return width;
     }
 
-    public float get(int i, int j) {
+    public double get(int i, int j) {
         return elements[i][j];
     }
 
-    public float[] getRow(int i) {
+    public double[] getRow(int i) {
         return elements[i];
     }
 
-    public float[][] getElements() {
+    public double[][] getElements() {
         return elements;
     }
 
     public Matrix transpose() {
 
-        float[][] transposedElements = new float[getWidth()][getHeight()];
+        double[][] transposedElements = new double[getWidth()][getHeight()];
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -54,7 +54,7 @@ public class Matrix {
 
     public Matrix multiply(Matrix matrix) {
 
-        float[][] resultElements = new float[height][matrix.getWidth()];
+        double[][] resultElements = new double[height][matrix.getWidth()];
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < matrix.getWidth(); j++) {
@@ -67,7 +67,7 @@ public class Matrix {
         return new Matrix(resultElements);
     }
 
-    public Matrix multiply(float value) {
+    public Matrix multiply(double value) {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 elements[i][j] *= value;
@@ -98,8 +98,8 @@ public class Matrix {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (float[] row : elements) {
-            stringBuilder.append(Floats.join(" ", row));
+        for (double[] row : elements) {
+            stringBuilder.append(Doubles.join(" ", row));
             stringBuilder.append("\n");
         }
 

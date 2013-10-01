@@ -82,20 +82,20 @@ public class MainSceneController {
         final int n = Integer.parseInt(nTextField.getText());
         final int m = Integer.parseInt(mTextField.getText());
         final int p = Integer.parseInt(pTextField.getText());
-        final float a = Float.parseFloat(aTextField.getText());
-        final float e = Float.parseFloat(eTextField.getText());
+        final double a = Float.parseFloat(aTextField.getText());
+        final double e = Float.parseFloat(eTextField.getText());
 
         if (image != null) {
 
             calculationThread = new Thread(new Runnable() {
                 public void run() {
                     NeuroImage neuroImage = NeuroImage.fromImage(image);
-                    float[][] segments = neuroImage.splitIntoSegments(n, m);
+                    double[][] segments = neuroImage.splitIntoSegments(n, m);
 
                     NeuralNetwork neuralNetwork = new NeuralNetwork(n * m * 3, p, e, a);
                     neuralNetwork.learn(segments);
-                    float[][] compressedSegments = neuralNetwork.compress(segments);
-                    float[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
+                    double[][] compressedSegments = neuralNetwork.compress(segments);
+                    double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
 
                     neuroImage.collectFromSegments(n, m, decompressedSegments);
                     resultImageView.setImage(NeuroImage.toImage(neuroImage));
@@ -164,6 +164,7 @@ public class MainSceneController {
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.setTitle("Choose Image");
+        fileChooser.setInitialDirectory(new File("yaskoam.mrz2.lab1/images/"));
 
         fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("JPEG", "*.jpg"),

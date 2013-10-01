@@ -2,7 +2,7 @@ package yaskoam.mrz2.lab1.neuro;
 
 import java.util.Calendar;
 
-import org.jblas.DoubleMatrix;
+import org.jblas.FloatMatrix;
 /**
  * @author Q-YAA
  */
@@ -12,61 +12,61 @@ public class NeuralNetwork {
 
     private int p;
 
-    private double maxError;
+    private float maxError;
 
-    private double a;
+    private float a;
 
-    private DoubleMatrix W1;
+    private FloatMatrix W1;
 
-    private DoubleMatrix W2;
+    private FloatMatrix W2;
 
-    public NeuralNetwork(int n, int p, double maxError, double a) {
+    public NeuralNetwork(int n, int p, float maxError, float a) {
         this.n = n;
         this.p = p;
         this.maxError = maxError;
         this.a = a;
 
-        W1 = new DoubleMatrix(createRandomArray(n, p));
-        W2 = new DoubleMatrix(createRandomArray(p, n));
+        W1 = new FloatMatrix(createRandomArray(n, p));
+        W2 = new FloatMatrix(createRandomArray(p, n));
     }
 
 
-    public double[][] compress(double[][] segments) {
-        double[][] compressed = new double[segments.length][p];
+    public float[][] compress(float[][] segments) {
+        float[][] compressed = new float[segments.length][p];
 
         for (int i = 0; i < segments.length; i++) {
-            DoubleMatrix X = new DoubleMatrix(new double[][]{segments[i]});
+            FloatMatrix X = new FloatMatrix(new float[][]{segments[i]});
             compressed[i] = X.mmul(W1).data;
         }
 
         return compressed;
     }
 
-    public double[][] decompress(double[][] segments) {
-        double[][] decompressed = new double[segments.length][n];
+    public float[][] decompress(float[][] segments) {
+        float[][] decompressed = new float[segments.length][n];
 
         for (int i = 0; i < segments.length; i++) {
-            DoubleMatrix Y = new DoubleMatrix(new double[][]{segments[i]});
+            FloatMatrix Y = new FloatMatrix(new float[][]{segments[i]});
             decompressed[i] = Y.mmul(W2).data;
         }
 
         return decompressed;
     }
 
-    public void learn(double[][] segments) {
+    public void learn(float[][] segments) {
 
-        double error;
+        float error;
 
         do {
 
-            double currentTime = Calendar.getInstance().getTimeInMillis();
+            long currentTime = Calendar.getInstance().getTimeInMillis();
 
             // learn
-            for (double[] segment : segments) {
-                DoubleMatrix X = new DoubleMatrix(new double[][]{segment});
+            for (float[] segment : segments) {
+                FloatMatrix X = new FloatMatrix(new float[][]{segment});
 
-                DoubleMatrix Y = X.mmul(W1);
-                DoubleMatrix deltaX = Y.mmul(W2).sub(X);
+                FloatMatrix Y = X.mmul(W1);
+                FloatMatrix deltaX = Y.mmul(W2).sub(X);
 
                 W1 = W1.sub((X.transpose()).mmul(deltaX).mmul((W2).transpose()).mmul(a));
                 W2 = W2.sub(Y.transpose().mmul(deltaX).mmul(a));
@@ -75,10 +75,10 @@ public class NeuralNetwork {
             error = 0;
 
             // calculate error
-            for (double[] segment : segments) {
-                DoubleMatrix X = new DoubleMatrix(new double[][]{segment});
-                DoubleMatrix Y = X.mmul(W1);
-                DoubleMatrix deltaX = Y.mmul(W2).sub(X);
+            for (float[] segment : segments) {
+                FloatMatrix X = new FloatMatrix(new float[][]{segment});
+                FloatMatrix Y = X.mmul(W1);
+                FloatMatrix deltaX = Y.mmul(W2).sub(X);
 
                 for (int j = 0; j < deltaX.length; j++) {
                     error += deltaX.get(0, j) * deltaX.get(0, j);
@@ -91,12 +91,12 @@ public class NeuralNetwork {
         while (error > maxError);
     }
 
-    private double[][] createRandomArray(int n, int m) {
-        double[][] array = new double[n][m];
+    private float[][] createRandomArray(int n, int m) {
+        float[][] array = new float[n][m];
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                array[i][j] = Math.random() * 0.1;
+                array[i][j] = (float) Math.random();
             }
         }
 

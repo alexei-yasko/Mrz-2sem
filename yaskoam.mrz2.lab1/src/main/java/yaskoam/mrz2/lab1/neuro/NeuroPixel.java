@@ -5,32 +5,32 @@ package yaskoam.mrz2.lab1.neuro;
  */
 public class NeuroPixel {
 
-    private double r;
+    private float r;
 
-    private double g;
+    private float g;
 
-    private double b;
+    private float b;
 
-    public NeuroPixel(double r, double g, double b) {
+    public NeuroPixel(float r, float g, float b) {
         this.r = r;
         this.g = g;
         this.b = b;
     }
 
-    public double getR() {
+    public float getR() {
         return r;
     }
 
-    public double getG() {
+    public float getG() {
         return g;
     }
 
-    public double getB() {
+    public float getB() {
         return b;
     }
 
-    public static double[] convertToSimple(NeuroPixel[] array) {
-        double[] simpleArray = new double[array.length * 3];
+    public static float[] convertToSimple(NeuroPixel[] array) {
+        float[] simpleArray = new float[array.length * 3];
 
         int index = 0;
         for (NeuroPixel pixel : array) {

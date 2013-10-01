@@ -60,9 +60,6 @@ public class MainSceneController {
     private TextField aTextField = null;
 
     @FXML
-    private TextField a1TextField = null;
-
-    @FXML
     private TextField eTextField = null;
 
     private Thread calculationThread;
@@ -82,23 +79,23 @@ public class MainSceneController {
 
         final Image image = sourceImageView.getImage();
 
-        final int n = 8;
-        final int m = 7;
-        final int p = 20;
-        final double a = 0.01;
-        final double e = 800;
+        final int n = Integer.parseInt(nTextField.getText());
+        final int m = Integer.parseInt(mTextField.getText());
+        final int p = Integer.parseInt(pTextField.getText());
+        final float a = Float.parseFloat(aTextField.getText());
+        final float e = Float.parseFloat(eTextField.getText());
 
         if (image != null) {
 
             calculationThread = new Thread(new Runnable() {
                 public void run() {
                     NeuroImage neuroImage = NeuroImage.fromImage(image);
-                    double[][] segments = neuroImage.splitIntoSegments(n, m);
+                    float[][] segments = neuroImage.splitIntoSegments(n, m);
 
                     NeuralNetwork neuralNetwork = new NeuralNetwork(n * m * 3, p, e, a);
                     neuralNetwork.learn(segments);
-                    double[][] compressedSegments = neuralNetwork.compress(segments);
-                    double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
+                    float[][] compressedSegments = neuralNetwork.compress(segments);
+                    float[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
 
                     neuroImage.collectFromSegments(n, m, decompressedSegments);
                     resultImageView.setImage(NeuroImage.toImage(neuroImage));
@@ -114,6 +111,10 @@ public class MainSceneController {
 
     public void closeMainWindow(ActionEvent event) {
         Platform.exit();
+    }
+
+    public void stop(ActionEvent event) {
+        calculationThread.stop();
     }
 
     public void disableLoadImageMenuItem(Event event) {

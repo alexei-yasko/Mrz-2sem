@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
@@ -29,37 +30,43 @@ import yaskoam.mrz2.lab1.neuro.NeuroImage;
 public class MainSceneController {
 
     @FXML
-    private VBox rootPane = null;
+    private VBox rootPane;
 
     @FXML
-    private MenuItem loadSourceImageMenuItem = null;
+    private MenuItem loadSourceImageMenuItem;
 
     @FXML
-    private ImageView sourceImageView = null;
+    private ImageView sourceImageView;
 
     @FXML
-    private ImageView resultImageView = null;
+    private ImageView resultImageView;
 
     @FXML
-    private Label imageHeightLabel = null;
+    private Label imageHeightLabel;
 
     @FXML
-    private Label imageWidthLabel = null;
+    private Label imageWidthLabel;
 
     @FXML
-    private TextField nTextField = null;
+    private TextField nTextField;
 
     @FXML
-    private TextField mTextField = null;
+    private TextField mTextField;
 
     @FXML
-    private TextField pTextField = null;
+    private TextField pTextField;
 
     @FXML
-    private TextField aTextField = null;
+    private TextField aTextField;
 
     @FXML
-    private TextField eTextField = null;
+    private TextField eTextField;
+
+    @FXML
+    private Button stopButton;
+
+    @FXML
+    private Button compressButton;
 
     private Thread calculationThread;
 
@@ -75,6 +82,8 @@ public class MainSceneController {
 
     public void compressSourceImage() {
         long currentTime = System.currentTimeMillis();
+
+        changeButtonsState();
 
         final Image image = sourceImageView.getImage();
 
@@ -98,6 +107,8 @@ public class MainSceneController {
 
                     neuroImage.collectFromSegments(n, m, decompressedSegments);
                     resultImageView.setImage(NeuroImage.toImage(neuroImage));
+
+                    changeButtonsState();
                 }
             });
 
@@ -113,7 +124,14 @@ public class MainSceneController {
     }
 
     public void stop(ActionEvent event) {
-        calculationThread.stop();
+        try {
+            if (calculationThread.getState() == Thread.State.RUNNABLE) {
+                calculationThread.stop();
+            }
+        }
+        finally {
+            changeButtonsState();
+        }
     }
 
     public void disableLoadImageMenuItem(Event event) {
@@ -199,5 +217,10 @@ public class MainSceneController {
                 unChooseImage(event);
             }
         });
+    }
+
+    private void changeButtonsState() {
+        compressButton.setDisable(!compressButton.isDisable());
+        stopButton.setDisable(!stopButton.isDisable());
     }
 }

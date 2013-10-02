@@ -24,14 +24,14 @@
         <ToolBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="37.0" minWidth="0.0" orientation="HORIZONTAL"
                  VBox.vgrow="NEVER">
             <items>
-                <Button contentDisplay="CENTER" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="9.0" minWidth="9.0"
-                        mnemonicParsing="false" onAction="#compressSourceImage" prefHeight="-1.0" text="Compress"
+                <Button fx:id="compressButton" contentDisplay="CENTER" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="9.0"
+                        minWidth="9.0" mnemonicParsing="false" onAction="#compressSourceImage" prefHeight="-1.0" text="Compress"
                         textAlignment="CENTER">
                     <font>
                         <Font size="17.0" fx:id="x1"/>
                     </font>
                 </Button>
-                <Button onAction="#stop" font="$x1" mnemonicParsing="false" text="Stop"/>
+                <Button fx:id="stopButton" disable="true" font="$x1" mnemonicParsing="false" onAction="#stop" text="Stop"/>
             </items>
             <VBox.margin>
                 <Insets/>

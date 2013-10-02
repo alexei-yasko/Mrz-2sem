@@ -1,6 +1,9 @@
 package yaskoam.mrz2.lab1.neuro;
 
+import java.util.Random;
+
 import org.jblas.DoubleMatrix;
+
 /**
  * @author Q-YAA
  */
@@ -91,10 +94,10 @@ public class NeuralNetwork {
 
     private double[][] createRandomArray(int n, int m) {
         double[][] array = new double[n][m];
-
+        Random random = new Random();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                array[i][j] = Math.random();
+                array[i][j] = Math.random() * (random.nextBoolean() ? -1 : 1) * 0.1;
             }
         }
 

@@ -37,47 +37,47 @@ public class NeuroImage {
         return pixels[i][j];
     }
 
-    public double[][] splitIntoSegments(int n, int m) {
+    public double[][] splitIntoSegments(int segmentHeight, int segmentWidth) {
 
-        int segmentsColumnCount = width / m;
-        int segmentsRowCount = height / n;
+        int segmentsColumnCount = width / segmentWidth;
+        int segmentsRowCount = height / segmentHeight;
 
-        double[][] segmentedNeuroImage = new double[segmentsRowCount * segmentsColumnCount][n * m * 3];
+        double[][] segmentedNeuroImage = new double[segmentsRowCount * segmentsColumnCount][segmentHeight * segmentWidth * 3];
 
-        for (int i = 0; i <= height - n; i += n) {
-            for (int j = 0; j <= width - m; j += m) {
+        for (int i = 0; i <= height - segmentHeight; i += segmentHeight) {
+            for (int j = 0; j <= width - segmentWidth; j += segmentWidth) {
 
-                double[][] segment = new double[n][m * 3];
+                double[][] segment = new double[segmentHeight][segmentWidth * 3];
 
                 int index = 0;
-                for (NeuroPixel[] segmentRow : Arrays.copyOfRange(pixels, i, i + n)) {
-                    segment[index++] = NeuroPixel.convertToSimple(Arrays.copyOfRange(segmentRow, j, j + m));
+                for (NeuroPixel[] segmentRow : Arrays.copyOfRange(pixels, i, i + segmentHeight)) {
+                    segment[index++] = NeuroPixel.convertToSimple(Arrays.copyOfRange(segmentRow, j, j + segmentWidth));
                 }
 
-                segmentedNeuroImage[(i / n) * segmentsColumnCount + (j / m)] = Doubles.concat(segment);
+                segmentedNeuroImage[(i / segmentHeight) * segmentsColumnCount + (j / segmentWidth)] = Doubles.concat(segment);
             }
         }
 
         return segmentedNeuroImage;
     }
 
-    public void collectFromSegments(int n, int m, double[][] segmentedNeuroImage) {
+    public void collectFromSegments(int segmentHeight, int segmentWidth, double[][] segmentedNeuroImage) {
 
-        int segmentsColumnCount = width / m;
+        int segmentsColumnCount = width / segmentWidth;
 
-        for (int i = 0; i < height - n; i += n) {
-            for (int j = 0; j < width - m; j += m) {
+        for (int i = 0; i < height - segmentHeight; i += segmentHeight) {
+            for (int j = 0; j < width - segmentWidth; j += segmentWidth) {
 
-                int segmentRowNumber = i / n;
-                int segmentColumnNumber = j / m;
+                int segmentRowNumber = i / segmentHeight;
+                int segmentColumnNumber = j / segmentWidth;
 
                 int segmentNumber = segmentRowNumber * segmentsColumnCount + segmentColumnNumber;
 
                 double[] segment = segmentedNeuroImage[segmentNumber];
 
-                for (int k = 0; k < n; k++) {
-                    for (int l = 0; l < m * 3; l += 3) {
-                        int pixelPosition = k * m * 3 + l;
+                for (int k = 0; k < segmentHeight; k++) {
+                    for (int l = 0; l < segmentWidth * 3; l += 3) {
+                        int pixelPosition = k * segmentWidth * 3 + l;
                         pixels[i + k][j + l / 3] = new NeuroPixel(
                             segment[pixelPosition], segment[pixelPosition + 1], segment[pixelPosition + 2]);
                     }

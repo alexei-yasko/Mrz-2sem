@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import org.apache.commons.io.IOUtils;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -26,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import yaskoam.mrz2.lab1.Logger;
 import yaskoam.mrz2.lab1.neuro.NeuralNetwork;
 import yaskoam.mrz2.lab1.neuro.NeuroImage;
 
@@ -53,22 +56,31 @@ public class MainSceneController implements Initializable {
     private Label imageWidthLabel;
 
     @FXML
-    private TextField nTextField;
+    private TextField segmentHeightTextField;
 
     @FXML
-    private TextField mTextField;
+    private TextField segmentWidthTextField;
 
     @FXML
-    private TextField pTextField;
+    private TextField secondLayerNeuronsTextField;
 
     @FXML
-    private TextField aTextField;
+    private TextField learningCoefficientTextField;
 
     @FXML
-    private TextField eTextField;
+    private TextField maxErrorTextField;
 
     @FXML
     private TextField maxIterTextField;
+
+    @FXML
+    private TextField totalErrorTextField;
+
+    @FXML
+    private TextField meanErrorTextField;
+
+    @FXML
+    private TextField numberOfIterationsTextField;
 
     @FXML
     private Button stopButton;
@@ -78,8 +90,12 @@ public class MainSceneController implements Initializable {
 
     private Thread calculationThread;
 
+    private Logger uiLogger;
+
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
+        uiLogger = createUiLogger();
+
         setImageViewsEventHandlers();
         setTextFieldsEventHandlers();
     }
@@ -94,17 +110,15 @@ public class MainSceneController implements Initializable {
     }
 
     public void compressSourceImage() {
-        long currentTime = System.currentTimeMillis();
-
         changeButtonsState();
 
         final Image image = sourceImageView.getImage();
 
-        final int n = Integer.parseInt(nTextField.getText());
-        final int m = Integer.parseInt(mTextField.getText());
-        final int p = Integer.parseInt(pTextField.getText());
-        final double a = Double.parseDouble(aTextField.getText());
-        final double maxError = Double.parseDouble(eTextField.getText());
+        final int segmentHeight = Integer.parseInt(segmentHeightTextField.getText());
+        final int segmentWidth = Integer.parseInt(segmentWidthTextField.getText());
+        final int secondLayerNeurons = Integer.parseInt(secondLayerNeuronsTextField.getText());
+        final double learningCoefficient = Double.parseDouble(learningCoefficientTextField.getText());
+        final double maxError = Double.parseDouble(maxErrorTextField.getText());
         final int maxIterations = Integer.parseInt(maxIterTextField.getText());
 
         if (image != null) {
@@ -112,14 +126,17 @@ public class MainSceneController implements Initializable {
             calculationThread = new Thread(new Runnable() {
                 public void run() {
                     NeuroImage neuroImage = NeuroImage.fromImage(image);
-                    double[][] segments = neuroImage.splitIntoSegments(n, m);
+                    double[][] segments = neuroImage.splitIntoSegments(segmentHeight, segmentWidth);
 
-                    NeuralNetwork neuralNetwork = new NeuralNetwork(n * m * 3, p, a, maxError, maxIterations);
+                    NeuralNetwork neuralNetwork = new NeuralNetwork(
+                        segmentHeight * segmentWidth * 3, secondLayerNeurons, learningCoefficient, maxError, maxIterations);
+                    neuralNetwork.setLogger(uiLogger);
+
                     neuralNetwork.learn(segments);
                     double[][] compressedSegments = neuralNetwork.compress(segments);
                     double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
 
-                    neuroImage.collectFromSegments(n, m, decompressedSegments);
+                    neuroImage.collectFromSegments(segmentHeight, segmentWidth, decompressedSegments);
                     resultImageView.setImage(NeuroImage.toImage(neuroImage));
 
                     changeButtonsState();
@@ -129,8 +146,6 @@ public class MainSceneController implements Initializable {
             calculationThread.setDaemon(true);
             calculationThread.start();
         }
-
-        System.out.println("Time: " + (System.currentTimeMillis() - currentTime));
     }
 
     public void closeMainWindow(ActionEvent event) {
@@ -206,6 +221,18 @@ public class MainSceneController implements Initializable {
         return fileChooser;
     }
 
+    private Logger createUiLogger() {
+        StringProperty totalErrorProperty = new SimpleStringProperty();
+        StringProperty meanErrorProperty = new SimpleStringProperty();
+        StringProperty numberOfIterationsProperty = new SimpleStringProperty();
+
+        totalErrorTextField.textProperty().bindBidirectional(totalErrorProperty);
+        meanErrorTextField.textProperty().bindBidirectional(meanErrorProperty);
+        numberOfIterationsTextField.textProperty().bindBidirectional(numberOfIterationsProperty);
+
+        return new UiLogger(totalErrorProperty, meanErrorProperty, numberOfIterationsProperty);
+    }
+
     private void setImageViewsEventHandlers() {
 
         sourceImageView.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -235,13 +262,13 @@ public class MainSceneController implements Initializable {
 
     private void setTextFieldsEventHandlers() {
 
-        nTextField.textProperty().addListener(new IntTextFieldChangeListener(nTextField));
-        mTextField.textProperty().addListener(new IntTextFieldChangeListener(mTextField));
-        pTextField.textProperty().addListener(new IntTextFieldChangeListener(pTextField));
+        segmentHeightTextField.textProperty().addListener(new IntTextFieldChangeListener(segmentHeightTextField));
+        segmentWidthTextField.textProperty().addListener(new IntTextFieldChangeListener(segmentWidthTextField));
+        secondLayerNeuronsTextField.textProperty().addListener(new IntTextFieldChangeListener(secondLayerNeuronsTextField));
         maxIterTextField.textProperty().addListener(new IntTextFieldChangeListener(maxIterTextField));
 
-        aTextField.textProperty().addListener(new DoubleTextFieldChangeListener(aTextField));
-        eTextField.textProperty().addListener(new DoubleTextFieldChangeListener(eTextField));
+        learningCoefficientTextField.textProperty().addListener(new DoubleTextFieldChangeListener(learningCoefficientTextField));
+        maxErrorTextField.textProperty().addListener(new DoubleTextFieldChangeListener(maxErrorTextField));
     }
 
     private void changeButtonsState() {

@@ -27,7 +27,7 @@ public class DefaultLogger implements Logger {
     public void log(double totalError, double meanError, int iterations) {
         try {
             String currentTime = Calendar.getInstance().getTime().toString();
-            IOUtils.write(String.format(LOG_TEMPLATE, currentTime, totalError, meanError, iterations), outputStream);
+            IOUtils.write(String.format(LOG_TEMPLATE, currentTime, totalError, meanError, iterations) + "\n", outputStream);
         }
         catch (IOException e) {
             throw new IllegalStateException("can't write in log stream", e);

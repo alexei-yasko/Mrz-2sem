@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -11,7 +10,8 @@
       prefWidth="900.0" stylesheets="/yaskoam/mrz2/lab1/style.css" xmlns:fx="http://javafx.com/fxml/1"
       xmlns="http://javafx.com/javafx/2.2" fx:controller="yaskoam.mrz2.lab1.ui.controllers.MainSceneController">
     <children>
-        <MenuBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="24.0" minWidth="0.0" prefWidth="-1.0" VBox.vgrow="NEVER">
+        <MenuBar disable="false" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="24.0" minWidth="0.0" prefWidth="-1.0"
+                 VBox.vgrow="NEVER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -106,71 +106,120 @@
                 </Tab>
                 <Tab text="Settings &amp; Results">
                     <content>
-                        <GridPane hgap="30.0" vgap="10.0">
-                            <children>
-                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <SplitPane dividerPositions="0.49902152641878667" focusTraversable="true" orientation="VERTICAL"
+                                   prefHeight="200.0" prefWidth="160.0">
+                            <items>
+                                <GridPane hgap="30.0" vgap="10.0">
                                     <children>
-                                        <Label text="Enter n:" VBox.vgrow="ALWAYS"/>
-                                        <TextField fx:id="nTextField" prefWidth="-1.0" text="3" VBox.vgrow="ALWAYS"/>
-                                    </children>
-                                </VBox>
-                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                                    <children>
-                                        <Label text="Enter m:" VBox.vgrow="ALWAYS"/>
-                                        <TextField fx:id="mTextField" prefWidth="-1.0" text="3" VBox.vgrow="ALWAYS"/>
-                                    </children>
-                                </VBox>
-                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                    <children>
-                                        <Label text="Enter a:" VBox.vgrow="ALWAYS"/>
-                                        <TextField fx:id="aTextField" prefWidth="-1.0" text="0.005" VBox.vgrow="ALWAYS"/>
-                                    </children>
-                                </VBox>
-                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <children>
-                                        <VBox prefHeight="200.0" prefWidth="100.0">
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                             <children>
-                                                <Label text="Enter e:" VBox.vgrow="ALWAYS"/>
-                                                <TextField fx:id="eTextField" prefWidth="-1.0" text="600" VBox.vgrow="ALWAYS"/>
+                                                <Label text="Segment height (n) :" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="segmentHeightTextField" minHeight="22.0" minWidth="-1.0"
+                                                           prefWidth="-1.0" text="2" VBox.vgrow="ALWAYS"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label text="Segment width (m) :" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="segmentWidthTextField" minHeight="22.0" prefWidth="-1.0"
+                                                           text="2"
+                                                           VBox.vgrow="ALWAYS"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                            <children>
+                                                <Label text="Learning coefficient (a) :" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="learningCoefficientTextField" minHeight="22.0"
+                                                           prefWidth="-1.0" text="0.005"
+                                                           VBox.vgrow="ALWAYS"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <children>
+                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                    <children>
+                                                        <Label text="Max error (e):" VBox.vgrow="ALWAYS"/>
+                                                        <TextField id="" fx:id="maxErrorTextField" minHeight="22.0"
+                                                                   prefWidth="-1.0"
+                                                                   text="30" VBox.vgrow="ALWAYS"/>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                            <children>
+                                                <Label text="Neurons number on second layer (p) :" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="secondLayerNeuronsTextField" minHeight="22.0"
+                                                           prefWidth="-1.0" text="6"
+                                                           VBox.vgrow="ALWAYS"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <children>
+                                                <Label text="Max number of iterations :" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="maxIterTextField" minHeight="22.0" prefWidth="-1.0"
+                                                           text="1000" VBox.vgrow="ALWAYS"/>
                                             </children>
                                         </VBox>
                                     </children>
-                                </VBox>
-                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                    </columnConstraints>
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                    </padding>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                </GridPane>
+                                <GridPane hgap="30.0" vgap="10.0">
                                     <children>
-                                        <Label text="Enter p:" VBox.vgrow="ALWAYS"/>
-                                        <TextField fx:id="pTextField" prefWidth="-1.0" text="6" VBox.vgrow="ALWAYS"/>
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                            <children>
+                                                <Label text="Total error:" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="totalErrorTextField" disable="false" editable="false"
+                                                           focusTraversable="true" minHeight="22.0" minWidth="-1.0"
+                                                           prefWidth="-1.0" text="" VBox.vgrow="ALWAYS"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label text="Mean error:" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="meanErrorTextField" editable="false" minHeight="22.0"
+                                                           prefWidth="-1.0" text="" VBox.vgrow="ALWAYS"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                            <children>
+                                                <Label text="Number of iterations:" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="numberOfIterationsTextField" editable="false"
+                                                           minHeight="22.0" prefWidth="-1.0" text="" VBox.vgrow="ALWAYS"/>
+                                            </children>
+                                        </VBox>
                                     </children>
-                                </VBox>
-                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                    <children>
-                                        <Label text="Enter max iter number:" VBox.vgrow="ALWAYS"/>
-                                        <TextField fx:id="maxIterTextField" prefWidth="-1.0" text="1000" VBox.vgrow="ALWAYS"/>
-                                    </children>
-                                </VBox>
-                            </children>
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                            </columnConstraints>
-                            <padding>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-                            </padding>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                        </GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                    </columnConstraints>
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                    </padding>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                </GridPane>
+                            </items>
+                        </SplitPane>
                     </content>
                 </Tab>
             </tabs>

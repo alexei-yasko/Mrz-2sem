@@ -3,7 +3,6 @@ package yaskoam.mrz2.lab1.ui.controllers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Calendar;
 
 import org.apache.commons.io.IOUtils;
 
@@ -75,7 +74,7 @@ public class MainSceneController {
     }
 
     public void compressSourceImage() {
-        long currentTime = Calendar.getInstance().getTimeInMillis();
+        long currentTime = System.currentTimeMillis();
 
         final Image image = sourceImageView.getImage();
 
@@ -106,7 +105,7 @@ public class MainSceneController {
             calculationThread.start();
         }
 
-        System.out.println("Time: " + (Calendar.getInstance().getTimeInMillis() - currentTime));
+        System.out.println("Time: " + (System.currentTimeMillis() - currentTime));
     }
 
     public void closeMainWindow(ActionEvent event) {

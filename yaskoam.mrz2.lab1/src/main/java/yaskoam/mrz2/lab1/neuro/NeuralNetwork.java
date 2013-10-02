@@ -1,7 +1,5 @@
 package yaskoam.mrz2.lab1.neuro;
 
-import java.util.Calendar;
-
 import org.jblas.DoubleMatrix;
 /**
  * @author Q-YAA
@@ -59,7 +57,7 @@ public class NeuralNetwork {
 
         do {
 
-            long currentTime = Calendar.getInstance().getTimeInMillis();
+            long currentTime = System.currentTimeMillis();
 
             // learn
             for (double[] segment : segments) {
@@ -85,7 +83,7 @@ public class NeuralNetwork {
                 }
             }
 
-            System.out.println(error + ", Time: " + (Calendar.getInstance().getTimeInMillis() - currentTime));
+            System.out.println(error + ", Time: " + (System.currentTimeMillis() - currentTime));
 
         }
         while (error > maxError);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -106,8 +107,8 @@
                 </Tab>
                 <Tab text="Settings &amp; Results">
                     <content>
-                        <SplitPane dividerPositions="0.49902152641878667" focusTraversable="true" orientation="VERTICAL"
-                                   prefHeight="200.0" prefWidth="160.0">
+                        <SplitPane dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0"
+                                   prefWidth="160.0">
                             <items>
                                 <GridPane hgap="30.0" vgap="10.0">
                                     <children>
@@ -122,16 +123,14 @@
                                             <children>
                                                 <Label text="Segment width (m) :" VBox.vgrow="ALWAYS"/>
                                                 <TextField id="" fx:id="segmentWidthTextField" minHeight="22.0" prefWidth="-1.0"
-                                                           text="2"
-                                                           VBox.vgrow="ALWAYS"/>
+                                                           text="2" VBox.vgrow="ALWAYS"/>
                                             </children>
                                         </VBox>
                                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                                             <children>
                                                 <Label text="Learning coefficient (a) :" VBox.vgrow="ALWAYS"/>
                                                 <TextField id="" fx:id="learningCoefficientTextField" minHeight="22.0"
-                                                           prefWidth="-1.0" text="0.005"
-                                                           VBox.vgrow="ALWAYS"/>
+                                                           prefWidth="-1.0" text="0.005" VBox.vgrow="ALWAYS"/>
                                             </children>
                                         </VBox>
                                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -140,8 +139,7 @@
                                                     <children>
                                                         <Label text="Max error (e):" VBox.vgrow="ALWAYS"/>
                                                         <TextField id="" fx:id="maxErrorTextField" minHeight="22.0"
-                                                                   prefWidth="-1.0"
-                                                                   text="30" VBox.vgrow="ALWAYS"/>
+                                                                   prefWidth="-1.0" text="30" VBox.vgrow="ALWAYS"/>
                                                     </children>
                                                 </VBox>
                                             </children>
@@ -150,8 +148,7 @@
                                             <children>
                                                 <Label text="Neurons number on second layer (p) :" VBox.vgrow="ALWAYS"/>
                                                 <TextField id="" fx:id="secondLayerNeuronsTextField" minHeight="22.0"
-                                                           prefWidth="-1.0" text="6"
-                                                           VBox.vgrow="ALWAYS"/>
+                                                           prefWidth="-1.0" text="6" VBox.vgrow="ALWAYS"/>
                                             </children>
                                         </VBox>
                                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -191,15 +188,16 @@
                                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
                                             <children>
                                                 <Label text="Mean error:" VBox.vgrow="ALWAYS"/>
-                                                <TextField id="" fx:id="meanErrorTextField" editable="false" minHeight="22.0"
-                                                           prefWidth="-1.0" text="" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="meanErrorTextField" disable="false" editable="false"
+                                                           minHeight="22.0" prefWidth="-1.0" text="" VBox.vgrow="ALWAYS"/>
                                             </children>
                                         </VBox>
                                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
                                             <children>
                                                 <Label text="Number of iterations:" VBox.vgrow="ALWAYS"/>
-                                                <TextField id="" fx:id="numberOfIterationsTextField" editable="false"
-                                                           minHeight="22.0" prefWidth="-1.0" text="" VBox.vgrow="ALWAYS"/>
+                                                <TextField id="" fx:id="numberOfIterationsTextField" disable="false"
+                                                           editable="false" minHeight="22.0" prefWidth="-1.0" text=""
+                                                           VBox.vgrow="ALWAYS"/>
                                             </children>
                                         </VBox>
                                     </children>

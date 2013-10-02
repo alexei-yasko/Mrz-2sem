@@ -91,7 +91,8 @@ public class MainSceneController {
         final int m = Integer.parseInt(mTextField.getText());
         final int p = Integer.parseInt(pTextField.getText());
         final double a = Float.parseFloat(aTextField.getText());
-        final double e = Float.parseFloat(eTextField.getText());
+        final double maxError = Float.parseFloat(eTextField.getText());
+        final int maxIterations = 1000;
 
         if (image != null) {
 
@@ -100,7 +101,7 @@ public class MainSceneController {
                     NeuroImage neuroImage = NeuroImage.fromImage(image);
                     double[][] segments = neuroImage.splitIntoSegments(n, m);
 
-                    NeuralNetwork neuralNetwork = new NeuralNetwork(n * m * 3, p, e, a);
+                    NeuralNetwork neuralNetwork = new NeuralNetwork(n * m * 3, p, a, maxError, maxIterations);
                     neuralNetwork.learn(segments);
                     double[][] compressedSegments = neuralNetwork.compress(segments);
                     double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);

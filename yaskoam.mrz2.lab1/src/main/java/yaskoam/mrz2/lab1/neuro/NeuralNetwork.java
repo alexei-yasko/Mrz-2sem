@@ -4,6 +4,9 @@ import java.util.Random;
 
 import org.jblas.DoubleMatrix;
 
+import yaskoam.mrz2.lab1.DefaultLogger;
+import yaskoam.mrz2.lab1.Logger;
+
 /**
  * @author Q-YAA
  */
@@ -13,19 +16,24 @@ public class NeuralNetwork {
 
     private int p;
 
+    private double a;
+
     private double maxError;
 
-    private double a;
+    private double maxIterations;
 
     private DoubleMatrix W1;
 
     private DoubleMatrix W2;
 
-    public NeuralNetwork(int n, int p, double maxError, double a) {
+    private Logger logger = new DefaultLogger();
+
+    public NeuralNetwork(int n, int p, double a, double maxError, int maxIterations) {
         this.n = n;
         this.p = p;
-        this.maxError = maxError;
         this.a = a;
+        this.maxError = maxError;
+        this.maxIterations = maxIterations;
 
         W1 = new DoubleMatrix(createRandomArray(n, p));
         W2 = new DoubleMatrix(createRandomArray(p, n));
@@ -56,7 +64,8 @@ public class NeuralNetwork {
 
     public void learn(double[][] segments) {
 
-        double error;
+        double totalError;
+        int iterations = 0;
 
         do {
 
@@ -73,23 +82,29 @@ public class NeuralNetwork {
                 W2 = W2.sub(Y.transpose().mmul(deltaX).mmul(a));
             }
 
-            error = 0;
+            totalError = 0;
 
-            // calculate error
+            // calculate total error
             for (double[] segment : segments) {
                 DoubleMatrix X = new DoubleMatrix(new double[][]{segment});
                 DoubleMatrix Y = X.mmul(W1);
                 DoubleMatrix deltaX = Y.mmul(W2).sub(X);
 
                 for (int j = 0; j < deltaX.length; j++) {
-                    error += deltaX.get(0, j) * deltaX.get(0, j);
+                    totalError += deltaX.get(0, j) * deltaX.get(0, j);
                 }
             }
 
-            System.out.println(error + ", Time: " + (System.currentTimeMillis() - currentTime));
+            iterations++;
 
+            System.out.println("Time: " + (System.currentTimeMillis() - currentTime));
+            logger.log(totalError, totalError / (segments.length * segments[0].length * 3), iterations);
         }
-        while (error > maxError);
+        while (totalError >= maxError && iterations <= maxIterations);
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
     }
 
     private double[][] createRandomArray(int n, int m) {

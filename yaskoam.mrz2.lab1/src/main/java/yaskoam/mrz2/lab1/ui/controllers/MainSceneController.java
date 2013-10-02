@@ -3,14 +3,19 @@ package yaskoam.mrz2.lab1.ui.controllers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import org.apache.commons.io.IOUtils;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -27,7 +32,7 @@ import yaskoam.mrz2.lab1.neuro.NeuroImage;
 /**
  * @author Q-YAA
  */
-public class MainSceneController {
+public class MainSceneController implements Initializable {
 
     @FXML
     private VBox rootPane;
@@ -63,6 +68,9 @@ public class MainSceneController {
     private TextField eTextField;
 
     @FXML
+    private TextField maxIterTextField;
+
+    @FXML
     private Button stopButton;
 
     @FXML
@@ -70,13 +78,18 @@ public class MainSceneController {
 
     private Thread calculationThread;
 
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        setImageViewsEventHandlers();
+        setTextFieldsEventHandlers();
+    }
+
     public void loadSourceImage(ActionEvent event) {
         File file = createFileChooser().showOpenDialog(rootPane.getScene().getWindow());
 
         if (file != null) {
             Image image = getImage(file);
             sourceImageView.setImage(image);
-            setImageViewsEventHandlers();
         }
     }
 
@@ -90,9 +103,9 @@ public class MainSceneController {
         final int n = Integer.parseInt(nTextField.getText());
         final int m = Integer.parseInt(mTextField.getText());
         final int p = Integer.parseInt(pTextField.getText());
-        final double a = Float.parseFloat(aTextField.getText());
-        final double maxError = Float.parseFloat(eTextField.getText());
-        final int maxIterations = 1000;
+        final double a = Double.parseDouble(aTextField.getText());
+        final double maxError = Double.parseDouble(eTextField.getText());
+        final int maxIterations = Integer.parseInt(maxIterTextField.getText());
 
         if (image != null) {
 
@@ -126,7 +139,7 @@ public class MainSceneController {
 
     public void stop(ActionEvent event) {
         try {
-            if (calculationThread.getState() == Thread.State.RUNNABLE) {
+            if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
                 calculationThread.stop();
             }
         }
@@ -220,8 +233,57 @@ public class MainSceneController {
         });
     }
 
+    private void setTextFieldsEventHandlers() {
+
+        nTextField.textProperty().addListener(new IntTextFieldChangeListener(nTextField));
+        mTextField.textProperty().addListener(new IntTextFieldChangeListener(mTextField));
+        pTextField.textProperty().addListener(new IntTextFieldChangeListener(pTextField));
+        maxIterTextField.textProperty().addListener(new IntTextFieldChangeListener(maxIterTextField));
+
+        aTextField.textProperty().addListener(new DoubleTextFieldChangeListener(aTextField));
+        eTextField.textProperty().addListener(new DoubleTextFieldChangeListener(eTextField));
+    }
+
     private void changeButtonsState() {
         compressButton.setDisable(!compressButton.isDisable());
         stopButton.setDisable(!stopButton.isDisable());
+    }
+
+    private class IntTextFieldChangeListener implements ChangeListener<String> {
+
+        private String PATTERN = "[0-9]*";
+
+        private TextField textField;
+
+        public IntTextFieldChangeListener(TextField textField) {
+            this.textField = textField;
+        }
+
+        @Override
+        public void changed(ObservableValue<? extends String> value, String s, String s2) {
+
+            if (!s2.matches(PATTERN)) {
+                textField.setText(s);
+            }
+        }
+    }
+
+    private class DoubleTextFieldChangeListener implements ChangeListener<String> {
+
+        private String PATTERN = "[0-9\\.]*";
+
+        private TextField textField;
+
+        public DoubleTextFieldChangeListener(TextField textField) {
+            this.textField = textField;
+        }
+
+        @Override
+        public void changed(ObservableValue<? extends String> value, String s, String s2) {
+
+            if (!s2.matches(PATTERN)) {
+                textField.setText(s);
+            }
+        }
     }
 }

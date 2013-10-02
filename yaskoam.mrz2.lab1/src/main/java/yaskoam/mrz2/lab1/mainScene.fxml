@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -122,8 +123,7 @@
                                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                                     <children>
                                         <Label text="Enter a:" VBox.vgrow="ALWAYS"/>
-                                        <TextField id="nTextField" fx:id="aTextField" prefWidth="-1.0" text="0.005"
-                                                   VBox.vgrow="ALWAYS"/>
+                                        <TextField fx:id="aTextField" prefWidth="-1.0" text="0.005" VBox.vgrow="ALWAYS"/>
                                     </children>
                                 </VBox>
                                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -131,8 +131,7 @@
                                         <VBox prefHeight="200.0" prefWidth="100.0">
                                             <children>
                                                 <Label text="Enter e:" VBox.vgrow="ALWAYS"/>
-                                                <TextField id="nTextField" fx:id="eTextField" prefWidth="-1.0" text="600"
-                                                           VBox.vgrow="ALWAYS"/>
+                                                <TextField fx:id="eTextField" prefWidth="-1.0" text="600" VBox.vgrow="ALWAYS"/>
                                             </children>
                                         </VBox>
                                     </children>
@@ -140,8 +139,13 @@
                                 <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
                                     <children>
                                         <Label text="Enter p:" VBox.vgrow="ALWAYS"/>
-                                        <TextField id="mTextField" fx:id="pTextField" prefWidth="-1.0" text="6"
-                                                   VBox.vgrow="ALWAYS"/>
+                                        <TextField fx:id="pTextField" prefWidth="-1.0" text="6" VBox.vgrow="ALWAYS"/>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <children>
+                                        <Label text="Enter max iter number:" VBox.vgrow="ALWAYS"/>
+                                        <TextField fx:id="maxIterTextField" prefWidth="-1.0" text="1000" VBox.vgrow="ALWAYS"/>
                                     </children>
                                 </VBox>
                             </children>

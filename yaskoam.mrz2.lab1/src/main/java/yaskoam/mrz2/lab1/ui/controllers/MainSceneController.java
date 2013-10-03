@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -124,29 +125,8 @@ public class MainSceneController implements Initializable {
 
         if (image != null) {
 
-            calculationThread = new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        NeuroImage neuroImage = NeuroImage.fromImage(image);
-                        double[][] segments = neuroImage.splitIntoSegments(segmentHeight, segmentWidth);
-
-                        NeuralNetwork neuralNetwork = new NeuralNetwork(
-                            segmentHeight * segmentWidth * 3, secondLayerNeurons, learningCoefficient, maxError, maxIterations);
-                        neuralNetwork.setLogger(uiLogger);
-
-                        neuralNetwork.learn(segments);
-                        double[][] compressedSegments = neuralNetwork.compress(segments);
-                        double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
-
-                        neuroImage.collectFromSegments(segmentHeight, segmentWidth, decompressedSegments);
-                        resultImageView.setImage(NeuroImage.toImage(neuroImage));
-                    }
-                    finally {
-                        changeButtonsState();
-                        enableResultTextFields();
-                    }
-                }
-            });
+            calculationThread = new Thread(new CompressImageTask(
+                image, segmentHeight, segmentWidth, secondLayerNeurons, learningCoefficient, maxError, maxIterations));
 
             calculationThread.setDaemon(true);
             calculationThread.start();
@@ -158,12 +138,10 @@ public class MainSceneController implements Initializable {
     }
 
     public void stop(ActionEvent event) {
-        try {
-            if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
-                calculationThread.stop();
-            }
+        if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
+            calculationThread.stop();
         }
-        finally {
+        else {
             changeButtonsState();
             enableResultTextFields();
         }
@@ -291,6 +269,65 @@ public class MainSceneController implements Initializable {
         totalErrorTextField.setDisable(false);
         meanErrorTextField.setDisable(false);
         numberOfIterationsTextField.setDisable(false);
+    }
+
+    private class CompressImageTask extends Task {
+
+        private Image image;
+
+        private int segmentHeight;
+
+        private int segmentWidth;
+
+        private int secondLayerNeurons;
+
+        private double learningCoefficient;
+
+        private double maxError;
+
+        private int maxIterations;
+
+        private CompressImageTask(Image image, int segmentHeight, int segmentWidth, int secondLayerNeurons,
+            double learningCoefficient, double maxError, int maxIterations) {
+
+            this.image = image;
+            this.segmentHeight = segmentHeight;
+            this.segmentWidth = segmentWidth;
+            this.secondLayerNeurons = secondLayerNeurons;
+            this.learningCoefficient = learningCoefficient;
+            this.maxError = maxError;
+            this.maxIterations = maxIterations;
+        }
+
+        @Override
+        protected Object call() throws Exception {
+            try {
+                NeuroImage neuroImage = NeuroImage.fromImage(image);
+                double[][] segments = neuroImage.splitIntoSegments(segmentHeight, segmentWidth);
+
+                NeuralNetwork neuralNetwork = new NeuralNetwork(
+                    segmentHeight * segmentWidth * 3, secondLayerNeurons, learningCoefficient, maxError, maxIterations);
+                neuralNetwork.setLogger(uiLogger);
+
+                neuralNetwork.learn(segments);
+                double[][] compressedSegments = neuralNetwork.compress(segments);
+                double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
+
+                neuroImage.collectFromSegments(segmentHeight, segmentWidth, decompressedSegments);
+                resultImageView.setImage(NeuroImage.toImage(neuroImage));
+
+                return null;
+            }
+            finally {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeButtonsState();
+                        enableResultTextFields();
+                    }
+                });
+            }
+        }
     }
 
     private class IntTextFieldChangeListener implements ChangeListener<String> {

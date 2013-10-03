@@ -2,6 +2,7 @@ package yaskoam.mrz2.lab1.ui.controllers;
 
 import java.text.DecimalFormat;
 
+import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import yaskoam.mrz2.lab1.Logger;
 
@@ -25,12 +26,15 @@ public class UiLogger implements Logger {
     }
 
     @Override
-    public void log(double totalError, double meanError, int iterations) {
+    public void log(final double totalError, final double meanError, final int iterations) {
 
-        synchronized(this) {
-            totalErrorProperty.set(FORMAT.format(totalError * -1));
-            meanErrorProperty.set(FORMAT.format(meanError));
-            iterationsProperty.set(FORMAT.format(iterations));
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                totalErrorProperty.set(FORMAT.format(totalError));
+                meanErrorProperty.set(FORMAT.format(meanError));
+                iterationsProperty.set(FORMAT.format(iterations));
+            }
+        });
     }
 }

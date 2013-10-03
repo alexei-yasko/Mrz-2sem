@@ -3,3 +3,13 @@
     -fx-text-fill: red;
     -fx-opacity: 1;
 }
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.chart-line-symbol {
+    -fx-background-color: #fc8b29;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 5px;
+}

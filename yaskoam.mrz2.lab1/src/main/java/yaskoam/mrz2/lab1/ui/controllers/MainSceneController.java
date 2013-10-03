@@ -13,12 +13,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -29,7 +33,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import yaskoam.mrz2.lab1.Logger;
 import yaskoam.mrz2.lab1.neuro.NeuralNetwork;
 import yaskoam.mrz2.lab1.neuro.NeuroImage;
 
@@ -89,9 +92,12 @@ public class MainSceneController implements Initializable {
     @FXML
     private Button compressButton;
 
+    @FXML
+    private LineChart totalErrorChart;
+
     private Thread calculationThread;
 
-    private Logger uiLogger;
+    private UiLogger uiLogger;
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -99,6 +105,7 @@ public class MainSceneController implements Initializable {
 
         setImageViewsEventHandlers();
         setTextFieldsEventHandlers();
+        initTotalErrorChart();
     }
 
     public void loadSourceImage(ActionEvent event) {
@@ -122,6 +129,7 @@ public class MainSceneController implements Initializable {
 
         if (image != null) {
 
+            clearTotalErrorChart();
             changeButtonsState();
             disableResultTextFields();
 
@@ -141,10 +149,6 @@ public class MainSceneController implements Initializable {
         if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
             calculationThread.stop();
         }
-    }
-
-    public void disableLoadImageMenuItem(Event event) {
-        loadSourceImageMenuItem.setDisable(!((Tab) event.getSource()).isSelected());
     }
 
     private void chooseImage(MouseEvent event) {
@@ -201,7 +205,7 @@ public class MainSceneController implements Initializable {
         return fileChooser;
     }
 
-    private Logger createUiLogger() {
+    private UiLogger createUiLogger() {
         StringProperty totalErrorProperty = new SimpleStringProperty();
         StringProperty meanErrorProperty = new SimpleStringProperty();
         StringProperty numberOfIterationsProperty = new SimpleStringProperty();
@@ -211,6 +215,22 @@ public class MainSceneController implements Initializable {
         numberOfIterationsTextField.textProperty().bindBidirectional(numberOfIterationsProperty);
 
         return new UiLogger(totalErrorProperty, meanErrorProperty, numberOfIterationsProperty);
+    }
+
+    private void initTotalErrorChart() {
+        ObservableList<XYChart.Data<Number, Number>> chartPoints = FXCollections.observableArrayList();
+        XYChart.Series<Number, Number> totalErrorSeries = new XYChart.Series<Number, Number>(chartPoints);
+        totalErrorChart.getData().add(totalErrorSeries);
+
+        uiLogger.setChartPoints(chartPoints);
+
+        totalErrorChart.getXAxis().setLabel("Iterations");
+        totalErrorChart.getYAxis().setLabel("Total error");
+    }
+
+    private void clearTotalErrorChart() {
+        XYChart.Series totalErrorSeries = (XYChart.Series) totalErrorChart.getData().get(0);
+        totalErrorSeries.getData().clear();
     }
 
     private void setImageViewsEventHandlers() {

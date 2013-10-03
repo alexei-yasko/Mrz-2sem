@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -42,7 +43,7 @@
         <TabPane maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0"
                  tabClosingPolicy="UNAVAILABLE" tabMaxHeight="+Infinity" tabMinHeight="0.0" VBox.vgrow="NEVER">
             <tabs>
-                <Tab onSelectionChanged="#disableLoadImageMenuItem" text="Images">
+                <Tab text="Images">
                     <content>
                         <VBox alignment="CENTER" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0"
                               prefHeight="632.0" prefWidth="964.0">
@@ -218,6 +219,18 @@
                                 </GridPane>
                             </items>
                         </SplitPane>
+                    </content>
+                </Tab>
+                <Tab text="Total error chart">
+                    <content>
+                        <LineChart fx:id="totalErrorChart" animated="true" legendVisible="false" title="Total error">
+                            <xAxis>
+                                <NumberAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
                     </content>
                 </Tab>
             </tabs>

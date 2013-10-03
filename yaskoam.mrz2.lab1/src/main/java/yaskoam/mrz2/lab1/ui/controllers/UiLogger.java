@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import yaskoam.mrz2.lab1.Logger;
 
 /**
@@ -18,6 +20,8 @@ public class UiLogger implements Logger {
     private StringProperty meanErrorProperty;
 
     private StringProperty iterationsProperty;
+
+    private ObservableList<XYChart.Data<Number, Number>> chartPoints;
 
     public UiLogger(StringProperty totalErrorProperty, StringProperty meanErrorProperty, StringProperty iterationsProperty) {
         this.totalErrorProperty = totalErrorProperty;
@@ -34,7 +38,15 @@ public class UiLogger implements Logger {
                 totalErrorProperty.set(FORMAT.format(totalError));
                 meanErrorProperty.set(FORMAT.format(meanError));
                 iterationsProperty.set(FORMAT.format(iterations));
+
+                if (chartPoints != null) {
+                    chartPoints.add(new XYChart.Data<Number, Number>(iterations, totalError));
+                }
             }
         });
+    }
+
+    public void setChartPoints(ObservableList<XYChart.Data<Number, Number>> chartPoints) {
+        this.chartPoints = chartPoints;
     }
 }

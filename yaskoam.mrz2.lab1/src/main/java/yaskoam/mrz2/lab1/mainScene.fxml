@@ -108,8 +108,8 @@
                 </Tab>
                 <Tab text="Settings &amp; Results">
                     <content>
-                        <SplitPane dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0"
-                                   prefWidth="160.0">
+                        <SplitPane dividerPositions="0.49902152641878667" focusTraversable="true" orientation="VERTICAL"
+                                   prefHeight="200.0" prefWidth="160.0">
                             <items>
                                 <GridPane hgap="30.0" vgap="10.0">
                                     <children>
@@ -217,6 +217,49 @@
                                         <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                 </GridPane>
+                            </items>
+                        </SplitPane>
+                    </content>
+                </Tab>
+                <Tab text="Weight matrix">
+                    <content>
+                        <SplitPane dividerPositions="0.5" focusTraversable="true" maxHeight="1.7976931348623157E308"
+                                   maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="-1.0"
+                                   prefWidth="-1.0">
+                            <items>
+                                <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                            minHeight="0.0" minWidth="0.0" text="First weight matrix">
+                                    <content>
+                                        <AnchorPane id="Content" maxHeight="1.7976931348623157E308"
+                                                    maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                                    prefHeight="-1.0" prefWidth="-1.0">
+                                            <children>
+                                                <TextArea fx:id="weightMatrix1TextArea" editable="false"
+                                                          maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                                          minHeight="0.0" minWidth="0.0" prefWidth="-1.0" wrapText="false"
+                                                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </TitledPane>
+                                <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                            minHeight="0.0" minWidth="0.0" text="Second weight matrix">
+                                    <content>
+                                        <AnchorPane id="Content" maxHeight="1.7976931348623157E308"
+                                                    maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                                    prefHeight="-1.0" prefWidth="-1.0">
+                                            <children>
+                                                <TextArea fx:id="weightMatrix2TextArea" editable="false"
+                                                          maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                                          minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0"
+                                                          wrapText="false" AnchorPane.bottomAnchor="0.0"
+                                                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                          AnchorPane.topAnchor="0.0"/>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </TitledPane>
                             </items>
                         </SplitPane>
                     </content>

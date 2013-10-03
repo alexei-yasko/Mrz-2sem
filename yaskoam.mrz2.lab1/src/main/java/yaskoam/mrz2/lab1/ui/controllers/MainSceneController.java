@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.IOUtils;
+import org.jblas.DoubleMatrix;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,6 +25,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -85,6 +87,12 @@ public class MainSceneController implements Initializable {
 
     @FXML
     private Button compressButton;
+
+    @FXML
+    private TextArea weightMatrix1TextArea;
+
+    @FXML
+    private TextArea weightMatrix2TextArea;
 
     @FXML
     private LineChart totalErrorChart;
@@ -311,14 +319,14 @@ public class MainSceneController implements Initializable {
 
         @Override
         protected Object call() throws Exception {
+            NeuroImage neuroImage = NeuroImage.fromImage(image);
+            double[][] segments = neuroImage.splitIntoSegments(segmentHeight, segmentWidth);
+
+            final NeuralNetwork neuralNetwork = new NeuralNetwork(
+                segmentHeight * segmentWidth * 3, secondLayerNeurons, learningCoefficient, maxError, maxIterations);
+            neuralNetwork.setLogger(uiLogger);
+
             try {
-                NeuroImage neuroImage = NeuroImage.fromImage(image);
-                double[][] segments = neuroImage.splitIntoSegments(segmentHeight, segmentWidth);
-
-                NeuralNetwork neuralNetwork = new NeuralNetwork(
-                    segmentHeight * segmentWidth * 3, secondLayerNeurons, learningCoefficient, maxError, maxIterations);
-                neuralNetwork.setLogger(uiLogger);
-
                 neuralNetwork.learn(segments);
                 double[][] compressedSegments = neuralNetwork.compress(segments);
                 double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
@@ -334,11 +342,36 @@ public class MainSceneController implements Initializable {
                     public void run() {
                         changeButtonsState();
                         enableResultTextFields();
+                        displayWeightMatrices(neuralNetwork.getWeightMatrix1(), neuralNetwork.getWeightMatrix2());
                     }
                 });
             }
         }
     }
+
+    private void displayWeightMatrices(DoubleMatrix weightMatrix1, DoubleMatrix weightMatrix2) {
+        weightMatrix1TextArea.setText(formatWeightMatrixString(weightMatrix1));
+        weightMatrix2TextArea.setText(formatWeightMatrixString(weightMatrix2));
+    }
+
+    private String formatWeightMatrixString(DoubleMatrix weightMatrix) {
+
+        StringBuilder weightMatrixString = new StringBuilder(weightMatrix.toString("%.5f", "", "", " | ", "\n"));
+
+        for (int i = 1; i < weightMatrixString.length() - 2; i++) {
+
+            if (weightMatrixString.charAt(i) != '-'
+                && weightMatrixString.charAt(i + 1) == '0' && weightMatrixString.charAt(i + 2) == '.') {
+
+                weightMatrixString.insert(i + 1, " ");
+                i++;
+            }
+        }
+
+        return weightMatrixString.charAt(0) != '-' ?
+            weightMatrixString.insert(0, " ").toString() : weightMatrixString.toString();
+    }
+
 
     private class IntTextFieldChangeListener implements ChangeListener<String> {
 

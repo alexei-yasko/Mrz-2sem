@@ -22,9 +22,9 @@ public class NeuralNetwork {
 
     private double maxIterations;
 
-    private DoubleMatrix WEIGHT_MATRIX_1;
+    private DoubleMatrix weightMatrix1;
 
-    private DoubleMatrix WEIGHT_MATRIX_2;
+    private DoubleMatrix weightMatrix2;
 
     private Logger logger = new DefaultLogger();
 
@@ -37,8 +37,8 @@ public class NeuralNetwork {
         this.maxError = maxError;
         this.maxIterations = maxIterations;
 
-        WEIGHT_MATRIX_1 = new DoubleMatrix(createRandomArray(segmentLength, secondLayerNeurons));
-        WEIGHT_MATRIX_2 = new DoubleMatrix(createRandomArray(secondLayerNeurons, segmentLength));
+        weightMatrix1 = new DoubleMatrix(createRandomArray(segmentLength, secondLayerNeurons));
+        weightMatrix2 = new DoubleMatrix(createRandomArray(secondLayerNeurons, segmentLength));
     }
 
 
@@ -47,7 +47,7 @@ public class NeuralNetwork {
 
         for (int i = 0; i < segments.length; i++) {
             DoubleMatrix X = new DoubleMatrix(new double[][]{segments[i]});
-            compressed[i] = X.mmul(WEIGHT_MATRIX_1).data;
+            compressed[i] = X.mmul(weightMatrix1).data;
         }
 
         return compressed;
@@ -58,7 +58,7 @@ public class NeuralNetwork {
 
         for (int i = 0; i < segments.length; i++) {
             DoubleMatrix Y = new DoubleMatrix(new double[][]{segments[i]});
-            decompressed[i] = Y.mmul(WEIGHT_MATRIX_2).data;
+            decompressed[i] = Y.mmul(weightMatrix2).data;
         }
 
         return decompressed;
@@ -74,13 +74,13 @@ public class NeuralNetwork {
             for (double[] segment : segments) {
                 DoubleMatrix X = new DoubleMatrix(new double[][]{segment});
 
-                DoubleMatrix Y = X.mmul(WEIGHT_MATRIX_1);
-                DoubleMatrix deltaX = Y.mmul(WEIGHT_MATRIX_2).sub(X);
+                DoubleMatrix Y = X.mmul(weightMatrix1);
+                DoubleMatrix deltaX = Y.mmul(weightMatrix2).sub(X);
 
-                WEIGHT_MATRIX_1 = WEIGHT_MATRIX_1
-                    .sub((X.transpose()).mmul(deltaX).mmul((WEIGHT_MATRIX_2).transpose()).mmul(learningCoefficient));
+                weightMatrix1 = weightMatrix1
+                    .sub((X.transpose()).mmul(deltaX).mmul((weightMatrix2).transpose()).mmul(learningCoefficient));
 
-                WEIGHT_MATRIX_2 = WEIGHT_MATRIX_2.sub(Y.transpose().mmul(deltaX).mmul(learningCoefficient));
+                weightMatrix2 = weightMatrix2.sub(Y.transpose().mmul(deltaX).mmul(learningCoefficient));
             }
 
             totalError = 0;
@@ -88,8 +88,8 @@ public class NeuralNetwork {
             // calculate total error
             for (double[] segment : segments) {
                 DoubleMatrix X = new DoubleMatrix(new double[][]{segment});
-                DoubleMatrix Y = X.mmul(WEIGHT_MATRIX_1);
-                DoubleMatrix deltaX = Y.mmul(WEIGHT_MATRIX_2).sub(X);
+                DoubleMatrix Y = X.mmul(weightMatrix1);
+                DoubleMatrix deltaX = Y.mmul(weightMatrix2).sub(X);
 
                 for (int j = 0; j < deltaX.length; j++) {
                     totalError += deltaX.get(0, j) * deltaX.get(0, j);
@@ -107,6 +107,14 @@ public class NeuralNetwork {
 
     public void setLogger(Logger logger) {
         this.logger = logger;
+    }
+
+    public DoubleMatrix getWeightMatrix1() {
+        return weightMatrix1;
+    }
+
+    public DoubleMatrix getWeightMatrix2() {
+        return weightMatrix2;
     }
 
     private double[][] createRandomArray(int n, int m) {

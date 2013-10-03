@@ -111,9 +111,6 @@ public class MainSceneController implements Initializable {
     }
 
     public void compressSourceImage() {
-        changeButtonsState();
-        disableResultTextFields();
-
         final Image image = sourceImageView.getImage();
 
         final int segmentHeight = Integer.parseInt(segmentHeightTextField.getText());
@@ -124,6 +121,9 @@ public class MainSceneController implements Initializable {
         final int maxIterations = Integer.parseInt(maxIterTextField.getText());
 
         if (image != null) {
+
+            changeButtonsState();
+            disableResultTextFields();
 
             calculationThread = new Thread(new CompressImageTask(
                 image, segmentHeight, segmentWidth, secondLayerNeurons, learningCoefficient, maxError, maxIterations));
@@ -140,10 +140,6 @@ public class MainSceneController implements Initializable {
     public void stop(ActionEvent event) {
         if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
             calculationThread.stop();
-        }
-        else {
-            changeButtonsState();
-            enableResultTextFields();
         }
     }
 

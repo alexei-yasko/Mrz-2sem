@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="rootPane" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0"
-      prefWidth="900.0" stylesheets="/yaskoam/mrz2/lab1/style.css" xmlns:fx="http://javafx.com/fxml/1"
+<VBox fx:id="rootPane" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefHeight="700.0"
+      prefWidth="950.0" styleClass="test" stylesheets="/yaskoam/mrz2/lab1/style.css" xmlns:fx="http://javafx.com/fxml/1"
       xmlns="http://javafx.com/javafx/2.2" fx:controller="yaskoam.mrz2.lab1.ui.controllers.MainSceneController">
     <children>
-        <MenuBar disable="false" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="24.0" minWidth="0.0" prefWidth="-1.0"
+        <MenuBar disable="false" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefWidth="-1.0"
                  VBox.vgrow="NEVER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
@@ -27,11 +27,11 @@
         <ToolBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="37.0" minWidth="0.0" orientation="HORIZONTAL"
                  VBox.vgrow="NEVER">
             <items>
-                <Button fx:id="compressButton" contentDisplay="CENTER" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="9.0"
-                        minWidth="9.0" mnemonicParsing="false" onAction="#compressSourceImage" prefHeight="-1.0" text="Compress"
+                <Button fx:id="compressButton" contentDisplay="CENTER" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0"
+                        minWidth="-1.0" mnemonicParsing="false" onAction="#compressSourceImage" prefHeight="-1.0" text="Compress"
                         textAlignment="CENTER">
                     <font>
-                        <Font size="17.0" fx:id="x1"/>
+                        <Font size="14.0" fx:id="x1"/>
                     </font>
                 </Button>
                 <Button fx:id="stopButton" disable="true" font="$x1" mnemonicParsing="false" onAction="#stop" text="Stop"/>
@@ -108,7 +108,7 @@
                 </Tab>
                 <Tab text="Settings &amp; Results">
                     <content>
-                        <SplitPane dividerPositions="0.49902152641878667" focusTraversable="true" orientation="VERTICAL"
+                        <SplitPane dividerPositions="0.49918166939443537" focusTraversable="true" orientation="VERTICAL"
                                    prefHeight="200.0" prefWidth="160.0">
                             <items>
                                 <GridPane hgap="30.0" vgap="10.0">
@@ -223,12 +223,11 @@
                 </Tab>
                 <Tab text="Weight matrix">
                     <content>
-                        <SplitPane dividerPositions="0.5" focusTraversable="true" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="-1.0"
-                                   prefWidth="-1.0">
+                        <SplitPane dividerPositions="0.5" focusTraversable="true" maxHeight="-1.0" maxWidth="-1.0"
+                                   minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0">
                             <items>
                                 <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                            minHeight="0.0" minWidth="0.0" text="First weight matrix">
+                                            minHeight="0.0" minWidth="0.0" text="First weight matrix" textOverrun="ELLIPSIS">
                                     <content>
                                         <AnchorPane id="Content" maxHeight="1.7976931348623157E308"
                                                     maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"

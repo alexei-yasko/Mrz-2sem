@@ -33,4 +33,13 @@ public class DefaultLogger implements Logger {
             throw new IllegalStateException("can't write in log stream", e);
         }
     }
+
+    public void logCompressionCoefficient(double compressionCoefficient) {
+        try {
+            IOUtils.write("Compression coefficient: " + compressionCoefficient + "\n", outputStream);
+        }
+        catch (IOException e) {
+            throw new IllegalStateException("can't write in log stream", e);
+        }
+    }
 }

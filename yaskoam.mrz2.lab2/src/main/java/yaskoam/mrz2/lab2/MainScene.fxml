@@ -18,22 +18,29 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import yaskoam.mrz2.lab2.ui.menu.MainMenuBar?>
+
 <VBox fx:id="rootPane" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefHeight="700.0"
       prefWidth="950.0" styleClass="test" stylesheets="/yaskoam/mrz2/lab2/style.css" xmlns:fx="http://javafx.com/fxml/1"
-      xmlns="http://javafx.com/javafx/2.2" fx:controller="yaskoam.mrz2.lab2.ui.controllers.MainSceneController">
+      xmlns="http://javafx.com/javafx/2.2" fx:controller="yaskoam.mrz2.lab2.ui.MainSceneController">
     <children>
-        <MenuBar disable="false" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefWidth="-1.0"
-                 VBox.vgrow="NEVER">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#loadSourceImage" text="Load image"
-                                  fx:id="loadSourceImageMenuItem"/>
-                        <MenuItem mnemonicParsing="false" onAction="#closeMainWindow" text="Close"/>
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+
+        <MainMenuBar disable="false" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1" minWidth="-1"
+                     prefWidth="-1" VBox.vgrow="NEVER"/>
+
+        <!--<MenuBar disable="false" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefWidth="-1.0"-->
+                 <!--VBox.vgrow="NEVER">-->
+            <!--<menus>-->
+                <!--<Menu mnemonicParsing="false" text="File">-->
+                    <!--<items>-->
+                        <!--<MenuItem mnemonicParsing="false" onAction="#loadSourceImage" text="Load image"-->
+                                  <!--fx:id="loadSourceImageMenuItem"/>-->
+                        <!--<MenuItem mnemonicParsing="false" onAction="#closeMainWindow" text="Close"/>-->
+                    <!--</items>-->
+                <!--</Menu>-->
+            <!--</menus>-->
+        <!--</MenuBar>-->
+
         <ToolBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="37.0" minWidth="0.0" orientation="HORIZONTAL"
                  VBox.vgrow="NEVER">
             <items>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+
+<MenuBar xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:id="mainMenuBar"
+         disable="false" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefWidth="-1.0"
+         fx:controller="yaskoam.mrz2.lab2.ui.menu.MainMenuBarController">
+
+    <menus>
+        <Menu mnemonicParsing="false" text="File">
+            <items>
+                <MenuItem mnemonicParsing="false" onAction="#closeMainWindow" text="Close"/>
+            </items>
+        </Menu>
+    </menus>
+
+</MenuBar>

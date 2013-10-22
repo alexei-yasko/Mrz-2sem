@@ -1,4 +1,4 @@
-package yaskoam.mrz2.lab2.ui.controllers;
+package yaskoam.mrz2.lab2.ui;
 
 import java.text.DecimalFormat;
 

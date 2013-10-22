@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Font?>
+<?import java.awt.Insets?>
+
+<fx:root type="yaskoam.mrz2.lab2.ui.toolbar.ToolBarPanel" xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="/yaskoam/mrz2/lab2/ui/toolbar/style.css">
+
+    <ToolBar minHeight="37.0" orientation="HORIZONTAL">
+        <items>
+            <Button fx:id="compressButton" text="Compress"/>
+            <Button fx:id="stopButton" disable="true" text="Stop"/>
+        </items>
+    </ToolBar>
+
+</fx:root>
+

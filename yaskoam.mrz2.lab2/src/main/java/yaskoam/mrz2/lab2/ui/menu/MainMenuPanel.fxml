@@ -4,14 +4,13 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="yaskoam.mrz2.lab2.ui.menu.MainMenuPanel" xmlns:fx="http://javafx.com/fxml/1">
 
-        <MenuBar fx:id="mainMenuBar" disable="false" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0"
-                 prefWidth="-1.0" prefHeight="-1.0">
+        <MenuBar fx:id="mainMenuBar">
             <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#closeMainWindow" text="Close"/>
+                        <MenuItem onAction="#closeMainWindow" text="Close"/>
                     </items>
                 </Menu>
             </menus>

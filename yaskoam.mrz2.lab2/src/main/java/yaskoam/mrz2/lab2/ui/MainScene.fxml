@@ -18,8 +18,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <?import yaskoam.mrz2.lab2.ui.menu.MainMenuPanel?>
+<?import yaskoam.mrz2.lab2.ui.toolbar.ToolBarPanel?>
+
 <fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml/1"
          fx:id="rootPane" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0"
          prefHeight="700.0" prefWidth="950.0" stylesheets="/yaskoam/mrz2/lab2/ui/style.css"
@@ -28,22 +29,8 @@
 
         <MainMenuPanel/>
 
-        <ToolBar maxHeight="+Infinity" maxWidth="+Infinity" minHeight="37.0" minWidth="0.0" orientation="HORIZONTAL"
-                 VBox.vgrow="NEVER">
-            <items>
-                <Button fx:id="compressButton" contentDisplay="CENTER" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0"
-                        minWidth="-1.0" mnemonicParsing="false" onAction="#compressSourceImage" prefHeight="-1.0" text="Compress"
-                        textAlignment="CENTER">
-                    <font>
-                        <Font size="14.0" fx:id="x1"/>
-                    </font>
-                </Button>
-                <Button fx:id="stopButton" disable="true" font="$x1" mnemonicParsing="false" onAction="#stop" text="Stop"/>
-            </items>
-            <VBox.margin>
-                <Insets/>
-            </VBox.margin>
-        </ToolBar>
+        <ToolBarPanel/>
+
         <TabPane maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0"
                  tabClosingPolicy="UNAVAILABLE" tabMaxHeight="+Infinity" tabMinHeight="0.0" VBox.vgrow="NEVER">
             <tabs>

@@ -1,0 +1,5 @@
+.tool-bar .button {
+    -fx-font-size: 14pt;
+    -fx-content-display: center;
+    -fx-text-alignment: center;
+}

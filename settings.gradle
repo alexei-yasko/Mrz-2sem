@@ -1,3 +1,4 @@
 rootProject.name = 'Mrz-2sem'
 
 include "yaskoam.mrz2.lab1"
+include "yaskoam.mrz2.lab2"

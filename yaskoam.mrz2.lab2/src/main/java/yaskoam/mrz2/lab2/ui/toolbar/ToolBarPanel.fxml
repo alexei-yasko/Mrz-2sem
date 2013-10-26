@@ -6,13 +6,11 @@
 <?import java.awt.Insets?>
 
 <fx:root type="yaskoam.mrz2.lab2.ui.toolbar.ToolBarPanel" xmlns:fx="http://javafx.com/fxml/1"
-        stylesheets="/yaskoam/mrz2/lab2/ui/toolbar/style.css">
+        stylesheets="/yaskoam/mrz2/lab2/ui/customStyle.css">
 
     <ToolBar minHeight="37.0" orientation="HORIZONTAL">
-        <items>
-            <Button fx:id="compressButton" text="Compress"/>
-            <Button fx:id="stopButton" disable="true" text="Stop"/>
-        </items>
+        <Button fx:id="compressButton" text="Compress"/>
+        <Button fx:id="stopButton" disable="true" text="Stop"/>
     </ToolBar>
 
 </fx:root>

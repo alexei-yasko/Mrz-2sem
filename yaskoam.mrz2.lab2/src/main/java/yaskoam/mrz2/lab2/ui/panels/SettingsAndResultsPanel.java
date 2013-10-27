@@ -44,9 +44,33 @@ public class SettingsAndResultsPanel extends BaseComponent {
     public SettingsAndResultsPanel() {
     }
 
+    public void disableResultTextFields() {
+        totalErrorTextField.setDisable(true);
+        meanErrorTextField.setDisable(true);
+        numberOfIterationsTextField.setDisable(true);
+    }
+
+    public void enableResultTextFields() {
+        totalErrorTextField.setDisable(false);
+        meanErrorTextField.setDisable(false);
+        numberOfIterationsTextField.setDisable(false);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         setTextFieldsEventHandlers();
+    }
+
+    public TextField getTotalErrorTextField() {
+        return totalErrorTextField;
+    }
+
+    public TextField getNumberOfIterationsTextField() {
+        return numberOfIterationsTextField;
+    }
+
+    public TextField getMeanErrorTextField() {
+        return meanErrorTextField;
     }
 
     private void setTextFieldsEventHandlers() {

@@ -1,11 +1,16 @@
 package yaskoam.mrz2.lab2.ui.toolbar;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import yaskoam.mrz2.lab2.Settings;
+import yaskoam.mrz2.lab2.neuro.NeuralNetwork;
+import yaskoam.mrz2.lab2.neuro.NeuroImage;
 import yaskoam.mrz2.lab2.ui.BaseComponent;
+import yaskoam.mrz2.lab2.ui.MainPanel;
 
 /**
  * @author Q-YAA
@@ -18,38 +23,47 @@ public class ToolBarPanel extends BaseComponent {
     @FXML
     private Button compressButton;
 
+    private MainPanel mainPanel;
+
+    private Thread calculationThread;
+
     public ToolBarPanel() {
     }
 
     public void stop(ActionEvent event) {
-//        if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
-//            calculationThread.stop();
-//        }
+        if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
+            calculationThread.stop();
+        }
     }
 
-    //    public void compressSourceImage() {
-    //        final Image image = sourceImageView.getImage();
-    //
-    //        final int segmentHeight = Integer.parseInt(segmentHeightTextField.getText());
-    //        final int segmentWidth = Integer.parseInt(segmentWidthTextField.getText());
-    //        final int secondLayerNeurons = Integer.parseInt(secondLayerNeuronsTextField.getText());
-    //        final double learningCoefficient = Double.parseDouble(learningCoefficientTextField.getText());
-    //        final double maxError = Double.parseDouble(maxErrorTextField.getText());
-    //        final int maxIterations = Integer.parseInt(maxIterTextField.getText());
-    //
-    //        if (image != null) {
-    //
-    //            clearTotalErrorChart();
-    //            changeButtonsState();
-    //            disableResultTextFields();
-    //
-    //            calculationThread = new Thread(new CompressImageTask(
-    //                image, segmentHeight, segmentWidth, secondLayerNeurons, learningCoefficient, maxError, maxIterations));
-    //
-    //            calculationThread.setDaemon(true);
-    //            calculationThread.start();
-    //        }
-    //    }
+    public void compressSourceImage() {
+        mainPanel.getSettingsAndResultsPanel().updateSettings();
+        final Image image = mainPanel.getImagePanel().getSourceImage();
+
+        final int segmentHeight = Settings.get().getSegmentHeight();
+        final int segmentWidth = Settings.get().getSegmentWidth();
+        final int secondLayerNeurons = Settings.get().getSecondLayerNeurons();
+        final double learningCoefficient = Settings.get().getLearningCoefficient();
+        final double maxError = Settings.get().getMaxError();
+        final int maxIterations = Settings.get().getMaxIterations();
+
+        if (image != null) {
+
+            mainPanel.getErrorChartPanel().clearErrorChart();
+            changeButtonsState();
+            mainPanel.getSettingsAndResultsPanel().disableResultTextFields();
+
+            calculationThread = new Thread(new CompressImageTask(
+                image, segmentHeight, segmentWidth, secondLayerNeurons, learningCoefficient, maxError, maxIterations));
+
+            calculationThread.setDaemon(true);
+            calculationThread.start();
+        }
+    }
+
+    public void setMainPanel(MainPanel mainPanel) {
+        this.mainPanel = mainPanel;
+    }
 
     private class CompressImageTask extends Task {
 
@@ -81,35 +95,34 @@ public class ToolBarPanel extends BaseComponent {
 
         @Override
         protected Object call() throws Exception {
-//            NeuroImage neuroImage = NeuroImage.fromImage(image);
-//            double[][] segments = neuroImage.splitIntoSegments(segmentHeight, segmentWidth);
-//
-//            final NeuralNetwork neuralNetwork = new NeuralNetwork(
-//                segmentHeight * segmentWidth * 3, secondLayerNeurons, learningCoefficient, maxError, maxIterations);
-//            neuralNetwork.setLogger(uiLogger);
-//
-//            try {
-//                neuralNetwork.learn(segments);
-//                double[][] compressedSegments = neuralNetwork.compress(segments);
-//                double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
-//
-//                neuroImage.collectFromSegments(segmentHeight, segmentWidth, decompressedSegments);
-//                resultImageView.setImage(NeuroImage.toImage(neuroImage));
-//
-//                return null;
-//            }
-//            finally {
-//                Platform.runLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        changeButtonsState();
-//                        enableResultTextFields();
-//                        displayWeightMatrices(neuralNetwork.getWeightMatrix1(), neuralNetwork.getWeightMatrix2());
-//                    }
-//                });
-//            }
+            NeuroImage neuroImage = NeuroImage.fromImage(image);
+            double[][] segments = neuroImage.splitIntoSegments(segmentHeight, segmentWidth);
 
-            return null;
+            final NeuralNetwork neuralNetwork = new NeuralNetwork(
+                segmentHeight * segmentWidth * 3, secondLayerNeurons, learningCoefficient, maxError, maxIterations);
+            neuralNetwork.setLogger(mainPanel.getUiLogger());
+
+            try {
+                neuralNetwork.learn(segments);
+                double[][] compressedSegments = neuralNetwork.compress(segments);
+                double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
+
+                neuroImage.collectFromSegments(segmentHeight, segmentWidth, decompressedSegments);
+                mainPanel.getImagePanel().setResultImage(NeuroImage.toImage(neuroImage));
+
+                return null;
+            }
+            finally {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeButtonsState();
+                        mainPanel.getSettingsAndResultsPanel().enableResultTextFields();
+                        mainPanel.getWeightMatrixPanel().displayWeightMatrices(
+                            neuralNetwork.getWeightMatrix1(), neuralNetwork.getWeightMatrix2());
+                    }
+                });
+            }
         }
     }
 

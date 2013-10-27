@@ -12,11 +12,15 @@ import yaskoam.mrz2.lab2.ui.panels.ErrorChartPanel;
 import yaskoam.mrz2.lab2.ui.panels.ImagesPanel;
 import yaskoam.mrz2.lab2.ui.panels.SettingsAndResultsPanel;
 import yaskoam.mrz2.lab2.ui.panels.WeightMatrixPanel;
+import yaskoam.mrz2.lab2.ui.toolbar.ToolBarPanel;
 
 /**
  * @author Q-YAA
  */
 public class MainPanel extends BaseComponent {
+
+    @FXML
+    private ToolBarPanel toolBarPanel;
 
     @FXML
     private ImagesPanel imagesPanel;
@@ -39,11 +43,28 @@ public class MainPanel extends BaseComponent {
     public void initialize(URL url, ResourceBundle bundle) {
         uiLogger = createUiLogger();
         menuPanel.setMainPanel(this);
+        toolBarPanel.setMainPanel(this);
         uiLogger.setChartPoints(errorChartPanel.getChartPoints());
     }
 
     public ImagesPanel getImagePanel() {
         return imagesPanel;
+    }
+
+    public WeightMatrixPanel getWeightMatrixPanel() {
+        return weightMatrixPanel;
+    }
+
+    public SettingsAndResultsPanel getSettingsAndResultsPanel() {
+        return settingsAndResultsPanel;
+    }
+
+    public ErrorChartPanel getErrorChartPanel() {
+        return errorChartPanel;
+    }
+
+    public UiLogger getUiLogger() {
+        return uiLogger;
     }
 
     private UiLogger createUiLogger() {

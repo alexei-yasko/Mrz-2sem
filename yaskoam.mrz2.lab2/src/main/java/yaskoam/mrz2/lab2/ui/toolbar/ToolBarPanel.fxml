@@ -9,8 +9,8 @@
         stylesheets="/yaskoam/mrz2/lab2/ui/customStyle.css">
 
     <ToolBar minHeight="37.0" orientation="HORIZONTAL">
-        <Button fx:id="compressButton" text="Compress"/>
-        <Button fx:id="stopButton" disable="true" text="Stop"/>
+        <Button fx:id="compressButton" text="Compress" onAction="#compressSourceImage"/>
+        <Button fx:id="stopButton" disable="true" text="Stop" onAction="#stop"/>
     </ToolBar>
 
 </fx:root>

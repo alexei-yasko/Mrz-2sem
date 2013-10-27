@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import yaskoam.mrz2.lab2.Settings;
 import yaskoam.mrz2.lab2.ui.BaseComponent;
 import yaskoam.mrz2.lab2.ui.support.DoubleTextFieldConstraint;
 import yaskoam.mrz2.lab2.ui.support.IntTextFieldConstraint;
@@ -42,6 +43,15 @@ public class SettingsAndResultsPanel extends BaseComponent {
     private TextField numberOfIterationsTextField;
 
     public SettingsAndResultsPanel() {
+    }
+
+    public void updateSettings() {
+        Settings.get().setSegmentHeight(Integer.parseInt(segmentHeightTextField.getText()));
+        Settings.get().setSegmentWidth(Integer.parseInt(segmentWidthTextField.getText()));
+        Settings.get().setSecondLayerNeurons(Integer.parseInt(secondLayerNeuronsTextField.getText()));
+        Settings.get().setLearningCoefficient(Double.parseDouble(learningCoefficientTextField.getText()));
+        Settings.get().setMaxError(Double.parseDouble(maxErrorTextField.getText()));
+        Settings.get().setMaxIterations(Integer.parseInt(maxIterTextField.getText()));
     }
 
     public void disableResultTextFields() {

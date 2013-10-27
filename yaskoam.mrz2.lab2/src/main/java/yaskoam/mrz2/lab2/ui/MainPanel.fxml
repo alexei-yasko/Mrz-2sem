@@ -15,7 +15,7 @@
 
     <MenuPanel fx:id="menuPanel"/>
 
-    <ToolBarPanel/>
+    <ToolBarPanel fx:id="toolBarPanel"/>
 
     <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="NEVER">
         <Tab text="Images">

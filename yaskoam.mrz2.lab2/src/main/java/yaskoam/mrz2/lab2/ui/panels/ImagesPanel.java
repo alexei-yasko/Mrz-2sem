@@ -35,6 +35,14 @@ public class ImagesPanel extends BaseComponent {
         sourceImageView.setImage(image);
     }
 
+    public Image getSourceImage() {
+        return sourceImageView.getImage();
+    }
+
+    public void setResultImage(Image image) {
+        resultImageView.setImage(image);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         setImageViewsEventHandlers();

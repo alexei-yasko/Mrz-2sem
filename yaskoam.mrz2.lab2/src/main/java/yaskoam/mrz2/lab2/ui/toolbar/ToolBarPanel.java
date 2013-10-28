@@ -30,6 +30,10 @@ public class ToolBarPanel extends BaseComponent {
     public ToolBarPanel() {
     }
 
+    public void generateSequence(ActionEvent event) {
+        mainPanel.getSequencePanel().generateSequence();
+    }
+
     public void stop(ActionEvent event) {
         if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
             calculationThread.stop();

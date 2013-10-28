@@ -3,3 +3,16 @@
     -fx-content-display: center;
     -fx-text-alignment: center;
 }
+
+.sequencePanel .label {
+    -fx-font-size: 15pt;
+}
+
+.sequencePanel .radio-button {
+    -fx-font-size: 15pt;
+}
+
+.sequencePanel .label.header {
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+}

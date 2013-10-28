@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import yaskoam.mrz2.lab2.ui.menu.MenuPanel;
 import yaskoam.mrz2.lab2.ui.panels.ErrorChartPanel;
 import yaskoam.mrz2.lab2.ui.panels.ImagesPanel;
+import yaskoam.mrz2.lab2.ui.panels.SequencePanel;
 import yaskoam.mrz2.lab2.ui.panels.SettingsAndResultsPanel;
 import yaskoam.mrz2.lab2.ui.panels.WeightMatrixPanel;
 import yaskoam.mrz2.lab2.ui.toolbar.ToolBarPanel;
@@ -18,6 +19,9 @@ import yaskoam.mrz2.lab2.ui.toolbar.ToolBarPanel;
  * @author Q-YAA
  */
 public class MainPanel extends BaseComponent {
+
+    @FXML
+    private SequencePanel sequencePanel;
 
     @FXML
     private ToolBarPanel toolBarPanel;
@@ -45,6 +49,10 @@ public class MainPanel extends BaseComponent {
         menuPanel.setMainPanel(this);
         toolBarPanel.setMainPanel(this);
         uiLogger.setChartPoints(errorChartPanel.getChartPoints());
+    }
+
+    public SequencePanel getSequencePanel() {
+        return sequencePanel;
     }
 
     public ImagesPanel getImagePanel() {

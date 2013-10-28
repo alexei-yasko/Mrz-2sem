@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root type="yaskoam.mrz2.lab2.ui.panels.SequencePanel" xmlns:fx="http://javafx.com/fxml/1"
+         stylesheets="/yaskoam/mrz2/lab2/ui/customStyle.css" styleClass="sequencePanel">
+
+    <GridPane hgap="20.0" vgap="20.0">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50.0"/>
+            <ColumnConstraints percentWidth="50.0"/>
+        </columnConstraints>
+        <VBox.margin>
+            <Insets bottom="70.0" left="70.0" right="70.0" top="70.0"/>
+        </VBox.margin>
+
+        <VBox alignment="TOP_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label styleClass="header" text="Functions">
+                <VBox.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x1"/>
+                </VBox.margin>
+            </Label>
+            <RadioButton fx:id="fibonacciRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <RadioButton fx:id="factorialRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <RadioButton fx:id="periodicRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <RadioButton fx:id="powerRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+        </VBox>
+
+        <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label styleClass="header" text="Parameters" VBox.margin="$x1"/>
+            <VBox VBox.margin="$x1">
+                <Label text="X parameter:"/>
+                <TextField fx:id="xParameterTextField" prefWidth="200.0"/>
+            </VBox>
+            <VBox VBox.margin="$x1">
+                <Label text="N parameter:"/>
+                <TextField fx:id="nParameterTextField" prefWidth="-1.0"/>
+            </VBox>
+        </VBox>
+
+        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label styleClass="header" text="Result sequence" VBox.margin="$x1"/>
+            <TextArea fx:id="resultSequenceTextArea" editable="false" wrapText="true" VBox.margin="$x1"/>
+        </VBox>
+
+    </GridPane>
+
+</fx:root>

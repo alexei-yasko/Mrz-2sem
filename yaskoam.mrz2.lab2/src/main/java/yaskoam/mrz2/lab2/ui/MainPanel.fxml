@@ -10,6 +10,7 @@
 <?import yaskoam.mrz2.lab2.ui.panels.WeightMatrixPanel?>
 <?import yaskoam.mrz2.lab2.ui.panels.ErrorChartPanel?>
 
+<?import yaskoam.mrz2.lab2.ui.panels.SequencePanel?>
 <fx:root type="yaskoam.mrz2.lab2.ui.MainPanel" xmlns:fx="http://javafx.com/fxml/1"
          fx:id="rootPane" prefHeight="700.0" prefWidth="950.0" stylesheets="/yaskoam/mrz2/lab2/ui/style.css">
 
@@ -18,6 +19,9 @@
     <ToolBarPanel fx:id="toolBarPanel"/>
 
     <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="NEVER">
+        <Tab text="Sequence">
+            <SequencePanel fx:id="sequencePanel"/>
+        </Tab>
         <Tab text="Images">
             <ImagesPanel fx:id="imagesPanel"/>
         </Tab>

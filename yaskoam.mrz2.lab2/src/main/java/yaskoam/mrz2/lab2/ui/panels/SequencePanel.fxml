@@ -43,11 +43,11 @@
             <Label styleClass="header" text="Parameters" VBox.margin="$x1"/>
             <VBox VBox.margin="$x1">
                 <Label text="X parameter:"/>
-                <TextField fx:id="xParameterTextField" prefWidth="200.0"/>
+                <TextField fx:id="xParameterTextField" text="0" prefWidth="200.0"/>
             </VBox>
             <VBox VBox.margin="$x1">
                 <Label text="N parameter:"/>
-                <TextField fx:id="nParameterTextField" prefWidth="-1.0"/>
+                <TextField fx:id="nParameterTextField" text="0" prefWidth="-1.0"/>
             </VBox>
         </VBox>
 

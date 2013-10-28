@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import com.google.common.base.Strings;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -49,8 +51,12 @@ public class SequencePanel extends BaseComponent {
     private ToggleGroup functionsToggleGroup;
 
     public void generateSequence() {
-        int x = Integer.parseInt(xParameterTextField.textProperty().getValue());
-        int n = Integer.parseInt(nParameterTextField.textProperty().getValue());
+        resultSequenceTextArea.clear();
+
+        String xString = xParameterTextField.textProperty().getValue();
+        String nString = nParameterTextField.textProperty().getValue();
+        int x = Strings.isNullOrEmpty(xString) ? 0 : Integer.parseInt(xString);
+        int n = Strings.isNullOrEmpty(nString) ? 0 : Integer.parseInt(nString);
 
         Function<Integer> function = FUNCTIONS_MAP.get(getSelectedFunction());
 

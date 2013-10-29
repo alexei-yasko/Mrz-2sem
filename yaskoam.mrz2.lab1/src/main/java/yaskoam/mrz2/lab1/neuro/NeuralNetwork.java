@@ -69,11 +69,14 @@ public class NeuralNetwork {
         double totalError;
         int iterations = 0;
 
-        do {
-            // learn
-            for (double[] segment : segments) {
-                DoubleMatrix X = new DoubleMatrix(new double[][]{segment});
+        DoubleMatrix[] segmentsM = new DoubleMatrix[segments.length];
+        for (int i = 0; i < segments.length; i++) {
+            segmentsM[i] = new DoubleMatrix(new double[][]{segments[i]});
+        }
 
+        do {
+
+            for (DoubleMatrix X : segmentsM) {
                 DoubleMatrix Y = X.mmul(weightMatrix1);
                 DoubleMatrix deltaX = Y.mmul(weightMatrix2).sub(X);
 
@@ -86,8 +89,7 @@ public class NeuralNetwork {
             totalError = 0;
 
             // calculate total error
-            for (double[] segment : segments) {
-                DoubleMatrix X = new DoubleMatrix(new double[][]{segment});
+            for (DoubleMatrix X : segmentsM) {
                 DoubleMatrix Y = X.mmul(weightMatrix1);
                 DoubleMatrix deltaX = Y.mmul(weightMatrix2).sub(X);
 

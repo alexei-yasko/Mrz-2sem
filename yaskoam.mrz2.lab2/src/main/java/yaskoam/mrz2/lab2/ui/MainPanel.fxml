@@ -18,7 +18,7 @@
 
     <ToolBarPanel fx:id="toolBarPanel"/>
 
-    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="NEVER">
+    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <Tab text="Sequence">
             <SequencePanel fx:id="sequencePanel"/>
         </Tab>

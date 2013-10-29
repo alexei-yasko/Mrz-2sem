@@ -18,11 +18,15 @@
 <fx:root type="yaskoam.mrz2.lab2.ui.panels.SequencePanel" xmlns:fx="http://javafx.com/fxml/1"
          stylesheets="/yaskoam/mrz2/lab2/ui/customStyle.css" styleClass="sequencePanel">
 
-    <GridPane hgap="20.0" vgap="20.0">
+    <GridPane hgap="20.0" vgap="20.0" VBox.vgrow="ALWAYS" alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints percentWidth="50.0"/>
             <ColumnConstraints percentWidth="50.0"/>
         </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="50.0"/>
+            <RowConstraints percentHeight="50.0"/>
+        </rowConstraints>
         <VBox.margin>
             <Insets bottom="70.0" left="70.0" right="70.0" top="70.0"/>
         </VBox.margin>
@@ -40,18 +44,17 @@
         </VBox>
 
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">
-            <Label styleClass="header" text="Parameters" VBox.margin="$x1"/>
             <VBox VBox.margin="$x1">
-                <Label text="X parameter:"/>
-                <TextField fx:id="xParameterTextField" text="0" prefWidth="200.0"/>
+                <Label text="generate from:"/>
+                <TextField fx:id="generateFromTextField" text="0"/>
             </VBox>
             <VBox VBox.margin="$x1">
-                <Label text="N parameter:"/>
-                <TextField fx:id="nParameterTextField" text="0" prefWidth="-1.0"/>
+                <Label text="generate to:"/>
+                <TextField fx:id="generateToTextField" text="0"/>
             </VBox>
         </VBox>
 
-        <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <VBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
             <Label styleClass="header" text="Result sequence" VBox.margin="$x1"/>
             <TextArea fx:id="resultSequenceTextArea" editable="false" wrapText="true" VBox.margin="$x1"/>
         </VBox>

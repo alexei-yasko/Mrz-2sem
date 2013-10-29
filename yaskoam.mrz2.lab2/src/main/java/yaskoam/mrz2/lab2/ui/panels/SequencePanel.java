@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import com.google.common.base.Strings;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -22,6 +20,7 @@ import yaskoam.mrz2.lab2.functions.PeriodicSequence;
 import yaskoam.mrz2.lab2.functions.PowerSequence;
 import yaskoam.mrz2.lab2.functions.Sequence;
 import yaskoam.mrz2.lab2.ui.BaseComponent;
+import yaskoam.mrz2.lab2.ui.UiUtils;
 import yaskoam.mrz2.lab2.ui.support.IntTextFieldConstraint;
 
 /**
@@ -65,8 +64,8 @@ public class SequencePanel extends BaseComponent {
         sequence.clear();
         resultSequenceTextArea.clear();
 
-        int from = getIntValue(generateFromTextField);
-        int to = getIntValue(generateToTextField);
+        int from = UiUtils.getIntValue(generateFromTextField);
+        int to = UiUtils.getIntValue(generateToTextField);
 
         Sequence<Long> function = FUNCTIONS_MAP.get(getSelectedFunction());
 
@@ -80,6 +79,15 @@ public class SequencePanel extends BaseComponent {
 
     public long[] getSequence() {
         return ArrayUtils.toPrimitive(sequence.toArray(new Long[sequence.size()]));
+    }
+
+    public double[] getDoubleSequence() {
+        long[] sequence = getSequence();
+        double[] doubleSequence = new double[sequence.length];
+        for (int i = 0; i < sequence.length; i++) {
+            doubleSequence[i] = sequence[i];
+        }
+        return doubleSequence;
     }
 
     @Override
@@ -112,10 +120,5 @@ public class SequencePanel extends BaseComponent {
 
     private String getSelectedFunction() {
         return ((RadioButton) functionsToggleGroup.getSelectedToggle()).textProperty().getValue();
-    }
-
-    private int getIntValue(TextField textField) {
-        return Strings.isNullOrEmpty(textField.textProperty().getValue()) ? 0
-            : Integer.parseInt(textField.textProperty().getValue());
     }
 }

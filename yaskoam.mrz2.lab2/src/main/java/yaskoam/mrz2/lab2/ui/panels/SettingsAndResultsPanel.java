@@ -5,8 +5,8 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import yaskoam.mrz2.lab2.Settings;
 import yaskoam.mrz2.lab2.ui.BaseComponent;
+import yaskoam.mrz2.lab2.ui.UiUtils;
 import yaskoam.mrz2.lab2.ui.support.DoubleTextFieldConstraint;
 import yaskoam.mrz2.lab2.ui.support.IntTextFieldConstraint;
 
@@ -16,13 +16,10 @@ import yaskoam.mrz2.lab2.ui.support.IntTextFieldConstraint;
 public class SettingsAndResultsPanel extends BaseComponent {
 
     @FXML
-    private TextField segmentHeightTextField;
+    private TextField imagesNumberTextField;
 
     @FXML
-    private TextField segmentWidthTextField;
-
-    @FXML
-    private TextField secondLayerNeuronsTextField;
+    private TextField windowSizeTextField;
 
     @FXML
     private TextField learningCoefficientTextField;
@@ -45,13 +42,24 @@ public class SettingsAndResultsPanel extends BaseComponent {
     public SettingsAndResultsPanel() {
     }
 
-    public void updateSettings() {
-        Settings.get().setSegmentHeight(Integer.parseInt(segmentHeightTextField.getText()));
-        Settings.get().setSegmentWidth(Integer.parseInt(segmentWidthTextField.getText()));
-        Settings.get().setSecondLayerNeurons(Integer.parseInt(secondLayerNeuronsTextField.getText()));
-        Settings.get().setLearningCoefficient(Double.parseDouble(learningCoefficientTextField.getText()));
-        Settings.get().setMaxError(Double.parseDouble(maxErrorTextField.getText()));
-        Settings.get().setMaxIterations(Integer.parseInt(maxIterTextField.getText()));
+    public int getImagesNumber() {
+        return UiUtils.getIntValue(imagesNumberTextField);
+    }
+
+    public int getWindowSize() {
+        return UiUtils.getIntValue(windowSizeTextField);
+    }
+
+    public double getLearningCoefficient() {
+        return UiUtils.getDoubleValue(learningCoefficientTextField);
+    }
+
+    public double getMaxError() {
+        return UiUtils.getDoubleValue(maxErrorTextField);
+    }
+
+    public int getMaxIter() {
+        return UiUtils.getIntValue(maxIterTextField);
     }
 
     public void disableResultTextFields() {
@@ -84,9 +92,8 @@ public class SettingsAndResultsPanel extends BaseComponent {
     }
 
     private void setTextFieldsEventHandlers() {
-        segmentHeightTextField.textProperty().addListener(new IntTextFieldConstraint(segmentHeightTextField));
-        segmentWidthTextField.textProperty().addListener(new IntTextFieldConstraint(segmentWidthTextField));
-        secondLayerNeuronsTextField.textProperty().addListener(new IntTextFieldConstraint(secondLayerNeuronsTextField));
+        windowSizeTextField.textProperty().addListener(new IntTextFieldConstraint(windowSizeTextField));
+        imagesNumberTextField.textProperty().addListener(new IntTextFieldConstraint(imagesNumberTextField));
         maxIterTextField.textProperty().addListener(new IntTextFieldConstraint(maxIterTextField));
 
         learningCoefficientTextField.textProperty().addListener(new DoubleTextFieldConstraint(learningCoefficientTextField));

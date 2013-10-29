@@ -31,12 +31,12 @@
                 <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
-                <Label text="Segment height (n) :" VBox.vgrow="ALWAYS"/>
-                <TextField fx:id="segmentHeightTextField" text="2" VBox.vgrow="ALWAYS"/>
+                <Label text="Window size (p) :" VBox.vgrow="ALWAYS"/>
+                <TextField fx:id="windowSizeTextField" text="2" VBox.vgrow="ALWAYS"/>
             </VBox>
             <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-                <Label text="Segment width (m) :" VBox.vgrow="ALWAYS"/>
-                <TextField fx:id="segmentWidthTextField" text="2" VBox.vgrow="ALWAYS"/>
+                <Label text="Number of images (m) :" VBox.vgrow="ALWAYS"/>
+                <TextField fx:id="imagesNumberTextField" text="2" VBox.vgrow="ALWAYS"/>
             </VBox>
             <VBox GridPane.columnIndex="1" GridPane.rowIndex="0">
                 <Label text="Learning coefficient (a) :" VBox.vgrow="ALWAYS"/>
@@ -45,10 +45,6 @@
             <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <Label text="Max error (e):" VBox.vgrow="ALWAYS"/>
                     <TextField fx:id="maxErrorTextField" text="30" VBox.vgrow="ALWAYS"/>
-            </VBox>
-            <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
-                <Label text="Neurons number on second layer (p) :" VBox.vgrow="ALWAYS"/>
-                <TextField fx:id="secondLayerNeuronsTextField" text="6" VBox.vgrow="ALWAYS"/>
             </VBox>
             <VBox GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <Label text="Max number of iterations :" VBox.vgrow="ALWAYS"/>

@@ -12,9 +12,9 @@ import yaskoam.mrz2.lab2.Logger;
  */
 public class NeuralNetwork {
 
-    private int segmentLength;
+    private int windowSize;
 
-    private int secondLayerNeurons;
+    private int imagesNumber;
 
     private double learningCoefficient;
 
@@ -28,40 +28,16 @@ public class NeuralNetwork {
 
     private Logger logger = new DefaultLogger();
 
-    public NeuralNetwork(
-        int segmentLength, int secondLayerNeurons, double learningCoefficient, double maxError, int maxIterations) {
+    public NeuralNetwork(int windowSize, int imagesNumber, double learningCoefficient, double maxError, int maxIterations) {
 
-        this.segmentLength = segmentLength;
-        this.secondLayerNeurons = secondLayerNeurons;
+        this.windowSize = windowSize;
+        this.imagesNumber = imagesNumber;
         this.learningCoefficient = learningCoefficient;
         this.maxError = maxError;
         this.maxIterations = maxIterations;
 
-        weightMatrix1 = new DoubleMatrix(createRandomArray(segmentLength, secondLayerNeurons));
-        weightMatrix2 = new DoubleMatrix(createRandomArray(secondLayerNeurons, segmentLength));
-    }
-
-
-    public double[][] compress(double[][] segments) {
-        double[][] compressed = new double[segments.length][secondLayerNeurons];
-
-        for (int i = 0; i < segments.length; i++) {
-            DoubleMatrix X = new DoubleMatrix(new double[][]{segments[i]});
-            compressed[i] = X.mmul(weightMatrix1).data;
-        }
-
-        return compressed;
-    }
-
-    public double[][] decompress(double[][] segments) {
-        double[][] decompressed = new double[segments.length][segmentLength];
-
-        for (int i = 0; i < segments.length; i++) {
-            DoubleMatrix Y = new DoubleMatrix(new double[][]{segments[i]});
-            decompressed[i] = Y.mmul(weightMatrix2).data;
-        }
-
-        return decompressed;
+        weightMatrix1 = new DoubleMatrix(createRandomArray(windowSize + imagesNumber, imagesNumber));
+        weightMatrix2 = new DoubleMatrix(createRandomArray(imagesNumber, 1));
     }
 
     public void learn(double[][] segments) {

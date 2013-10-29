@@ -5,10 +5,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import yaskoam.mrz2.lab2.Settings;
 import yaskoam.mrz2.lab2.neuro.NeuralNetwork;
-import yaskoam.mrz2.lab2.neuro.NeuroImage;
 import yaskoam.mrz2.lab2.ui.BaseComponent;
 import yaskoam.mrz2.lab2.ui.MainPanel;
 
@@ -18,10 +15,10 @@ import yaskoam.mrz2.lab2.ui.MainPanel;
 public class ToolBarPanel extends BaseComponent {
 
     @FXML
-    private Button stopButton;
+    private Button startLearnButton;
 
     @FXML
-    private Button compressButton;
+    private Button stopLearnButton;
 
     private MainPanel mainPanel;
 
@@ -34,34 +31,31 @@ public class ToolBarPanel extends BaseComponent {
         mainPanel.getSequencePanel().generateSequence();
     }
 
-    public void stop(ActionEvent event) {
-        if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
-            calculationThread.stop();
-        }
-    }
+    public void startLearn(ActionEvent event) {
+        double[] sequence = mainPanel.getSequencePanel().getDoubleSequence();
 
-    public void compressSourceImage() {
-        mainPanel.getSettingsAndResultsPanel().updateSettings();
-        final Image image = mainPanel.getImagePanel().getSourceImage();
+        int windowSize = mainPanel.getSettingsAndResultsPanel().getWindowSize();
+        int imagesNumber = mainPanel.getSettingsAndResultsPanel().getImagesNumber();
+        double learningCoefficient = mainPanel.getSettingsAndResultsPanel().getLearningCoefficient();
+        double maxError = mainPanel.getSettingsAndResultsPanel().getMaxError();
+        int maxIter = mainPanel.getSettingsAndResultsPanel().getMaxIter();
 
-        final int segmentHeight = Settings.get().getSegmentHeight();
-        final int segmentWidth = Settings.get().getSegmentWidth();
-        final int secondLayerNeurons = Settings.get().getSecondLayerNeurons();
-        final double learningCoefficient = Settings.get().getLearningCoefficient();
-        final double maxError = Settings.get().getMaxError();
-        final int maxIterations = Settings.get().getMaxIterations();
-
-        if (image != null) {
-
+        if (sequence.length > 1) {
             mainPanel.getErrorChartPanel().clearErrorChart();
             changeButtonsState();
             mainPanel.getSettingsAndResultsPanel().disableResultTextFields();
 
-            calculationThread = new Thread(new CompressImageTask(
-                image, segmentHeight, segmentWidth, secondLayerNeurons, learningCoefficient, maxError, maxIterations));
+            calculationThread = new Thread(new LearnTask(
+                sequence, windowSize, imagesNumber, learningCoefficient, maxError, maxIter));
 
             calculationThread.setDaemon(true);
             calculationThread.start();
+        }
+    }
+
+    public void stopLearn(ActionEvent event) {
+        if (calculationThread != null && calculationThread.getState() == Thread.State.RUNNABLE) {
+            calculationThread.interrupt();
         }
     }
 
@@ -69,13 +63,13 @@ public class ToolBarPanel extends BaseComponent {
         this.mainPanel = mainPanel;
     }
 
-    private class CompressImageTask extends Task {
+    private class LearnTask extends Task {
 
-        private Image image;
+        private double[] sequence;
 
-        private int segmentHeight;
+        private int windowSize;
 
-        private int segmentWidth;
+        private int imagesNumber;
 
         private int secondLayerNeurons;
 
@@ -85,13 +79,12 @@ public class ToolBarPanel extends BaseComponent {
 
         private int maxIterations;
 
-        private CompressImageTask(Image image, int segmentHeight, int segmentWidth, int secondLayerNeurons,
+        private LearnTask(double[] sequence, int windowSize, int imagesNumber,
             double learningCoefficient, double maxError, int maxIterations) {
 
-            this.image = image;
-            this.segmentHeight = segmentHeight;
-            this.segmentWidth = segmentWidth;
-            this.secondLayerNeurons = secondLayerNeurons;
+            this.sequence = sequence;
+            this.windowSize = windowSize;
+            this.imagesNumber = imagesNumber;
             this.learningCoefficient = learningCoefficient;
             this.maxError = maxError;
             this.maxIterations = maxIterations;
@@ -99,31 +92,29 @@ public class ToolBarPanel extends BaseComponent {
 
         @Override
         protected Object call() throws Exception {
-            NeuroImage neuroImage = NeuroImage.fromImage(image);
-            double[][] segments = neuroImage.splitIntoSegments(segmentHeight, segmentWidth);
 
-            final NeuralNetwork neuralNetwork = new NeuralNetwork(
-                segmentHeight * segmentWidth * 3, secondLayerNeurons, learningCoefficient, maxError, maxIterations);
+            final NeuralNetwork neuralNetwork =
+                new NeuralNetwork(windowSize, imagesNumber, learningCoefficient, maxError, maxIterations);
             neuralNetwork.setLogger(mainPanel.getUiLogger());
 
             try {
-                neuralNetwork.learn(segments);
-                double[][] compressedSegments = neuralNetwork.compress(segments);
-                double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
-
-                neuroImage.collectFromSegments(segmentHeight, segmentWidth, decompressedSegments);
-                mainPanel.getImagePanel().setResultImage(NeuroImage.toImage(neuroImage));
-
+//                neuralNetwork.learn(segments);
+//                double[][] compressedSegments = neuralNetwork.compress(segments);
+//                double[][] decompressedSegments = neuralNetwork.decompress(compressedSegments);
+//
+//                neuroImage.collectFromSegments(segmentHeight, segmentWidth, decompressedSegments);
+//                mainPanel.getImagePanel().setResultImage(NeuroImage.toImage(neuroImage));
+//
                 return null;
             }
             finally {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        changeButtonsState();
-                        mainPanel.getSettingsAndResultsPanel().enableResultTextFields();
-                        mainPanel.getWeightMatrixPanel().displayWeightMatrices(
-                            neuralNetwork.getWeightMatrix1(), neuralNetwork.getWeightMatrix2());
+//                        changeButtonsState();
+//                        mainPanel.getSettingsAndResultsPanel().enableResultTextFields();
+//                        mainPanel.getWeightMatrixPanel().displayWeightMatrices(
+//                            neuralNetwork.getWeightMatrix1(), neuralNetwork.getWeightMatrix2());
                     }
                 });
             }
@@ -131,7 +122,7 @@ public class ToolBarPanel extends BaseComponent {
     }
 
     private void changeButtonsState() {
-        compressButton.setDisable(!compressButton.isDisable());
-        stopButton.setDisable(!stopButton.isDisable());
+        startLearnButton.setDisable(!startLearnButton.isDisable());
+        stopLearnButton.setDisable(!stopLearnButton.isDisable());
     }
 }

@@ -18,10 +18,6 @@ public class ErrorChartPanel extends BaseComponent {
     @FXML
     private LineChart errorChart;
 
-    public ErrorChartPanel() {
-
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         initTotalErrorChart();

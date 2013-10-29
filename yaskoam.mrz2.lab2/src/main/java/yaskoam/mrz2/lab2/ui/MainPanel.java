@@ -7,9 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javafx.fxml.FXML;
-import yaskoam.mrz2.lab2.ui.menu.MenuPanel;
 import yaskoam.mrz2.lab2.ui.panels.ErrorChartPanel;
-import yaskoam.mrz2.lab2.ui.panels.ImagesPanel;
 import yaskoam.mrz2.lab2.ui.panels.SequencePanel;
 import yaskoam.mrz2.lab2.ui.panels.SettingsAndResultsPanel;
 import yaskoam.mrz2.lab2.ui.panels.WeightMatrixPanel;
@@ -27,12 +25,6 @@ public class MainPanel extends BaseComponent {
     private ToolBarPanel toolBarPanel;
 
     @FXML
-    private ImagesPanel imagesPanel;
-
-    @FXML
-    private MenuPanel menuPanel;
-
-    @FXML
     private SettingsAndResultsPanel settingsAndResultsPanel;
 
     @FXML
@@ -46,17 +38,12 @@ public class MainPanel extends BaseComponent {
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         uiLogger = createUiLogger();
-        menuPanel.setMainPanel(this);
         toolBarPanel.setMainPanel(this);
         uiLogger.setChartPoints(errorChartPanel.getChartPoints());
     }
 
     public SequencePanel getSequencePanel() {
         return sequencePanel;
-    }
-
-    public ImagesPanel getImagePanel() {
-        return imagesPanel;
     }
 
     public WeightMatrixPanel getWeightMatrixPanel() {

@@ -6,25 +6,23 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.TextArea?>
 
+<?import javafx.scene.control.Accordion?>
 <fx:root type="yaskoam.mrz2.lab2.ui.panels.WeightMatrixPanel" xmlns:fx="http://javafx.com/fxml/1"
-         stylesheets="/yaskoam/mrz2/lab2/ui/customStyle.css">
+         stylesheets="/yaskoam/mrz2/lab2/ui/customStyle.css" styleClass="weightMatrixPanel">
 
-    <SplitPane dividerPositions="0.5" focusTraversable="true" VBox.vgrow="ALWAYS">
+    <AnchorPane VBox.vgrow="ALWAYS">
+        <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="0.0">
+            <panes>
+                <TitledPane animated="true" text="First weight matrix" textOverrun="ELLIPSIS">
+                    <TextArea fx:id="weightMatrix1TextArea" editable="false" wrapText="false"/>
+                </TitledPane>
 
-        <AnchorPane>
-            <TitledPane animated="false" text="First weight matrix" textOverrun="ELLIPSIS" AnchorPane.bottomAnchor="0.0"
-                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <TextArea fx:id="weightMatrix1TextArea" editable="false" wrapText="false"/>
-            </TitledPane>
-        </AnchorPane>
-
-        <AnchorPane>
-            <TitledPane animated="false" text="Second weight matrix" textOverrun="ELLIPSIS" AnchorPane.bottomAnchor="0.0"
-                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <TextArea fx:id="weightMatrix2TextArea" editable="false" wrapText="false"/>
-            </TitledPane>
-        </AnchorPane>
-
-    </SplitPane>
+                <TitledPane animated="true" text="Second weight matrix" textOverrun="ELLIPSIS">
+                    <TextArea fx:id="weightMatrix2TextArea" editable="false" wrapText="false"/>
+                </TitledPane>
+            </panes>
+        </Accordion>
+    </AnchorPane>
 
 </fx:root>

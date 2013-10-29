@@ -24,9 +24,6 @@ public class ToolBarPanel extends BaseComponent {
 
     private Thread calculationThread;
 
-    public ToolBarPanel() {
-    }
-
     public void generateSequence(ActionEvent event) {
         mainPanel.getSequencePanel().generateSequence();
     }

@@ -39,9 +39,6 @@ public class SettingsAndResultsPanel extends BaseComponent {
     @FXML
     private TextField numberOfIterationsTextField;
 
-    public SettingsAndResultsPanel() {
-    }
-
     public int getImagesNumber() {
         return UiUtils.getIntValue(imagesNumberTextField);
     }

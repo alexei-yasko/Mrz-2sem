@@ -2,6 +2,7 @@ package yaskoam.mrz2.lab2.ui.panels;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,9 @@ public class SequencePanel extends BaseComponent {
     private TextField generateFromTextField;
 
     @FXML
+    private TextField predictedAmountTextField;
+
+    @FXML
     private RadioButton powerRadioButton;
 
     @FXML
@@ -55,6 +59,9 @@ public class SequencePanel extends BaseComponent {
 
     @FXML
     private TextArea resultSequenceTextArea;
+
+    @FXML
+    public TextArea predictedSequenceTextArea;
 
     private ToggleGroup functionsToggleGroup;
 
@@ -90,6 +97,14 @@ public class SequencePanel extends BaseComponent {
         return doubleSequence;
     }
 
+    public int getPredictedAmount() {
+        return UiUtils.getIntValue(predictedAmountTextField);
+    }
+
+    public void setPredictedSequence(double[] predictedSequence) {
+        predictedSequenceTextArea.textProperty().setValue(Arrays.toString(predictedSequence));
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
         initRadioButtons();
@@ -116,6 +131,7 @@ public class SequencePanel extends BaseComponent {
     private void initTextFields() {
         generateFromTextField.textProperty().addListener(new IntTextFieldConstraint(generateFromTextField));
         generateToTextField.textProperty().addListener(new IntTextFieldConstraint(generateToTextField));
+        predictedAmountTextField.textProperty().addListener(new IntTextFieldConstraint(predictedAmountTextField));
     }
 
     private String getSelectedFunction() {

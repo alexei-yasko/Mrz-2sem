@@ -8,7 +8,6 @@
 
     <MenuBar>
         <Menu text="File">
-            <MenuItem onAction="#loadSourceImage" text="Load image"/>
             <MenuItem onAction="#closeMainWindow" text="Close"/>
         </Menu>
     </MenuBar>

@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.VBox?>
-<?import yaskoam.mrz2.lab2.ui.panels.ImagesPanel?>
 <?import yaskoam.mrz2.lab2.ui.panels.SettingsAndResultsPanel?>
 <?import yaskoam.mrz2.lab2.ui.panels.WeightMatrixPanel?>
 <?import yaskoam.mrz2.lab2.ui.panels.ErrorChartPanel?>
@@ -14,16 +13,13 @@
 <fx:root type="yaskoam.mrz2.lab2.ui.MainPanel" xmlns:fx="http://javafx.com/fxml/1"
          fx:id="rootPane" prefHeight="700.0" prefWidth="950.0" stylesheets="/yaskoam/mrz2/lab2/ui/style.css">
 
-    <MenuPanel fx:id="menuPanel"/>
+    <MenuPanel/>
 
     <ToolBarPanel fx:id="toolBarPanel"/>
 
     <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <Tab text="Sequence">
             <SequencePanel fx:id="sequencePanel"/>
-        </Tab>
-        <Tab text="Images">
-            <ImagesPanel fx:id="imagesPanel"/>
         </Tab>
         <Tab text="Settings &amp; Results">
             <SettingsAndResultsPanel fx:id="settingsAndResultsPanel"/>

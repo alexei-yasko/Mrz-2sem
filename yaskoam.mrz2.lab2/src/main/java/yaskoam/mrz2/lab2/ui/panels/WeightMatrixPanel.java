@@ -17,10 +17,6 @@ public class WeightMatrixPanel extends BaseComponent {
     @FXML
     private TextArea weightMatrix2TextArea;
 
-    public WeightMatrixPanel() {
-
-    }
-
     public void displayWeightMatrices(DoubleMatrix weightMatrix1, DoubleMatrix weightMatrix2) {
         weightMatrix1TextArea.setText(formatWeightMatrixString(weightMatrix1));
         weightMatrix2TextArea.setText(formatWeightMatrixString(weightMatrix2));

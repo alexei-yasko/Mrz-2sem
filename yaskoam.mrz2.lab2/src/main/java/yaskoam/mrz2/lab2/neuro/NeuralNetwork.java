@@ -78,7 +78,7 @@ public class NeuralNetwork {
 
             logger.log(totalError, meanError, iterations);
         }
-        while (totalError >= maxError && iterations <= maxIterations);
+        while (totalError >= maxError && iterations <= maxIterations && !Thread.interrupted());
     }
 
     public void setLogger(Logger logger) {

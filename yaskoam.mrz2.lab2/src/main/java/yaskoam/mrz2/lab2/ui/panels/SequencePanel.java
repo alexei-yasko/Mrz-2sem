@@ -67,6 +67,8 @@ public class SequencePanel extends BaseComponent {
 
     private List<Long> sequence = new ArrayList<Long>();
 
+    private double[] predictedSequence;
+
     public void generateSequence() {
         sequence.clear();
         resultSequenceTextArea.clear();
@@ -102,6 +104,7 @@ public class SequencePanel extends BaseComponent {
     }
 
     public void setPredictedSequence(double[] predictedSequence) {
+        this.predictedSequence = predictedSequence;
         predictedSequenceTextArea.textProperty().setValue(Arrays.toString(predictedSequence));
     }
 

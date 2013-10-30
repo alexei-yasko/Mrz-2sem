@@ -52,10 +52,27 @@ public class NeuralNetwork {
         double[] predictedSequence = new double[predictedAmount];
 
         for (int i = 0; i < predictedAmount; i++) {
-//            double[] image = System.arraycopy(sequence, );
+
+            double[] image = new double[windowSize];
+
+            if (windowSize - i > 0) {
+                System.arraycopy(sequence, sequence.length - windowSize + i, image, 0, windowSize - i);
+                System.arraycopy(predictedSequence, 0, image, windowSize - i, i);
+            }
+            else {
+                System.arraycopy(predictedSequence, i - windowSize, image, 0, windowSize);
+            }
+
+            DoubleMatrix X = DoubleMatrix.concatVertically(
+                new DoubleMatrix(new double[][]{image}).transpose(), contextNeurons);
+
+            DoubleMatrix Y1 = weightMatrix1.mmul(X);
+            DoubleMatrix Y2 = weightMatrix2.mmul(Y1);
+
+            predictedSequence[i] = Y2.data[0];
         }
 
-        return null;
+        return predictedSequence;
     }
 
     public void learn(double[] sequence) {

@@ -68,7 +68,8 @@ public class ToolBarPanel extends BaseComponent {
         double[] sequence = mainPanel.getSequencePanel().getDoubleSequence();
 
         if (neuralNetwork != null) {
-            checkSequence(sequence, neuralNetwork.getWindowSize(), neuralNetwork.getImagesNumber());
+            double[] predictedSequence = neuralNetwork.predict(sequence, predictedAmount);
+            mainPanel.getSequencePanel().setPredictedSequence(predictedSequence);
         }
     }
 

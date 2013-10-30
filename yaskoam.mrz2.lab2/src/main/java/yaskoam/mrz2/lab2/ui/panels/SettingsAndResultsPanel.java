@@ -42,6 +42,11 @@ public class SettingsAndResultsPanel extends BaseComponent {
     @FXML
     private TextField numberOfIterationsTextField;
 
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        setTextFieldsEventHandlers();
+    }
+    
     public int getImagesNumber() {
         return UiUtils.getIntValue(imagesNumberTextField);
     }
@@ -78,11 +83,6 @@ public class SettingsAndResultsPanel extends BaseComponent {
     public void enableResultTextFields() {
         totalErrorTextField.setDisable(false);
         numberOfIterationsTextField.setDisable(false);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle bundle) {
-        setTextFieldsEventHandlers();
     }
 
     public TextField getTotalErrorTextField() {

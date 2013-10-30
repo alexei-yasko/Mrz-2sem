@@ -11,7 +11,7 @@ import org.apache.commons.io.IOUtils;
  */
 public class DefaultLogger implements Logger {
 
-    private static final String LOG_TEMPLATE = "(%s) - Total error: '%s'; Mean error: '%s'; Number of iterations: '%s'";
+    private static final String LOG_TEMPLATE = "(%s) - Total error: '%s'; Number of iterations: '%s'";
 
     private OutputStream outputStream;
 
@@ -24,10 +24,10 @@ public class DefaultLogger implements Logger {
     }
 
     @Override
-    public void log(double totalError, double meanError, int iterations) {
+    public void log(double totalError, int iterations) {
         try {
             String currentTime = Calendar.getInstance().getTime().toString();
-            IOUtils.write(String.format(LOG_TEMPLATE, currentTime, totalError, meanError, iterations) + "\n", outputStream);
+            IOUtils.write(String.format(LOG_TEMPLATE, currentTime, totalError, iterations) + "\n", outputStream);
         }
         catch (IOException e) {
             throw new IllegalStateException("can't write in log stream", e);

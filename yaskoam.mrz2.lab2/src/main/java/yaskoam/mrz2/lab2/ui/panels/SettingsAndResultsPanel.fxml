@@ -50,6 +50,14 @@
                 <Label text="Max number of iterations :" VBox.vgrow="ALWAYS"/>
                 <TextField fx:id="maxIterTextField" text="1000" VBox.vgrow="ALWAYS"/>
             </VBox>
+            <VBox GridPane.columnIndex="2" GridPane.rowIndex="0">
+                    <Label text="Learning delay:" VBox.vgrow="ALWAYS"/>
+                    <TextField fx:id="delayTextField" text="100" VBox.vgrow="ALWAYS"/>
+            </VBox>
+            <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <Label text="Log step:" VBox.vgrow="ALWAYS"/>
+                <TextField fx:id="logStepTextField" text="1" VBox.vgrow="ALWAYS"/>
+            </VBox>
         </GridPane>
 
         <GridPane hgap="30.0" vgap="10.0">
@@ -68,14 +76,10 @@
                 <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <VBox GridPane.columnIndex="0" GridPane.rowIndex="0">
-                <Label text="Total error:" VBox.vgrow="ALWAYS"/>
+                <Label text="Error:" VBox.vgrow="ALWAYS"/>
                 <TextField id="" fx:id="totalErrorTextField"  editable="false" VBox.vgrow="ALWAYS"/>
             </VBox>
             <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-                <Label text="Mean error:" VBox.vgrow="ALWAYS"/>
-                <TextField id="" fx:id="meanErrorTextField" editable="false" VBox.vgrow="ALWAYS"/>
-            </VBox>
-            <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
                 <Label text="Number of iterations:" VBox.vgrow="ALWAYS"/>
                 <TextField id="" fx:id="numberOfIterationsTextField" editable="false" VBox.vgrow="ALWAYS"/>
             </VBox>

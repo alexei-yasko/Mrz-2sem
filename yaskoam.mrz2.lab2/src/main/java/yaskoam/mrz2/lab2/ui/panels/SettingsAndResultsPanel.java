@@ -16,6 +16,12 @@ import yaskoam.mrz2.lab2.ui.support.IntTextFieldConstraint;
 public class SettingsAndResultsPanel extends BaseComponent {
 
     @FXML
+    private TextField logStepTextField;
+
+    @FXML
+    private TextField delayTextField;
+
+    @FXML
     private TextField imagesNumberTextField;
 
     @FXML
@@ -32,9 +38,6 @@ public class SettingsAndResultsPanel extends BaseComponent {
 
     @FXML
     private TextField totalErrorTextField;
-
-    @FXML
-    private TextField meanErrorTextField;
 
     @FXML
     private TextField numberOfIterationsTextField;
@@ -59,15 +62,21 @@ public class SettingsAndResultsPanel extends BaseComponent {
         return UiUtils.getIntValue(maxIterTextField);
     }
 
+    public int getLogStep() {
+        return UiUtils.getIntValue(logStepTextField);
+    }
+
+    public int getDelay() {
+        return UiUtils.getIntValue(delayTextField);
+    }
+
     public void disableResultTextFields() {
         totalErrorTextField.setDisable(true);
-        meanErrorTextField.setDisable(true);
         numberOfIterationsTextField.setDisable(true);
     }
 
     public void enableResultTextFields() {
         totalErrorTextField.setDisable(false);
-        meanErrorTextField.setDisable(false);
         numberOfIterationsTextField.setDisable(false);
     }
 
@@ -84,14 +93,12 @@ public class SettingsAndResultsPanel extends BaseComponent {
         return numberOfIterationsTextField;
     }
 
-    public TextField getMeanErrorTextField() {
-        return meanErrorTextField;
-    }
-
     private void setTextFieldsEventHandlers() {
         windowSizeTextField.textProperty().addListener(new IntTextFieldConstraint(windowSizeTextField));
         imagesNumberTextField.textProperty().addListener(new IntTextFieldConstraint(imagesNumberTextField));
         maxIterTextField.textProperty().addListener(new IntTextFieldConstraint(maxIterTextField));
+        delayTextField.textProperty().addListener(new IntTextFieldConstraint(delayTextField));
+        logStepTextField.textProperty().addListener(new IntTextFieldConstraint(logStepTextField));
 
         learningCoefficientTextField.textProperty().addListener(new DoubleTextFieldConstraint(learningCoefficientTextField));
         maxErrorTextField.textProperty().addListener(new DoubleTextFieldConstraint(maxErrorTextField));

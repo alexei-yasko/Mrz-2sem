@@ -30,13 +30,12 @@ public class UiLogger implements Logger {
     }
 
     @Override
-    public void log(final double totalError, final double meanError, final int iterations) {
+    public void log(final double totalError, final int iterations) {
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 totalErrorProperty.set(FORMAT.format(totalError));
-                meanErrorProperty.set(FORMAT.format(meanError));
                 iterationsProperty.set(FORMAT.format(iterations));
 
                 if (chartPoints != null) {

@@ -68,7 +68,6 @@ public class MainPanel extends BaseComponent {
         StringProperty numberOfIterationsProperty = new SimpleStringProperty();
 
         settingsAndResultsPanel.getTotalErrorTextField().textProperty().bindBidirectional(totalErrorProperty);
-        settingsAndResultsPanel.getMeanErrorTextField().textProperty().bindBidirectional(meanErrorProperty);
         settingsAndResultsPanel.getNumberOfIterationsTextField().textProperty().bindBidirectional(numberOfIterationsProperty);
 
         return new UiLogger(totalErrorProperty, meanErrorProperty, numberOfIterationsProperty);

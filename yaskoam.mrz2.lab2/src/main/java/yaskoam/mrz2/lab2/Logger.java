@@ -5,5 +5,5 @@ package yaskoam.mrz2.lab2;
  */
 public interface Logger {
 
-    void log(double totalError, double meanError, int iterations);
+    void log(double totalError, int iterations);
 }

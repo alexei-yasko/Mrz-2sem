@@ -9,11 +9,15 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import yaskoam.mrz2.lab2.functions.NaturalSequence;
 import yaskoam.mrz2.lab2.functions.FibonacciSequence;
 import yaskoam.mrz2.lab2.functions.PeriodicSequence;
@@ -78,7 +82,23 @@ public class SequencePanel extends BaseComponent {
         if (function != null) {
             List<Integer> sequence = function.generateSequence(from, to);
             this.sequence = ArrayUtils.toPrimitive(sequence.toArray(new Integer[sequence.size()]));
-            resultSequenceTextArea.textProperty().setValue(Arrays.toString(this.sequence));
+            resultSequenceTextArea.setText(Arrays.toString(this.sequence));
+        }
+    }
+
+    public void inputSequence(ActionEvent event) {
+
+        Stage stage = new Stage();
+        InputSequencePanel inputSequencePanel = new InputSequencePanel();
+        stage.setScene(new Scene(inputSequencePanel));
+        stage.setTitle("Input sequence");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(getScene().getWindow());
+        stage.showAndWait();
+
+        if (inputSequencePanel.isSequenceEntered()) {
+            sequence = inputSequencePanel.getSequence();
+            resultSequenceTextArea.setText(Arrays.toString(sequence));
         }
     }
 

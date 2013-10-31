@@ -33,7 +33,7 @@
         </VBox.margin>
 
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <Label styleClass="header" text="Functions">
+            <Label styleClass="header" text="Sequences">
                 <VBox.margin>
                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x1"/>
                 </VBox.margin>
@@ -42,6 +42,11 @@
             <RadioButton fx:id="naturalRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
             <RadioButton fx:id="periodicRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
             <RadioButton fx:id="powerRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <Button text="Input sequence" onAction="#inputSequence">
+                <VBox.margin>
+                    <Insets top="5" left="5"/>
+                </VBox.margin>
+            </Button>
         </VBox>
 
         <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">

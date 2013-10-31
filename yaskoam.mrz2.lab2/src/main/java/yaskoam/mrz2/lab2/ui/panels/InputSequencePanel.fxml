@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root type="yaskoam.mrz2.lab2.ui.panels.InputSequencePanel" xmlns:fx="http://javafx.com/fxml/1"
+         stylesheets="/yaskoam/mrz2/lab2/ui/customStyle.css" styleClass="inputSequencePanel">
+
+    <VBox VBox.vgrow="ALWAYS">
+
+        <Label text="Input sequence (separate numbers by commas) :">
+            <VBox.margin>
+                <Insets left="30.0" top="30.0"/>
+            </VBox.margin>
+        </Label>
+        <Label fx:id="errorLabel" text="Error in sequence text." styleClass="errorLabel" visible="false">
+            <VBox.margin>
+                <Insets left="30"/>
+            </VBox.margin>
+        </Label>
+        <TextArea fx:id="inputSequenceTextArea" wrapText="true" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+                <Insets bottom="10.0" left="30.0" right="30.0"/>
+            </VBox.margin>
+        </TextArea>
+
+        <HBox alignment="CENTER">
+            <Button text="Save" onAction="#save">
+                <HBox.margin>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" fx:id="x2"/>
+                </HBox.margin>
+            </Button>
+            <Button text="Cancel" HBox.margin="$x2" onAction="#cancel"/>
+        </HBox>
+
+    </VBox>
+
+</fx:root>

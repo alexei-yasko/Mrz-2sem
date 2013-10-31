@@ -28,8 +28,7 @@ public class WeightMatrixPanel extends BaseComponent {
 
         for (int i = 1; i < weightMatrixString.length() - 2; i++) {
 
-            if (weightMatrixString.charAt(i) != '-'
-                && weightMatrixString.charAt(i + 1) == '0' && weightMatrixString.charAt(i + 2) == '.') {
+            if (weightMatrixString.charAt(i) != '-' && weightMatrixString.charAt(i + 2) == '.') {
 
                 weightMatrixString.insert(i + 1, " ");
                 i++;

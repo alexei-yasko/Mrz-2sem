@@ -64,7 +64,7 @@ public class SequencePanel extends BaseComponent {
 
     private ToggleGroup functionsToggleGroup;
 
-    private int[] sequence;
+    private int[] sequence = new int[]{};
 
     public void generateSequence() {
         sequence = new int[]{};

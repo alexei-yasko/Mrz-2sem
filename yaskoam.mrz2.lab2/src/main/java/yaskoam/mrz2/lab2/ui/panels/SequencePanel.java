@@ -1,7 +1,6 @@
 package yaskoam.mrz2.lab2.ui.panels;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +14,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import yaskoam.mrz2.lab2.functions.FactorialSequence;
+import yaskoam.mrz2.lab2.functions.NaturalSequence;
 import yaskoam.mrz2.lab2.functions.FibonacciSequence;
 import yaskoam.mrz2.lab2.functions.PeriodicSequence;
 import yaskoam.mrz2.lab2.functions.PowerSequence;
@@ -29,9 +28,9 @@ import yaskoam.mrz2.lab2.ui.support.IntTextFieldConstraint;
  */
 public class SequencePanel extends BaseComponent {
 
-    private static final Map<String, Sequence<Long>> FUNCTIONS_MAP = new HashMap<String, Sequence<Long>>() {{
+    private static final Map<String, Sequence<Integer>> FUNCTIONS_MAP = new HashMap<String, Sequence<Integer>>() {{
         put("Fibonacci", new FibonacciSequence());
-        put("Factorial", new FactorialSequence());
+        put("Natural", new NaturalSequence());
         put("Periodic", new PeriodicSequence());
         put("Power", new PowerSequence(2));
     }};
@@ -52,7 +51,7 @@ public class SequencePanel extends BaseComponent {
     private RadioButton periodicRadioButton;
 
     @FXML
-    private RadioButton factorialRadioButton;
+    private RadioButton naturalRadioButton;
 
     @FXML
     private RadioButton fibonacciRadioButton;
@@ -65,33 +64,25 @@ public class SequencePanel extends BaseComponent {
 
     private ToggleGroup functionsToggleGroup;
 
-    private List<Long> sequence = new ArrayList<Long>();
-
-    private double[] predictedSequence;
+    private int[] sequence;
 
     public void generateSequence() {
-        sequence.clear();
+        sequence = new int[]{};
         resultSequenceTextArea.clear();
 
         int from = UiUtils.getIntValue(generateFromTextField);
         int to = UiUtils.getIntValue(generateToTextField);
 
-        Sequence<Long> function = FUNCTIONS_MAP.get(getSelectedFunction());
+        Sequence<Integer> function = FUNCTIONS_MAP.get(getSelectedFunction());
 
         if (function != null) {
-            List<Long> sequence = function.generateSequence(from, to);
-            resultSequenceTextArea.textProperty().setValue(sequence.toString());
-
-            this.sequence = sequence;
+            List<Integer> sequence = function.generateSequence(from, to);
+            this.sequence = ArrayUtils.toPrimitive(sequence.toArray(new Integer[sequence.size()]));
+            resultSequenceTextArea.textProperty().setValue(Arrays.toString(this.sequence));
         }
     }
 
-    public long[] getSequence() {
-        return ArrayUtils.toPrimitive(sequence.toArray(new Long[sequence.size()]));
-    }
-
     public double[] getDoubleSequence() {
-        long[] sequence = getSequence();
         double[] doubleSequence = new double[sequence.length];
         for (int i = 0; i < sequence.length; i++) {
             doubleSequence[i] = sequence[i];
@@ -104,7 +95,6 @@ public class SequencePanel extends BaseComponent {
     }
 
     public void setPredictedSequence(double[] predictedSequence) {
-        this.predictedSequence = predictedSequence;
         predictedSequenceTextArea.textProperty().setValue(Arrays.toString(predictedSequence));
     }
 
@@ -121,8 +111,8 @@ public class SequencePanel extends BaseComponent {
         fibonacciRadioButton.setToggleGroup(functionsToggleGroup);
         fibonacciRadioButton.setSelected(true);
 
-        factorialRadioButton.textProperty().setValue("Factorial");
-        factorialRadioButton.setToggleGroup(functionsToggleGroup);
+        naturalRadioButton.textProperty().setValue("Natural");
+        naturalRadioButton.setToggleGroup(functionsToggleGroup);
 
         periodicRadioButton.textProperty().setValue("Periodic");
         periodicRadioButton.setToggleGroup(functionsToggleGroup);

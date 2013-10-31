@@ -5,7 +5,7 @@ import static java.lang.Math.pow;
 /**
  * @author Q-YAA
  */
-public class PowerSequence extends Sequence<Long> {
+public class PowerSequence extends Sequence<Integer> {
 
     private int number;
 
@@ -14,7 +14,7 @@ public class PowerSequence extends Sequence<Long> {
     }
 
     @Override
-    public Long apply(int x) {
-        return (long) pow(number, x);
+    public Integer apply(int x) {
+        return (int) pow(number, x);
     }
 }

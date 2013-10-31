@@ -6,10 +6,10 @@ import static java.lang.Math.sqrt;
 /**
  * @author Q-YAA
  */
-public class FibonacciSequence extends Sequence<Long> {
+public class FibonacciSequence extends Sequence<Integer> {
 
     @Override
-    public Long apply(int x) {
-        return (long) ((pow((1 + sqrt(5)) / 2, x) - pow((1 - sqrt(5)) / 2, x)) / sqrt(5));
+    public Integer apply(int x) {
+        return (int) ((pow((1 + sqrt(5)) / 2, x) - pow((1 - sqrt(5)) / 2, x)) / sqrt(5));
     }
 }

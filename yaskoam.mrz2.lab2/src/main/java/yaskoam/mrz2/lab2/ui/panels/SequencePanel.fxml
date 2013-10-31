@@ -39,7 +39,7 @@
                 </VBox.margin>
             </Label>
             <RadioButton fx:id="fibonacciRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
-            <RadioButton fx:id="factorialRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <RadioButton fx:id="naturalRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
             <RadioButton fx:id="periodicRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
             <RadioButton fx:id="powerRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
         </VBox>

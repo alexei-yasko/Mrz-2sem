@@ -46,8 +46,8 @@ public class NeuralNetwork {
         this.maxError = maxError;
         this.maxIterations = maxIterations;
 
-        weightMatrix1 = new DoubleMatrix(createRandomArray(imagesNumber, windowSize + imagesNumber));
-        weightMatrix2 = new DoubleMatrix(createRandomArray(1, imagesNumber));
+        weightMatrix1 = createRandomMatrix(imagesNumber, windowSize + imagesNumber);
+        weightMatrix2 = createRandomMatrix(1, imagesNumber);
         contextNeurons = new DoubleMatrix(new double[imagesNumber][1]);
     }
 
@@ -161,20 +161,23 @@ public class NeuralNetwork {
 
     private DoubleMatrix normalize(DoubleMatrix vector) {
 
-        double x = 0;
+        double normalizationValue = 0;
         for (int i = 0; i < vector.length; i++) {
-            x += pow(vector.get(i), 2);
+            normalizationValue += pow(vector.get(i), 2);
         }
 
-        x = sqrt(x);
+        if (normalizationValue != 0) {
+            DoubleMatrix normalizedVector = new DoubleMatrix(vector.length);
 
-        DoubleMatrix normalizedVector = new DoubleMatrix(vector.length);
+            for (int i = 0; i < vector.length; i++) {
+                normalizedVector.data[i] = vector.get(i) / sqrt(normalizationValue);
+            }
 
-        for (int i = 0; i < vector.length; i++) {
-            normalizedVector.data[i] = vector.get(i) / x;
+            return normalizedVector;
         }
-
-        return normalizedVector;
+        else {
+            return vector;
+        }
     }
 
     private DoubleMatrix[] createLearningMatrix(double[] sequence) {
@@ -185,7 +188,7 @@ public class NeuralNetwork {
         return learningMatrix;
     }
 
-    private double[][] createRandomArray(int n, int m) {
+    private DoubleMatrix createRandomMatrix(int n, int m) {
         double[][] array = new double[n][m];
         Random random = new Random();
         for (int i = 0; i < n; i++) {
@@ -193,7 +196,7 @@ public class NeuralNetwork {
                 array[i][j] = Math.random() * (random.nextBoolean() ? -1 : 1) * 0.01;
             }
         }
-        return array;
+        return new DoubleMatrix(array);
     }
 
     private void makeDelay(int delay) {

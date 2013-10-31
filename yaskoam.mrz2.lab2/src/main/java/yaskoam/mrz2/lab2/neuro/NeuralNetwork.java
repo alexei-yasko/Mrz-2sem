@@ -8,6 +8,9 @@ import org.jblas.DoubleMatrix;
 import yaskoam.mrz2.lab2.DefaultLogger;
 import yaskoam.mrz2.lab2.Logger;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 /**
  * @author Q-YAA
  */
@@ -89,13 +92,16 @@ public class NeuralNetwork {
 
                 DoubleMatrix X = DoubleMatrix.concatVertically(learningMatrix[i], contextNeurons);
 
-                DoubleMatrix Y1 = weightMatrix1.mmul(X);
+                DoubleMatrix Xn = normalize(X);
+                double norm = X.norm2();
+
+                DoubleMatrix Y1 = weightMatrix1.mmul(Xn);
                 DoubleMatrix Y2 = weightMatrix2.mmul(Y1);
 
-                DoubleMatrix gamma2 = Y2.sub(etalons[i]);
+                DoubleMatrix gamma2 = Y2.mul(norm).sub(etalons[i]);
                 DoubleMatrix gamma1 = gamma2.mmul(weightMatrix2);
 
-                weightMatrix1 = weightMatrix1.sub(X.mmul(gamma1.mul(learningCoefficient)));
+                weightMatrix1 = weightMatrix1.sub(Xn.mmul(gamma1.mul(learningCoefficient)));
                 weightMatrix2 = weightMatrix2.sub(Y1.mmul(gamma2.mul(learningCoefficient)));
 
                 contextNeurons = Y1;
@@ -108,12 +114,15 @@ public class NeuralNetwork {
 
                 DoubleMatrix X = DoubleMatrix.concatVertically(learningMatrix[i], contextNeurons);
 
-                DoubleMatrix Y1 = weightMatrix1.mmul(X);
+                DoubleMatrix Xn = normalize(X);
+                double norm = X.norm2();
+
+                DoubleMatrix Y1 = weightMatrix1.mmul(Xn);
                 DoubleMatrix Y2 = weightMatrix2.mmul(Y1);
 
-                DoubleMatrix gamma2 = Y2.sub(etalons[i]);
+                DoubleMatrix gamma2 = Y2.mul(norm).sub(etalons[i]);
 
-                totalError += gamma2.data[0] * gamma2.data[0];
+                totalError += pow(gamma2.data[0], 2);
             }
 
             iterations++;
@@ -148,6 +157,24 @@ public class NeuralNetwork {
 
     private double[] createEtalons(double[] sequence) {
         return Arrays.copyOfRange(sequence, windowSize, windowSize + imagesNumber);
+    }
+
+    private DoubleMatrix normalize(DoubleMatrix vector) {
+
+        double x = 0;
+        for (int i = 0; i < vector.length; i++) {
+            x += pow(vector.get(i), 2);
+        }
+
+        x = sqrt(x);
+
+        DoubleMatrix normalizedVector = new DoubleMatrix(vector.length);
+
+        for (int i = 0; i < vector.length; i++) {
+            normalizedVector.data[i] = vector.get(i) / x;
+        }
+
+        return normalizedVector;
     }
 
     private DoubleMatrix[] createLearningMatrix(double[] sequence) {

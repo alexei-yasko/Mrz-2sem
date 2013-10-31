@@ -1,5 +1,6 @@
 package yaskoam.mrz2.lab2.neuro;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.jblas.DoubleMatrix;
@@ -63,8 +64,7 @@ public class NeuralNetwork {
                 System.arraycopy(predictedSequence, i - windowSize, image, 0, windowSize);
             }
 
-            DoubleMatrix X = DoubleMatrix.concatVertically(
-                new DoubleMatrix(new double[][]{image}).transpose(), contextNeurons);
+            DoubleMatrix X = DoubleMatrix.concatVertically(new DoubleMatrix(image), contextNeurons);
 
             DoubleMatrix Y1 = weightMatrix1.mmul(X);
             DoubleMatrix Y2 = weightMatrix2.mmul(Y1);
@@ -76,7 +76,7 @@ public class NeuralNetwork {
     }
 
     public void learn(double[] sequence) {
-        double[][] learningMatrix = createLearningMatrix(sequence);
+        DoubleMatrix[] learningMatrix = createLearningMatrix(sequence);
         double[] etalons = createEtalons(sequence);
 
         double totalError;
@@ -87,8 +87,7 @@ public class NeuralNetwork {
             // learn
             for (int i = 0; i < learningMatrix.length; i++) {
 
-                DoubleMatrix X = DoubleMatrix.concatVertically(
-                    new DoubleMatrix(new double[][]{learningMatrix[i]}).transpose(), contextNeurons);
+                DoubleMatrix X = DoubleMatrix.concatVertically(learningMatrix[i], contextNeurons);
 
                 DoubleMatrix Y1 = weightMatrix1.mmul(X);
                 DoubleMatrix Y2 = weightMatrix2.mmul(Y1);
@@ -107,8 +106,7 @@ public class NeuralNetwork {
             // calculate total error
             for (int i = 0; i < learningMatrix.length; i++) {
 
-                DoubleMatrix X = DoubleMatrix.concatVertically(
-                    new DoubleMatrix(new double[][]{learningMatrix[i]}).transpose(), contextNeurons);
+                DoubleMatrix X = DoubleMatrix.concatVertically(learningMatrix[i], contextNeurons);
 
                 DoubleMatrix Y1 = weightMatrix1.mmul(X);
                 DoubleMatrix Y2 = weightMatrix2.mmul(Y1);
@@ -148,26 +146,15 @@ public class NeuralNetwork {
         return weightMatrix2;
     }
 
-    public int getWindowSize() {
-        return windowSize;
-    }
-
-    public int getImagesNumber() {
-        return imagesNumber;
-    }
-
     private double[] createEtalons(double[] sequence) {
-        double[] samples = new double[imagesNumber];
-        System.arraycopy(sequence, windowSize, samples, 0, imagesNumber);
-        return samples;
+        return Arrays.copyOfRange(sequence, windowSize, windowSize + imagesNumber);
     }
 
-    private double[][] createLearningMatrix(double[] sequence) {
-        double[][] learningMatrix = new double[imagesNumber][windowSize];
+    private DoubleMatrix[] createLearningMatrix(double[] sequence) {
+        DoubleMatrix[] learningMatrix = new DoubleMatrix[imagesNumber];
         for (int i = 0; i < imagesNumber; i++) {
-            System.arraycopy(sequence, i, learningMatrix[i], 0, windowSize);
+            learningMatrix[i] = new DoubleMatrix(Arrays.copyOfRange(sequence, i, i + windowSize));
         }
-
         return learningMatrix;
     }
 
@@ -179,7 +166,6 @@ public class NeuralNetwork {
                 array[i][j] = Math.random() * (random.nextBoolean() ? -1 : 1) * 0.01;
             }
         }
-
         return array;
     }
 

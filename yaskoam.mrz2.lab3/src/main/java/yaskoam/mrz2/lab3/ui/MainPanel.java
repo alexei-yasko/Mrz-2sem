@@ -7,14 +7,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javafx.fxml.FXML;
-import yaskoam.mrz2.lab3.ui.panels.ErrorChartPanel;
-import yaskoam.mrz2.lab3.ui.panels.SequencePanel;
-import yaskoam.mrz2.lab3.ui.panels.SettingsAndResultsPanel;
-import yaskoam.mrz2.lab3.ui.panels.WeightMatrixPanel;
+import yaskoam.mrz2.lab3.ui.panels.ImagePanel;
 import yaskoam.mrz2.lab3.ui.toolbar.ToolBarPanel;
-import yaskoam.mrz2.lab3.ui.panels.ErrorChartPanel;
-import yaskoam.mrz2.lab3.ui.panels.SequencePanel;
-import yaskoam.mrz2.lab3.ui.panels.SettingsAndResultsPanel;
 
 /**
  * @author Q-YAA
@@ -22,19 +16,9 @@ import yaskoam.mrz2.lab3.ui.panels.SettingsAndResultsPanel;
 public class MainPanel extends BaseComponent {
 
     @FXML
-    private SequencePanel sequencePanel;
-
+    private ImagePanel sourceImagePanel;
     @FXML
     private ToolBarPanel toolBarPanel;
-
-    @FXML
-    private SettingsAndResultsPanel settingsAndResultsPanel;
-
-    @FXML
-    private ErrorChartPanel errorChartPanel;
-
-    @FXML
-    private WeightMatrixPanel weightMatrixPanel;
 
     private UiLogger uiLogger;
 
@@ -42,23 +26,6 @@ public class MainPanel extends BaseComponent {
     public void initialize(URL url, ResourceBundle bundle) {
         uiLogger = createUiLogger();
         toolBarPanel.setMainPanel(this);
-        uiLogger.setChartPoints(errorChartPanel.getChartPoints());
-    }
-
-    public SequencePanel getSequencePanel() {
-        return sequencePanel;
-    }
-
-    public WeightMatrixPanel getWeightMatrixPanel() {
-        return weightMatrixPanel;
-    }
-
-    public SettingsAndResultsPanel getSettingsAndResultsPanel() {
-        return settingsAndResultsPanel;
-    }
-
-    public ErrorChartPanel getErrorChartPanel() {
-        return errorChartPanel;
     }
 
     public UiLogger getUiLogger() {
@@ -70,9 +37,10 @@ public class MainPanel extends BaseComponent {
         StringProperty meanErrorProperty = new SimpleStringProperty();
         StringProperty numberOfIterationsProperty = new SimpleStringProperty();
 
-        settingsAndResultsPanel.getTotalErrorTextField().textProperty().bindBidirectional(totalErrorProperty);
-        settingsAndResultsPanel.getNumberOfIterationsTextField().textProperty().bindBidirectional(numberOfIterationsProperty);
-
         return new UiLogger(totalErrorProperty, meanErrorProperty, numberOfIterationsProperty);
+    }
+
+    public ImagePanel getSourceImagePanel() {
+        return sourceImagePanel;
     }
 }

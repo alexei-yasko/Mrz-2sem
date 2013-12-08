@@ -7,7 +7,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import yaskoam.mrz2.lab3.Logger;
-import yaskoam.mrz2.lab3.Logger;
 
 /**
  * @author Q-YAA

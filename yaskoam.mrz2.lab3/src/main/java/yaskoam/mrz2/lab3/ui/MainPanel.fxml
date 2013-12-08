@@ -4,12 +4,10 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.VBox?>
-<?import yaskoam.mrz2.lab3.ui.panels.SettingsAndResultsPanel?>
-<?import yaskoam.mrz2.lab3.ui.panels.WeightMatrixPanel?>
-<?import yaskoam.mrz2.lab3.ui.panels.ErrorChartPanel?>
-<?import yaskoam.mrz2.lab3.ui.panels.SequencePanel?>
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.control.SplitPane?>
+<?import yaskoam.mrz2.lab3.ui.panels.ImagePanel?>
 <fx:root type="yaskoam.mrz2.lab3.ui.MainPanel" xmlns:fx="http://javafx.com/fxml/1"
          fx:id="rootPane" prefHeight="700.0" prefWidth="950.0" stylesheets="/yaskoam/mrz2/lab3/ui/style.css">
 
@@ -19,19 +17,9 @@
         </VBox.margin>
     </ToolBarPanel>
 
-    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-        <Tab text="Sequence">
-            <SequencePanel fx:id="sequencePanel"/>
-        </Tab>
-        <Tab text="Settings &amp; Results">
-            <SettingsAndResultsPanel fx:id="settingsAndResultsPanel"/>
-        </Tab>
-        <Tab text="Weight matrix">
-            <WeightMatrixPanel fx:id="weightMatrixPanel" VBox.vgrow="ALWAYS"/>
-        </Tab>
-        <Tab text="Total error chart">
-            <ErrorChartPanel fx:id="errorChartPanel"/>
-        </Tab>
-    </TabPane>
+    <SplitPane orientation="HORIZONTAL" dividerPositions="0.5" VBox.vgrow="ALWAYS">
+        <ImagePanel fx:id="sourceImagePanel"/>
+        <ImagePanel/>
+    </SplitPane>
 
 </fx:root>

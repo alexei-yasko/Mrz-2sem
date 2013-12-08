@@ -1,78 +1,42 @@
 package yaskoam.mrz2.lab3.ui.toolbar;
 
-import javax.swing.JOptionPane;
+import java.io.File;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import yaskoam.mrz2.lab3.neuro.NeuralNetwork;
+import javafx.scene.Scene;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import yaskoam.mrz2.lab3.image.Image;
 import yaskoam.mrz2.lab3.ui.BaseComponent;
 import yaskoam.mrz2.lab3.ui.MainPanel;
-import yaskoam.mrz2.lab3.neuro.NeuralNetwork;
-import yaskoam.mrz2.lab3.ui.BaseComponent;
-import yaskoam.mrz2.lab3.ui.MainPanel;
+import yaskoam.mrz2.lab3.ui.panels.EditImagePanel;
 
 /**
  * @author Q-YAA
  */
 public class ToolBarPanel extends BaseComponent {
 
-    @FXML
-    private Button predictButton;
-
-    @FXML
-    private Button startLearnButton;
-
-    @FXML
-    private Button stopLearnButton;
-
     private MainPanel mainPanel;
 
-    private Thread calculationThread;
-
-    private NeuralNetwork neuralNetwork;
-
-    public void generateSequence(ActionEvent event) {
-        mainPanel.getSequencePanel().generateSequence();
-    }
-
-    public void startLearn(ActionEvent event) {
-        double[] sequence = mainPanel.getSequencePanel().getDoubleSequence();
-        int windowSize = mainPanel.getSettingsAndResultsPanel().getWindowSize();
-        int imagesNumber = mainPanel.getSettingsAndResultsPanel().getImagesNumber();
-        double learningCoefficient = mainPanel.getSettingsAndResultsPanel().getLearningCoefficient();
-        double maxError = mainPanel.getSettingsAndResultsPanel().getMaxError();
-        int maxIter = mainPanel.getSettingsAndResultsPanel().getMaxIter();
-        int delay = mainPanel.getSettingsAndResultsPanel().getDelay();
-        int logStep = mainPanel.getSettingsAndResultsPanel().getLogStep();
-
-        checkSequence(sequence, windowSize, imagesNumber);
-
-        mainPanel.getErrorChartPanel().clearErrorChart();
-        changeButtonsState();
-        mainPanel.getSettingsAndResultsPanel().disableResultTextFields();
-
-        calculationThread = new Thread(new LearnTask(
-            sequence, windowSize, imagesNumber, learningCoefficient, maxError, maxIter, delay, logStep));
-        calculationThread.setDaemon(true);
-        calculationThread.start();
-    }
-
-    public void stopLearn(ActionEvent event) {
-        if (calculationThread != null) {
-            calculationThread.interrupt();
+    public void loadImage() {
+        File file = createFileChooser().showOpenDialog(mainPanel.getScene().getWindow());
+        if (file != null) {
+            mainPanel.getSourceImagePanel().setImage(Image.fromFile(file));
         }
     }
 
-    public void predict(ActionEvent event) {
-        int predictedAmount = mainPanel.getSequencePanel().getPredictedAmount();
-        double[] sequence = mainPanel.getSequencePanel().getDoubleSequence();
+    public void editImage() {
+        Stage stage = new Stage();
+        EditImagePanel editImagePanel = new EditImagePanel(mainPanel.getSourceImagePanel().getImage());
+        stage.setScene(new Scene(editImagePanel));
+        stage.setTitle("Edit image");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(getScene().getWindow());
+        stage.showAndWait();
 
-        if (neuralNetwork != null) {
-            double[] predictedSequence = neuralNetwork.predict(sequence, predictedAmount);
-            mainPanel.getSequencePanel().setPredictedSequence(predictedSequence);
+        if (editImagePanel.isImageEditted()) {
+            mainPanel.getSourceImagePanel().setImage(editImagePanel.getImage());
         }
     }
 
@@ -80,72 +44,17 @@ public class ToolBarPanel extends BaseComponent {
         this.mainPanel = mainPanel;
     }
 
-    private void checkSequence(double[] sequence, int windowSize, int imagesNumber) {
-        if (sequence.length - windowSize < imagesNumber) {
-            JOptionPane.showMessageDialog(null, "Wrong sequence size!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+    private FileChooser createFileChooser() {
 
-    private class LearnTask extends Task {
+        FileChooser fileChooser = new FileChooser();
 
-        private double[] sequence;
+        fileChooser.setTitle("Choose Image");
+        fileChooser.setInitialDirectory(new File("yaskoam.mrz2.lab3/images/"));
 
-        private int windowSize;
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Image files", "*.img")
+        );
 
-        private int imagesNumber;
-
-        private double learningCoefficient;
-
-        private double maxError;
-
-        private int maxIterations;
-
-        private int delay;
-
-        private int logStep;
-
-        private LearnTask(double[] sequence, int windowSize, int imagesNumber,
-            double learningCoefficient, double maxError, int maxIterations, int delay, int logStep) {
-
-            this.sequence = sequence;
-            this.windowSize = windowSize;
-            this.imagesNumber = imagesNumber;
-            this.learningCoefficient = learningCoefficient;
-            this.maxError = maxError;
-            this.maxIterations = maxIterations;
-            this.delay = delay;
-            this.logStep = logStep;
-        }
-
-        @Override
-        protected Object call() throws Exception {
-
-            neuralNetwork = new NeuralNetwork(windowSize, imagesNumber, learningCoefficient, maxError, maxIterations);
-            neuralNetwork.setLogger(mainPanel.getUiLogger());
-            neuralNetwork.setDelay(delay);
-            neuralNetwork.setLogStep(logStep);
-
-            try {
-                neuralNetwork.learn(sequence);
-                return null;
-            }
-            finally {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        changeButtonsState();
-                        mainPanel.getSettingsAndResultsPanel().enableResultTextFields();
-                        mainPanel.getWeightMatrixPanel().displayWeightMatrices(
-                            neuralNetwork.getWeightMatrix1(), neuralNetwork.getWeightMatrix2());
-                    }
-                });
-            }
-        }
-    }
-
-    private void changeButtonsState() {
-        startLearnButton.setDisable(!startLearnButton.isDisable());
-        stopLearnButton.setDisable(!stopLearnButton.isDisable());
-        predictButton.setDisable(!predictButton.isDisable());
+        return fileChooser;
     }
 }

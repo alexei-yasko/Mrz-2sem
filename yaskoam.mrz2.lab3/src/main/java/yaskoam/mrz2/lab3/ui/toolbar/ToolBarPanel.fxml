@@ -9,10 +9,8 @@
         stylesheets="/yaskoam/mrz2/lab3/ui/customStyle.css">
 
     <ToolBar minHeight="37.0" orientation="HORIZONTAL">
-        <Button text="Generate sequence" onAction="#generateSequence"/>
-        <Button fx:id="startLearnButton" text="Start learn" onAction="#startLearn"/>
-        <Button fx:id="stopLearnButton" text="Stop learn" onAction="#stopLearn" disable="true"/>
-        <Button fx:id="predictButton" text="Predict" onAction="#predict"/>
+        <Button text="Load image" onAction="#loadImage"/>
+        <Button text="Edit image" onAction="#editImage"/>
     </ToolBar>
 
 </fx:root>

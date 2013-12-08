@@ -5,7 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import yaskoam.mrz2.lab3.ui.MainPanel;
-import yaskoam.mrz2.lab3.ui.MainPanel;
 
 /**
  * @author Q-YAA

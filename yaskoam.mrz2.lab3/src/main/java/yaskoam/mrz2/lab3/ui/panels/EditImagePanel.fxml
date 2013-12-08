@@ -8,22 +8,18 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root type="yaskoam.mrz2.lab3.ui.panels.InputSequencePanel" xmlns:fx="http://javafx.com/fxml/1"
+<fx:root type="yaskoam.mrz2.lab3.ui.panels.EditImagePanel" xmlns:fx="http://javafx.com/fxml/1"
          stylesheets="/yaskoam/mrz2/lab3/ui/customStyle.css" styleClass="inputSequencePanel">
 
     <VBox VBox.vgrow="ALWAYS">
 
-        <Label text="Input sequence (separate numbers by commas) :">
+        <Label text="Source image:">
             <VBox.margin>
                 <Insets left="30.0" top="30.0"/>
             </VBox.margin>
         </Label>
-        <Label fx:id="errorLabel" text="Error in sequence text." styleClass="errorLabel" visible="false">
-            <VBox.margin>
-                <Insets left="30"/>
-            </VBox.margin>
-        </Label>
-        <TextArea fx:id="inputSequenceTextArea" wrapText="true" VBox.vgrow="ALWAYS">
+
+        <TextArea fx:id="imageTextArea" wrapText="true" VBox.vgrow="ALWAYS">
             <VBox.margin>
                 <Insets bottom="10.0" left="30.0" right="30.0"/>
             </VBox.margin>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root type="yaskoam.mrz2.lab3.ui.panels.SequencePanel" xmlns:fx="http://javafx.com/fxml/1"
+         stylesheets="/yaskoam/mrz2/lab3/ui/customStyle.css" styleClass="sequencePanel">
+
+    <GridPane hgap="20.0" vgap="20.0" VBox.vgrow="ALWAYS" alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50.0"/>
+            <ColumnConstraints percentWidth="50.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="33.0"/>
+            <RowConstraints percentHeight="33.0"/>
+            <RowConstraints percentHeight="33.0"/>
+        </rowConstraints>
+        <VBox.margin>
+            <Insets bottom="30" left="30" right="30" top="30"/>
+        </VBox.margin>
+
+        <VBox alignment="TOP_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label styleClass="header" text="Sequences">
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x1"/>
+                </VBox.margin>
+            </Label>
+            <RadioButton fx:id="fibonacciRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <RadioButton fx:id="naturalRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <RadioButton fx:id="periodicRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <RadioButton fx:id="powerRadioButton" mnemonicParsing="false" VBox.margin="$x1"/>
+            <Button text="Input sequence" onAction="#inputSequence">
+                <VBox.margin>
+                    <Insets top="5" left="5"/>
+                </VBox.margin>
+            </Button>
+        </VBox>
+
+        <VBox alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <VBox VBox.margin="$x1">
+                <Label text="generate from:"/>
+                <TextField fx:id="generateFromTextField" text="0"/>
+            </VBox>
+            <VBox VBox.margin="$x1">
+                <Label text="generate to:"/>
+                <TextField fx:id="generateToTextField" text="10"/>
+            </VBox>
+            <VBox VBox.margin="$x1">
+                <Label text="predicted amount:"/>
+                <TextField fx:id="predictedAmountTextField" text="1"/>
+            </VBox>
+        </VBox>
+
+        <VBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <Label styleClass="header" text="Generated sequence" VBox.margin="$x1"/>
+            <TextArea fx:id="resultSequenceTextArea" editable="false" wrapText="true" VBox.margin="$x1"/>
+        </VBox>
+
+        <VBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <Label styleClass="header" text="Predicted sequence" VBox.margin="$x1"/>
+            <TextArea fx:id="predictedSequenceTextArea" editable="false" wrapText="true" VBox.margin="$x1"/>
+        </VBox>
+
+    </GridPane>
+
+</fx:root>

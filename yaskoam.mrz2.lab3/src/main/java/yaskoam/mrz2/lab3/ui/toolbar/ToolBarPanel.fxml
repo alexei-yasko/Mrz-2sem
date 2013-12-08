@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Font?>
+<?import java.awt.Insets?>
+
+<fx:root type="yaskoam.mrz2.lab3.ui.toolbar.ToolBarPanel" xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="/yaskoam/mrz2/lab3/ui/customStyle.css">
+
+    <ToolBar minHeight="37.0" orientation="HORIZONTAL">
+        <Button text="Generate sequence" onAction="#generateSequence"/>
+        <Button fx:id="startLearnButton" text="Start learn" onAction="#startLearn"/>
+        <Button fx:id="stopLearnButton" text="Stop learn" onAction="#stopLearn" disable="true"/>
+        <Button fx:id="predictButton" text="Predict" onAction="#predict"/>
+    </ToolBar>
+
+</fx:root>
+

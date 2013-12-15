@@ -8,8 +8,9 @@
 
 <?import javafx.scene.control.SplitPane?>
 <?import yaskoam.mrz2.lab3.ui.panels.ImagePanel?>
+
 <fx:root type="yaskoam.mrz2.lab3.ui.MainPanel" xmlns:fx="http://javafx.com/fxml/1"
-         fx:id="rootPane" prefHeight="700.0" prefWidth="950.0" stylesheets="/yaskoam/mrz2/lab3/ui/style.css">
+         fx:id="rootPane" prefHeight="700.0" prefWidth="1100.0" stylesheets="/yaskoam/mrz2/lab3/ui/style.css">
 
     <ToolBarPanel fx:id="toolBarPanel">
         <VBox.margin>
@@ -19,7 +20,7 @@
 
     <SplitPane orientation="HORIZONTAL" dividerPositions="0.5" VBox.vgrow="ALWAYS">
         <ImagePanel fx:id="sourceImagePanel"/>
-        <ImagePanel/>
+        <ImagePanel fx:id="resultImagePanel"/>
     </SplitPane>
 
 </fx:root>

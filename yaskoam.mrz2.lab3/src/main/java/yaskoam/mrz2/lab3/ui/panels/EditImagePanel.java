@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import yaskoam.mrz2.lab3.image.Image;
+import yaskoam.mrz2.lab3.image.ImageDecoder;
 import yaskoam.mrz2.lab3.ui.BaseComponent;
 
 /**
@@ -25,7 +26,7 @@ public class EditImagePanel extends BaseComponent {
     public void setImageSymbols() {
         StringBuilder imageString = new StringBuilder();
 
-        for (char[] imageLine : image.getSymbols()) {
+        for (char[] imageLine : ImageDecoder.toSymbols(image)) {
             imageString.append(new String(imageLine)).append('\n');
         }
 
@@ -43,26 +44,13 @@ public class EditImagePanel extends BaseComponent {
     public void save(ActionEvent event) {
         String text = imageTextArea.getText();
 
-        char[][] imageSymbols = parseImageSymbols(text);
-        image = new Image(imageSymbols, imageSymbols[0].length, imageSymbols.length);
+        String[] lines = text.trim().split("\n");
+        image = ImageDecoder.fromLines(lines);
         ((Stage) getScene().getWindow()).close();
     }
 
     public void cancel(ActionEvent event) {
         image = null;
         ((Stage) getScene().getWindow()).close();
-    }
-
-    private char[][] parseImageSymbols(String text) {
-
-        String[] imageLines = text.trim().split("\n");
-
-        char[][] imageSymbols = new char[imageLines.length][];
-
-        for (int i = 0; i < imageLines.length; i++) {
-            imageSymbols[i] = imageLines[i].toCharArray();
-        }
-
-        return imageSymbols;
     }
 }

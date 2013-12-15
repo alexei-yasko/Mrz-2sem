@@ -17,6 +17,10 @@ public class MainPanel extends BaseComponent {
 
     @FXML
     private ImagePanel sourceImagePanel;
+
+    @FXML
+    private ImagePanel resultImagePanel;
+
     @FXML
     private ToolBarPanel toolBarPanel;
 
@@ -42,5 +46,9 @@ public class MainPanel extends BaseComponent {
 
     public ImagePanel getSourceImagePanel() {
         return sourceImagePanel;
+    }
+
+    public ImagePanel getResultImagePanel() {
+        return resultImagePanel;
     }
 }

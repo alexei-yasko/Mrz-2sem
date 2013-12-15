@@ -5,12 +5,31 @@
 <?import javafx.scene.text.Font?>
 <?import java.awt.Insets?>
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+
 <fx:root type="yaskoam.mrz2.lab3.ui.toolbar.ToolBarPanel" xmlns:fx="http://javafx.com/fxml/1"
         stylesheets="/yaskoam/mrz2/lab3/ui/customStyle.css">
 
     <ToolBar minHeight="37.0" orientation="HORIZONTAL">
+        <Button text="Create network" onAction="#createNetwork"/>
+        <Label text="width: "/>
+        <TextField fx:id="networkWidthTextField"/>
+        <Label text="height: "/>
+        <TextField fx:id="networkHeightTextField">
+            <HBox.margin>
+                <Insets bottom="0" left="0" right="100" top="0"/>
+            </HBox.margin>
+        </TextField>
+
         <Button text="Load image" onAction="#loadImage"/>
         <Button text="Edit image" onAction="#editImage"/>
+        <Button text="Learn" onAction="#learn"/>
+        <Button text="Recognize" onAction="#recognize"/>
+        <Button fx:id="previousButton" text="Previous" onAction="#previous"/>
+        <Button fx:id="nextButton" text="Next" onAction="#next"/>
     </ToolBar>
 
 </fx:root>

@@ -2,8 +2,6 @@
 
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.text.Font?>
-<?import java.awt.Insets?>
 
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Label?>
@@ -24,9 +22,9 @@
             </HBox.margin>
         </TextField>
 
-        <Button text="Load image" onAction="#loadImage"/>
-        <Button text="Edit image" onAction="#editImage"/>
         <Button text="Learn" onAction="#learn"/>
+        <Button text="Load" onAction="#loadImage"/>
+        <Button text="Edit" onAction="#editImage"/>
         <Button text="Recognize" onAction="#recognize"/>
         <Button fx:id="previousButton" text="Previous" onAction="#previous"/>
         <Button fx:id="nextButton" text="Next" onAction="#next"/>

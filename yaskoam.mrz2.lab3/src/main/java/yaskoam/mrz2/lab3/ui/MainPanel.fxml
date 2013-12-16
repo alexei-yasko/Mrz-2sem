@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import yaskoam.mrz2.lab3.ui.toolbar.ToolBarPanel?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
 

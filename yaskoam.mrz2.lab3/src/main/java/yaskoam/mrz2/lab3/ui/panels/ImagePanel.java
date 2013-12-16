@@ -18,11 +18,17 @@ public class ImagePanel extends BaseComponent {
 
     public void setImage(Image image) {
         this.image = image;
-        paint(image);
+        if (image != null) {
+            paint(image);
+        }
     }
 
     public Image getImage() {
         return image;
+    }
+
+    public void clear() {
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     private void paint(Image image) {

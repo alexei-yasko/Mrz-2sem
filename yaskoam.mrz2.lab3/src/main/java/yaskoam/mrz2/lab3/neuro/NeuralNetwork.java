@@ -1,6 +1,5 @@
 package yaskoam.mrz2.lab3.neuro;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jblas.FloatMatrix;
@@ -14,17 +13,17 @@ import yaskoam.mrz2.lab3.image.Image;
  */
 public class NeuralNetwork {
 
-    private FloatMatrix weightMatrix;
+    private FloatMatrix W;
 
     public NeuralNetwork(int width, int height) {
-        weightMatrix = FloatMatrix.zeros(width * height, width * height);
+        W = FloatMatrix.zeros(width * height, width * height);
     }
 
     public void learn(Image image) {
         int[] X = image.flattenValues();
         for (int i = 0; i < X.length; i++) {
             for (int j = 0; j < X.length; j++) {
-                weightMatrix.put(i, j, i == j ? 0 : weightMatrix.get(i, j) + X[i] * X[j]);
+                W.put(i, j, i == j ? 0 : W.get(i, j) + X[i] * X[j]);
             }
         }
     }
@@ -53,7 +52,7 @@ public class NeuralNetwork {
     private Image recognizeImage(Image image) {
         FloatMatrix X = new FloatMatrix(toFloatArray(image.flattenValues()));
 
-        float[] S = X.transpose().mmul(weightMatrix).data;
+        float[] S = X.transpose().mmul(W).data;
 
         int[] Y = new int[S.length];
         for (int i = 0; i < Y.length; i++) {

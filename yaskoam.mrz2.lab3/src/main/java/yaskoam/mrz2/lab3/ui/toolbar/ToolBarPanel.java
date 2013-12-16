@@ -3,6 +3,8 @@ package yaskoam.mrz2.lab3.ui.toolbar;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -67,12 +69,17 @@ public class ToolBarPanel extends BaseComponent {
     public void createNetwork() {
         neuralNetwork = new NeuralNetwork(
             Integer.parseInt(networkWidthTextField.getText()), Integer.parseInt(networkHeightTextField.getText()));
+
+        JOptionPane.showMessageDialog(null, "Network created.", "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void learn() {
-        if (neuralNetwork != null) {
-            neuralNetwork.learn(mainPanel.getSourceImagePanel().getImage());
+        List<File> files = createFileChooser().showOpenMultipleDialog(mainPanel.getScene().getWindow());
+        for (File file : files) {
+            learnSimple(file);
         }
+        mainPanel.getSourceImagePanel().clear();
+        JOptionPane.showMessageDialog(null, "Network successfully learned.", "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void recognize() {
@@ -99,6 +106,15 @@ public class ToolBarPanel extends BaseComponent {
 
     public void setMainPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
+    }
+
+    private void learnSimple(File file) {
+        if (file != null) {
+            mainPanel.getSourceImagePanel().setImage(ImageDecoder.fromFile(file));
+        }
+        if (neuralNetwork != null) {
+            neuralNetwork.learn(mainPanel.getSourceImagePanel().getImage());
+        }
     }
 
     private void updateNextPreviousButtonState() {

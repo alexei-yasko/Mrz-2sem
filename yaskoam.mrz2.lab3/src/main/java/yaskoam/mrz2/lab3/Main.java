@@ -14,7 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = new MainPanel();
-        stage.setTitle("Lab 2");
+        stage.setTitle("Lab 3");
         stage.setScene(new Scene(root));
         stage.show();
     }

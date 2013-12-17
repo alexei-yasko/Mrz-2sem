@@ -71,21 +71,37 @@ public class ToolBarPanel extends BaseComponent {
             Integer.parseInt(networkWidthTextField.getText()), Integer.parseInt(networkHeightTextField.getText()));
 
         JOptionPane.showMessageDialog(null, "Network created.", "Message", JOptionPane.INFORMATION_MESSAGE);
+        mainPanel.getSourceImagePanel().clear();
+        mainPanel.getResultImagePanel().clear();
     }
 
     public void learn() {
         List<File> files = createFileChooser().showOpenMultipleDialog(mainPanel.getScene().getWindow());
-        for (File file : files) {
-            learnSimple(file);
+        boolean isSuccessful = false;
+
+        if (files != null) {
+            Image[] images = new Image[files.size()];
+            for (int i = 0; i < images.length; i++) {
+                images[i] = ImageDecoder.fromFile(files.get(i));
+            }
+            isSuccessful = neuralNetwork.learn(images);
         }
+
+        if (isSuccessful) {
+            JOptionPane.showMessageDialog(null, "Network successfully learned.", "Message", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Network learn failed.", "Message", JOptionPane.ERROR_MESSAGE);
+        }
+
         mainPanel.getSourceImagePanel().clear();
-        JOptionPane.showMessageDialog(null, "Network successfully learned.", "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void recognize() {
         if (neuralNetwork != null) {
             Image image = mainPanel.getSourceImagePanel().getImage();
-            recognizedImages = neuralNetwork.recognize(image, 100);
+            recognizedImages = neuralNetwork.recognize(image, 1000);
+            recognizedImages.add(0, image);
             curentImageNumber = recognizedImages.size() - 1;
             mainPanel.getResultImagePanel().setImage(recognizedImages.get(curentImageNumber));
             updateNextPreviousButtonState();
@@ -106,15 +122,6 @@ public class ToolBarPanel extends BaseComponent {
 
     public void setMainPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
-    }
-
-    private void learnSimple(File file) {
-        if (file != null) {
-            mainPanel.getSourceImagePanel().setImage(ImageDecoder.fromFile(file));
-        }
-        if (neuralNetwork != null) {
-            neuralNetwork.learn(mainPanel.getSourceImagePanel().getImage());
-        }
     }
 
     private void updateNextPreviousButtonState() {

@@ -1,11 +1,14 @@
 package yaskoam.mrz2.lab3.neuro;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jblas.FloatMatrix;
 
 import com.google.common.collect.Lists;
 
+import ch.lambdaj.Lambda;
 import yaskoam.mrz2.lab3.image.Image;
 
 /**
@@ -19,26 +22,25 @@ public class NeuralNetwork {
         W = FloatMatrix.zeros(width * height, width * height);
     }
 
-    public void learn(Image image) {
-        int[] X = image.flattenValues();
-        for (int i = 0; i < X.length; i++) {
-            for (int j = 0; j < X.length; j++) {
-                W.put(i, j, i == j ? 0 : W.get(i, j) + X[i] * X[j]);
-            }
+    public boolean learn(Image[] images) {
+        for (Image image : images) {
+            learnImage(image);
         }
+        return checkLearn(images);
     }
 
     public List<Image> recognize(Image image, int maxIterationsNumber) {
-        List<Image> images = Lists.newArrayList(image);
+        List<Image> images = new ArrayList<Image>();
 
         Image recognizedImage;
 
         for (int i = 0; i < maxIterationsNumber; i++) {
-            Image currentImage = images.get(images.size() - 1);
+            Image currentImage = images.size() > 0 ? images.get(images.size() - 1) : image;
+            Image previousImage = images.size() > 2 ? images.get(images.size() - 2) : null;
 
             recognizedImage = recognizeImage(currentImage);
 
-            if (currentImage.equals(recognizedImage)) {
+            if (currentImage.equals(recognizedImage) || (previousImage != null && previousImage.equals(recognizedImage))) {
                 break;
             }
             else {
@@ -60,6 +62,25 @@ public class NeuralNetwork {
         }
 
         return Image.fromFlatten(Y, image.getWidth(), image.getHeight());
+    }
+
+    private void learnImage(Image image) {
+        int[] X = image.flattenValues();
+        for (int i = 0; i < X.length; i++) {
+            for (int j = 0; j < X.length; j++) {
+                W.put(i, j, i == j ? 0 : W.get(i, j) + X[i] * X[j]);
+            }
+        }
+    }
+
+    private boolean checkLearn(Image[] images) {
+        for (Image image : images) {
+            Image recognizedImage = recognizeImage(image);
+            if (!image.equals(recognizedImage)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private float[] toFloatArray(int[] intArray) {

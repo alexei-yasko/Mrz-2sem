@@ -1,14 +1,10 @@
 package yaskoam.mrz2.lab3.neuro;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.jblas.FloatMatrix;
 
-import com.google.common.collect.Lists;
-
-import ch.lambdaj.Lambda;
 import yaskoam.mrz2.lab3.image.Image;
 
 /**
@@ -65,13 +61,24 @@ public class NeuralNetwork {
     }
 
     private void learnImage(Image image) {
-        int[] X = image.flattenValues();
-        for (int i = 0; i < X.length; i++) {
-            for (int j = 0; j < X.length; j++) {
-                W.put(i, j, i == j ? 0 : W.get(i, j) + X[i] * X[j]);
-            }
+        FloatMatrix X = new FloatMatrix(toFloatArray(image.flattenValues()));
+        FloatMatrix first = (W.mmul(X).sub(X)).mmul(W.mmul(X).sub(X).transpose());
+        FloatMatrix second = (X.transpose().mmul(X)).sub(X.transpose().mmul(W).mmul(X));
+        W = W.add(first.div(second));
+
+        for (int i = 0; i < W.columns; i++) {
+            W.put(i, i, 0);
         }
     }
+
+//    private void learnImage(Image image) {
+//        int[] X = image.flattenValues();
+//        for (int i = 0; i < X.length; i++) {
+//            for (int j = 0; j < X.length; j++) {
+//                W.put(i, j, i == j ? 0 : W.get(i, j) + X[i] * X[j]);
+//            }
+//        }
+//    }
 
     private boolean checkLearn(Image[] images) {
         for (Image image : images) {
